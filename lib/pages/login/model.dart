@@ -5,16 +5,16 @@ import 'package:provider/provider.dart';
 import 'login_page.dart';
 
 class Model extends ChangeNotifier {
-  Model(context) : this.context = context;
+  Model(navigator) : this._navigator = navigator;
 
-  BuildContext context;
+  AppNavigator _navigator;
 
   factory Model.initialize(BuildContext context) {
-    return Model(context);
+    final navigator = Provider.of<AppNavigator>(context);
+    return Model(navigator);
   }
 
   void login() {
-    final navigator = Provider.of<AppNavigator>(context, listen: false);
-    navigator.pushNamed(LoginPage.loginPath);
+    _navigator.pushNamed(LoginPage.loginPath);
   }
 }

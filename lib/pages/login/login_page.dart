@@ -10,7 +10,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<Model>(
-      create: (_) => Model(context),
+      create: (_) => Model.initialize(context),
       child: Builder(
         builder: (context) {
           final model = Provider.of<Model>(context);
