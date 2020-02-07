@@ -17,7 +17,7 @@ class AppNavigator {
     key.currentState.pushNamed(name, arguments: arguments);
   }
 
-  void pushReplacementNamed(name, Object arguments) {
+  void pushReplacementNamed(name, {Object arguments}) {
     key.currentState.pushReplacementNamed(name, arguments: arguments);
   }
 }

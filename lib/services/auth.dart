@@ -7,13 +7,13 @@ import 'package:flutter/cupertino.dart';
 typedef Future<IdTokenResult> GetToken({bool refresh});
 
 class Auth extends ChangeNotifier {
-  FirebaseAuth _auth;
-  User user;
-  StreamSubscription _subscription;
-
   Auth(
     FirebaseAuth auth,
   ) : this._auth = auth;
+
+  FirebaseAuth _auth;
+  User user;
+  StreamSubscription _subscription;
 
   factory Auth.initialize(FirebaseAuth instance) {
     return Auth(
