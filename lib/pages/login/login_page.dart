@@ -27,7 +27,7 @@ class LoginPage extends StatelessWidget {
                             height: 100,
                           ),
                           Text(
-                            'LOGIN',
+                            model?.user?.email ?? '',
                             style: TextStyle(
                               fontSize: 40,
                             ),
