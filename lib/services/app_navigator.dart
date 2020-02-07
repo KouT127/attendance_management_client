@@ -13,7 +13,7 @@ class AppNavigator {
     key.currentState.push<T>(route);
   }
 
-  void pushNamed(name, Object arguments) {
+  void pushNamed(name, {Object arguments}) {
     key.currentState.pushNamed(name, arguments: arguments);
   }
 

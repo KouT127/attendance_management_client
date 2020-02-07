@@ -1,4 +1,4 @@
-import 'package:attendance_management/pages/login_page.dart';
+import 'package:attendance_management/pages/login/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -45,6 +45,9 @@ class App extends StatelessWidget {
     return MaterialApp(
       home: LoginPage(),
       navigatorKey: navigatorKey,
+      routes: {
+        '/login': (context) => LoginPage(),
+      },
     );
   }
 }

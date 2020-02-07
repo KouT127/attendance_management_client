@@ -30,7 +30,7 @@ class HttpClient {
   Future<Response> post(String url, dynamic body) async {
     Map<String, String> headers = Map();
     if (user != null) {
-      return _client.get(url);
+      return _client.post(url);
     }
     final tokenResult = await user.getToken();
     headers['Authorization'] = 'Bearer ' + tokenResult.token;
@@ -40,7 +40,7 @@ class HttpClient {
   Future<Response> put(String url, dynamic body) async {
     Map<String, String> headers = Map();
     if (user != null) {
-      return _client.get(url);
+      return _client.put(url);
     }
     final tokenResult = await user.getToken();
     headers['Authorization'] = 'Bearer ' + tokenResult.token;
@@ -50,7 +50,7 @@ class HttpClient {
   Future<Response> delete(String url) async {
     Map<String, String> headers = Map();
     if (user != null) {
-      return _client.get(url);
+      return _client.delete(url);
     }
     final tokenResult = await user.getToken();
     headers['Authorization'] = 'Bearer ' + tokenResult.token;
