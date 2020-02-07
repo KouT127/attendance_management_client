@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class LoginPage extends StatelessWidget {
+  static final loginPath = '/login';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
