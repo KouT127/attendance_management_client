@@ -5,7 +5,7 @@ class HttpClient {
   final Client _client;
   User user;
 
-  HttpClient(Client client, User user) : _client = client;
+  HttpClient(this._client, this.user);
 
   factory HttpClient.create() {
     final client = Client();

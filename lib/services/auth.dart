@@ -7,11 +7,9 @@ import 'package:flutter/cupertino.dart';
 typedef Future<IdTokenResult> GetToken({bool refresh});
 
 class Auth extends ChangeNotifier {
-  Auth(
-    FirebaseAuth auth,
-  ) : this._auth = auth;
+  Auth(this.auth);
 
-  FirebaseAuth _auth;
+  FirebaseAuth auth;
   User user;
   StreamSubscription _subscription;
 
@@ -36,7 +34,7 @@ class Auth extends ChangeNotifier {
   }
 
   void listenAuthState() {
-    _subscription = _auth.onAuthStateChanged.listen(handleChangeAuthState);
+    _subscription = auth.onAuthStateChanged.listen(handleChangeAuthState);
   }
 
   void disposeSubscription() {
@@ -48,7 +46,7 @@ class Auth extends ChangeNotifier {
     String password,
   }) async {
     try {
-      await _auth.signInWithEmailAndPassword(
+      await auth.signInWithEmailAndPassword(
         email: email.toString(),
         password: password.toString(),
       );
