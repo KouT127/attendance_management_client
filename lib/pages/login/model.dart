@@ -36,9 +36,11 @@ class Model extends ChangeNotifier {
     passwordNode = FocusNode();
   }
 
-  void disposeModel() {
+  @override
+  void dispose() {
     emailNode.dispose();
     passwordNode.dispose();
+    super.dispose();
   }
 
   void handleChangeEmail(String email) {
@@ -54,7 +56,5 @@ class Model extends ChangeNotifier {
       email: 'test@test.com',
       password: 'abcd1234',
     );
-    print(email);
-    print(password);
   }
 }

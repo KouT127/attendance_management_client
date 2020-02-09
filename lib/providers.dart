@@ -1,3 +1,4 @@
+import 'package:attendance_management/services/shared_preference.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,9 @@ class Providers extends StatelessWidget {
         Provider<AppNavigator>(
           create: (_) => AppNavigator.create(),
         ),
+        Provider<AppPreferences>(
+          create: (_) => AppPreferences.create(),
+        ),
         ChangeNotifierProvider<Auth>(
           create: (_) => Auth.create(),
         ),
@@ -23,6 +27,7 @@ class Providers extends StatelessWidget {
         ),
         ProxyProvider<Auth, Router>(
           create: (_context) => Router.create(
+            preferences: Provider.of<AppPreferences>(_context, listen: false),
             navigator: Provider.of<AppNavigator>(_context, listen: false),
           ),
           update: (_, auth, router) => router.updateUser(auth),

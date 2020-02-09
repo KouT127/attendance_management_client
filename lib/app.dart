@@ -15,8 +15,8 @@ class App extends StatelessWidget {
       initialRoute: '/',
       navigatorKey: navigator.navigatorKey,
       routes: {
-        '/': (context) => SplashPage(),
-        '/login': (context) => LoginProvider(),
+        '/': (context) => SplashPageProvider(),
+        '/login': (context) => LoginPageProvider(),
         '/home': (context) => HomePage()
       },
     );

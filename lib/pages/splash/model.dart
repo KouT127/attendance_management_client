@@ -1,11 +1,38 @@
-import 'package:flutter/cupertino.dart';
+import 'package:attendance_management/services/services.dart';
+import 'package:attendance_management/services/shared_preference.dart';
 
 class Model {
-  Model(this.context) : assert(context != null) {
+  Model({
+    this.auth,
+    this.preferences,
+    this.router,
+  }) {
     initialize();
   }
 
-  final BuildContext context;
+  final AppPreferences preferences;
+  final Auth auth;
+  final Router router;
+  bool isInitial = true;
 
-  void initialize() {}
+  factory Model.create({
+    Router router,
+    AppPreferences preferences,
+    Auth auth,
+  }) {
+    return Model(
+      auth: auth,
+      preferences: preferences,
+      router: router,
+    );
+  }
+
+  Future<void> initialize() async {
+    print('splash initialize');
+    final hadStarted = await preferences.getHadStarted();
+    if (!hadStarted) {
+      await auth.auth.signInAnonymously();
+      await preferences.setHadStarted(true);
+    }
+  }
 }

@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 
 import 'model.dart';
 
-class LoginProvider extends StatelessWidget {
-  const LoginProvider({Key key}) : super(key: key);
+class LoginPageProvider extends StatelessWidget {
+  const LoginPageProvider({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
