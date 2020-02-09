@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 class User {
   User({
     @required this.uid,
-    @required this.token,
     @required this.email,
     @required this.displayName,
     this.photoUrl,
@@ -15,7 +14,6 @@ class User {
   });
 
   String uid;
-  String token;
   String email;
   String displayName;
   String photoUrl;

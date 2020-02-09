@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:attendance_management/models/user.dart';
+import 'package:attendance_management/services/http_client.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -9,20 +10,25 @@ typedef OnUpdateUser = void Function(User user);
 
 class Auth extends ChangeNotifier {
   Auth({
+    this.client,
     this.auth,
     this.onUpdateUser,
   }) {
     listenAuthState();
   }
 
+  final HttpClient client;
   FirebaseAuth auth;
   OnUpdateUser onUpdateUser;
-
   StreamSubscription _subscription;
 
-  factory Auth.create({OnUpdateUser onUpdateUser}) {
+  factory Auth.create({
+    HttpClient client,
+    OnUpdateUser onUpdateUser,
+  }) {
     print('auth create');
     return Auth(
+      client: client,
       auth: FirebaseAuth.instance,
       onUpdateUser: onUpdateUser,
     );
@@ -41,10 +47,13 @@ class Auth extends ChangeNotifier {
   }
 
   Future<void> handleChangeAuthState(FirebaseUser user) async {
-    final tokenResult = await user.getIdToken();
+    final response = await client.get(
+      'http://localhost:8080/v1/users/mine',
+      getToken: user.getIdToken,
+    );
+    print(response);
     final updatedUser = User(
       uid: user.uid,
-      token: tokenResult.token,
       email: user.email,
       displayName: user.displayName,
       photoUrl: user.photoUrl,
@@ -52,6 +61,7 @@ class Auth extends ChangeNotifier {
       isAnonymous: user.isAnonymous,
       getToken: user.getIdToken,
     );
+
     onUpdateUser(updatedUser);
   }
 

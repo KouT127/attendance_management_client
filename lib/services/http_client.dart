@@ -19,7 +19,7 @@ class HttpClient {
     if (getToken == null) {
       return _client.get(url);
     }
-    final tokenResult = await getToken();
+    final tokenResult = await getToken(refresh: true);
     headers['Authorization'] = 'Bearer ' + tokenResult.token;
     return _client.get(url, headers: headers);
   }

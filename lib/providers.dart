@@ -37,6 +37,7 @@ class DependencyProviders extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<Auth>(
           create: (_context) => Auth.create(
+            client: Provider.of<HttpClient>(context),
             onUpdateUser:
                 Provider.of<UserState>(_context, listen: false).onUpdateUser,
           ),
