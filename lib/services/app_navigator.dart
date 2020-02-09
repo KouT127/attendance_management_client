@@ -8,6 +8,7 @@ class AppNavigator {
   final GlobalKey<NavigatorState> navigatorKey;
 
   factory AppNavigator.create() {
+    print('create navigator');
     return AppNavigator(
       GlobalKey<NavigatorState>(),
     );

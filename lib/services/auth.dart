@@ -14,6 +14,7 @@ class Auth extends ChangeNotifier {
   StreamSubscription _subscription;
 
   factory Auth.create() {
+    print('auth create');
     return Auth(
       FirebaseAuth.instance,
     );

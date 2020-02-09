@@ -5,6 +5,8 @@ import 'app.dart';
 import 'services/services.dart';
 
 class Providers extends StatelessWidget {
+  Providers({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -18,6 +20,11 @@ class Providers extends StatelessWidget {
         ProxyProvider<Auth, HttpClient>(
           create: (_) => HttpClient.create(),
           update: (_, auth, client) => client.update(auth.user),
+        ),
+        Provider<Router>(
+          create: (_context) => Router.create(
+            navigator: Provider.of<AppNavigator>(_context, listen: false),
+          ),
         ),
       ],
       child: const App(),

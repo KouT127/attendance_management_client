@@ -10,10 +10,12 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final navigator = Provider.of<AppNavigator>(context);
     return MaterialApp(
-      home: SplashPage(),
-      navigatorKey: Provider.of<AppNavigator>(context).navigatorKey,
+      initialRoute: '/',
+      navigatorKey: navigator.navigatorKey,
       routes: {
+        '/': (context) => SplashPage(),
         '/login': (context) => LoginProvider(),
       },
     );
