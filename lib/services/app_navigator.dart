@@ -5,7 +5,7 @@ class AppNavigator {
 
   AppNavigator(GlobalKey<NavigatorState> key) : this.key = key;
 
-  factory AppNavigator.initialize(GlobalKey<NavigatorState> key) {
+  factory AppNavigator.create(GlobalKey<NavigatorState> key) {
     return AppNavigator(key);
   }
 

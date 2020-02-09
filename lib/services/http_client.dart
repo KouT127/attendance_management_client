@@ -7,7 +7,7 @@ class HttpClient {
 
   HttpClient(Client client, User user) : _client = client;
 
-  factory HttpClient.initialize() {
+  factory HttpClient.create() {
     final client = Client();
     return HttpClient(client, null);
   }

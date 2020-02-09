@@ -14,13 +14,13 @@ class Providers extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<AppNavigator>(
-          create: (_) => AppNavigator.initialize(navigatorKey),
+          create: (_) => AppNavigator.create(navigatorKey),
         ),
         ChangeNotifierProvider<Auth>(
-          create: (_) => Auth.initialize(FirebaseAuth.instance),
+          create: (_) => Auth.create(FirebaseAuth.instance),
         ),
         ProxyProvider<Auth, HttpClient>(
-          create: (_) => HttpClient.initialize(),
+          create: (_) => HttpClient.create(),
           update: (_, auth, client) => client.update(auth.user),
         )
       ],
