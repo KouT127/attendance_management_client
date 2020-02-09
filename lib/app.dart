@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -6,45 +5,16 @@ import 'package:provider/provider.dart';
 import 'pages/pages.dart';
 import 'services/services.dart';
 
-class Providers extends StatelessWidget {
-  final navigatorKey = GlobalKey<NavigatorState>();
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<AppNavigator>(
-          create: (_) => AppNavigator.create(navigatorKey),
-        ),
-        ChangeNotifierProvider<Auth>(
-          create: (_) => Auth.create(FirebaseAuth.instance),
-        ),
-        ProxyProvider<Auth, HttpClient>(
-          create: (_) => HttpClient.create(),
-          update: (_, auth, client) => client.update(auth.user),
-        )
-      ],
-      child: App(
-        navigatorKey: navigatorKey,
-      ),
-    );
-  }
-}
-
 class App extends StatelessWidget {
-  App({
-    this.navigatorKey,
-  });
-
-  final GlobalKey<NavigatorState> navigatorKey;
+  const App({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LoginProvider(),
-      navigatorKey: navigatorKey,
+      home: SplashPage(),
+      navigatorKey: Provider.of<AppNavigator>(context).navigatorKey,
       routes: {
-        '/login': (context) => LoginPage(),
+        '/login': (context) => LoginProvider(),
       },
     );
   }

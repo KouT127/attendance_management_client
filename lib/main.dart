@@ -1,5 +1,4 @@
+import 'package:attendance_management/providers.dart';
 import 'package:flutter/material.dart';
-
-import 'app.dart';
 
 void main() => runApp(Providers());
