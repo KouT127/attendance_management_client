@@ -4,21 +4,27 @@ import 'package:attendance_management/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
-typedef Future<IdTokenResult> GetToken({bool refresh});
+typedef GetToken = Future<IdTokenResult> Function({bool refresh});
+typedef OnUpdateUser = void Function(User user);
 
 class Auth extends ChangeNotifier {
-  Auth(this.auth) {
+  Auth({
+    this.auth,
+    this.onUpdateUser,
+  }) {
     listenAuthState();
   }
 
   FirebaseAuth auth;
-  User user;
+  OnUpdateUser onUpdateUser;
+
   StreamSubscription _subscription;
 
-  factory Auth.create() {
+  factory Auth.create({OnUpdateUser onUpdateUser}) {
     print('auth create');
     return Auth(
-      FirebaseAuth.instance,
+      auth: FirebaseAuth.instance,
+      onUpdateUser: onUpdateUser,
     );
   }
 
@@ -36,7 +42,7 @@ class Auth extends ChangeNotifier {
 
   Future<void> handleChangeAuthState(FirebaseUser user) async {
     final tokenResult = await user.getIdToken();
-    this.user = User(
+    final updatedUser = User(
       uid: user.uid,
       token: tokenResult.token,
       email: user.email,
@@ -46,7 +52,7 @@ class Auth extends ChangeNotifier {
       isAnonymous: user.isAnonymous,
       getToken: user.getIdToken,
     );
-    notifyListeners();
+    onUpdateUser(updatedUser);
   }
 
   Future<void> signIn({

@@ -6,6 +6,7 @@ class Model {
     this.auth,
     this.preferences,
     this.router,
+    this.client,
   }) {
     initialize();
   }
@@ -13,17 +14,20 @@ class Model {
   final AppPreferences preferences;
   final Auth auth;
   final Router router;
+  final HttpClient client;
   bool isInitial = true;
 
   factory Model.create({
     Router router,
     AppPreferences preferences,
     Auth auth,
+    HttpClient client,
   }) {
     return Model(
       auth: auth,
       preferences: preferences,
       router: router,
+      client: client,
     );
   }
 

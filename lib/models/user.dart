@@ -11,6 +11,7 @@ class User {
     @required this.isEmailVerified,
     @required this.getToken,
     @required this.isAnonymous,
+    @required this.isUserCreated,
   });
 
   String uid;
@@ -21,4 +22,7 @@ class User {
   bool isEmailVerified;
   bool isAnonymous;
   GetToken getToken;
+
+  // API用のフラグ
+  bool isUserCreated;
 }

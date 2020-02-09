@@ -3,8 +3,7 @@ import 'package:attendance_management/pages/home/home.dart';
 import 'package:attendance_management/pages/login/login_page.dart';
 import 'package:attendance_management/services/app_navigator.dart';
 import 'package:attendance_management/services/shared_preference.dart';
-
-import 'auth.dart';
+import 'package:attendance_management/services/user_state.dart';
 
 class Router {
   Router({
@@ -27,13 +26,13 @@ class Router {
     );
   }
 
-  Router updateUser(Auth auth) {
-    this.user = auth.user;
-    onUpdateUser(this.user);
+  Router updateUser(UserState userState) {
+    this.user = userState.user;
+    _navigateByUser(this.user);
     return this;
   }
 
-  void onUpdateUser(User user) {
+  void _navigateByUser(User user) {
     if (user == null) {
       return;
     }

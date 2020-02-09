@@ -23,6 +23,7 @@ class SplashPageProvider extends StatelessWidget {
         preferences: Provider.of<AppPreferences>(context),
         auth: Provider.of<Auth>(context),
         router: Provider.of<Router>(context),
+        client: Provider.of<HttpClient>(context),
       ),
       child: SplashPage(),
     );
