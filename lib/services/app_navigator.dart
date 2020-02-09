@@ -7,9 +7,9 @@ class AppNavigator {
 
   final GlobalKey<NavigatorState> navigatorKey;
 
-  factory AppNavigator.create(GlobalKey<NavigatorState> navigatorKey) {
+  factory AppNavigator.create() {
     return AppNavigator(
-      navigatorKey,
+      GlobalKey<NavigatorState>(),
     );
   }
 

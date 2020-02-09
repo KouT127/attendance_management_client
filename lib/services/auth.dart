@@ -13,10 +13,20 @@ class Auth extends ChangeNotifier {
   User user;
   StreamSubscription _subscription;
 
-  factory Auth.create(FirebaseAuth instance) {
+  factory Auth.create() {
     return Auth(
-      instance,
+      FirebaseAuth.instance,
     );
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+
+  void listenAuthState() {
+    _subscription = auth.onAuthStateChanged.listen(handleChangeAuthState);
   }
 
   Future<void> handleChangeAuthState(FirebaseUser user) async {
@@ -31,14 +41,6 @@ class Auth extends ChangeNotifier {
       getToken: user.getIdToken,
     );
     notifyListeners();
-  }
-
-  void listenAuthState() {
-    _subscription = auth.onAuthStateChanged.listen(handleChangeAuthState);
-  }
-
-  void disposeSubscription() {
-    _subscription.cancel();
   }
 
   Future<void> signIn({
