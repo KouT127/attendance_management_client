@@ -1,30 +1,56 @@
-import 'package:attendance_management/models/user.dart';
 import 'package:attendance_management/services/app_navigator.dart';
 import 'package:attendance_management/services/auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import 'login_page.dart';
-
 class Model extends ChangeNotifier {
-  Model(navigator, auth)
-      : this._navigator = navigator,
-        this._auth = auth;
-
-  AppNavigator _navigator;
-  Auth _auth;
-
-  factory Model.initialize(BuildContext context) {
-    final navigator = Provider.of<AppNavigator>(context);
-    final auth = Provider.of<Auth>(context);
-    return Model(navigator, auth);
+  Model({
+    @required this.context,
+    @required this.navigator,
+    @required this.auth,
+  }) {
+    initialize();
   }
 
-  User get user {
-    return _auth.user;
+  final BuildContext context;
+  final AppNavigator navigator;
+  final Auth auth;
+  String email;
+  String password;
+  FocusNode emailNode;
+  FocusNode passwordNode;
+
+  factory Model.create(BuildContext context) {
+    final navigator = Provider.of<AppNavigator>(context);
+    final auth = Provider.of<Auth>(context);
+    return Model(
+      context: context,
+      navigator: navigator,
+      auth: auth,
+    );
+  }
+
+  void initialize() {
+    print('initialize');
+    emailNode = FocusNode();
+    passwordNode = FocusNode();
+  }
+
+  void disposeModel() {
+    emailNode.dispose();
+    passwordNode.dispose();
+  }
+
+  void handleChangeEmail(String email) {
+    this.email = email;
+  }
+
+  void handleChangePassword(String password) {
+    this.password = password;
   }
 
   void login() {
-    _navigator.pushNamed(LoginPage.loginPath);
+    print(email);
+    print(password);
   }
 }

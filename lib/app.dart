@@ -33,16 +33,15 @@ class Providers extends StatelessWidget {
 
 class App extends StatelessWidget {
   App({
-    GlobalKey<NavigatorState> navigatorKey,
-  })  : assert(navigatorKey != null),
-        this.navigatorKey = navigatorKey;
+    this.navigatorKey,
+  });
 
   final GlobalKey<NavigatorState> navigatorKey;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LoginPage(),
+      home: LoginProvider(),
       navigatorKey: navigatorKey,
       routes: {
         '/login': (context) => LoginPage(),
