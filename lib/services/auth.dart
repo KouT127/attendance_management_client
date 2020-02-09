@@ -7,7 +7,9 @@ import 'package:flutter/cupertino.dart';
 typedef Future<IdTokenResult> GetToken({bool refresh});
 
 class Auth extends ChangeNotifier {
-  Auth(this.auth);
+  Auth(this.auth) {
+    listenAuthState();
+  }
 
   FirebaseAuth auth;
   User user;
@@ -27,7 +29,9 @@ class Auth extends ChangeNotifier {
   }
 
   void listenAuthState() {
-    _subscription = auth.onAuthStateChanged.listen(handleChangeAuthState);
+    _subscription = auth.onAuthStateChanged
+        .where((user) => user != null)
+        .listen(handleChangeAuthState);
   }
 
   Future<void> handleChangeAuthState(FirebaseUser user) async {
@@ -39,6 +43,7 @@ class Auth extends ChangeNotifier {
       displayName: user.displayName,
       photoUrl: user.photoUrl,
       isEmailVerified: user.isEmailVerified,
+      isAnonymous: user.isAnonymous,
       getToken: user.getIdToken,
     );
     notifyListeners();

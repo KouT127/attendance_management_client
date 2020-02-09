@@ -10,6 +10,7 @@ class User {
     this.photoUrl,
     @required this.isEmailVerified,
     @required this.getToken,
+    @required this.isAnonymous,
   });
 
   String uid;
@@ -18,5 +19,6 @@ class User {
   String displayName;
   String photoUrl;
   bool isEmailVerified;
+  bool isAnonymous;
   GetToken getToken;
 }

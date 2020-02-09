@@ -21,10 +21,11 @@ class Providers extends StatelessWidget {
           create: (_) => HttpClient.create(),
           update: (_, auth, client) => client.update(auth.user),
         ),
-        Provider<Router>(
+        ProxyProvider<Auth, Router>(
           create: (_context) => Router.create(
             navigator: Provider.of<AppNavigator>(_context, listen: false),
           ),
+          update: (_, auth, router) => router.updateUser(auth),
         ),
       ],
       child: const App(),

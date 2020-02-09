@@ -50,6 +50,10 @@ class Model extends ChangeNotifier {
   }
 
   void login() {
+    auth.signIn(
+      email: 'test@test.com',
+      password: 'abcd1234',
+    );
     print(email);
     print(password);
   }
