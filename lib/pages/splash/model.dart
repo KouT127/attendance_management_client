@@ -12,7 +12,7 @@ class Model {
   }
 
   final AppPreferences preferences;
-  final Auth auth;
+  final UserState auth;
   final Router router;
   final HttpClient client;
   bool isInitial = true;
@@ -20,11 +20,11 @@ class Model {
   factory Model.create({
     Router router,
     AppPreferences preferences,
-    Auth auth,
+    UserState userState,
     HttpClient client,
   }) {
     return Model(
-      auth: auth,
+      auth: userState,
       preferences: preferences,
       router: router,
       client: client,
@@ -35,7 +35,6 @@ class Model {
     print('splash initialize');
     final hadStarted = await preferences.getHadStarted();
     if (!hadStarted) {
-      await auth.auth.signInAnonymously();
       await preferences.setHadStarted(true);
     }
   }

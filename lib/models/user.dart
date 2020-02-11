@@ -1,4 +1,4 @@
-import 'package:attendance_management/services/auth.dart';
+import 'package:attendance_management/services/user_state.dart';
 import 'package:flutter/material.dart';
 
 class User {
@@ -6,21 +6,24 @@ class User {
     @required this.uid,
     @required this.email,
     @required this.displayName,
-    this.photoUrl,
-    @required this.isEmailVerified,
     @required this.getToken,
-    @required this.isAnonymous,
-    @required this.isUserCreated,
+    this.photoUrl,
+    this.isEmailVerified = false,
   });
+
+  factory User.initial() {
+    return User(
+      uid: null,
+      email: null,
+      displayName: null,
+      getToken: null,
+    );
+  }
 
   String uid;
   String email;
   String displayName;
   String photoUrl;
   bool isEmailVerified;
-  bool isAnonymous;
   GetToken getToken;
-
-  // API用のフラグ
-  bool isUserCreated;
 }

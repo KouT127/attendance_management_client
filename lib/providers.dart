@@ -12,18 +12,10 @@ class Providers extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<AppNavigator>(
-          create: (_) => AppNavigator.create(),
-        ),
-        Provider<AppPreferences>(
-          create: (_) => AppPreferences.create(),
-        ),
-        Provider<HttpClient>(
-          create: (_) => HttpClient.create(),
-        ),
-        ChangeNotifierProvider<UserState>(
-          create: (_) => UserState.create(),
-        ),
+        Provider<AppNavigator>(create: (_) => AppNavigator.create()),
+        Provider<AppPreferences>(create: (_) => AppPreferences.create()),
+        Provider<HttpClient>(create: (_) => HttpClient.create()),
+        Provider<AppState>(create: (_) => AppState.create()),
       ],
       child: DependencyProviders(),
     );
@@ -35,19 +27,22 @@ class DependencyProviders extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<Auth>(
-          create: (_context) => Auth.create(
-            client: Provider.of<HttpClient>(context),
-            onUpdateUser:
-                Provider.of<UserState>(_context, listen: false).onUpdateUser,
+        ChangeNotifierProvider<UserState>(
+          create: (_) => UserState.create(
+            client: Provider.of<HttpClient>(context, listen: false),
+            updateAppState:
+                Provider.of<AppState>(context, listen: false).update,
           ),
         ),
-        ProxyProvider<UserState, Router>(
-          create: (_context) => Router.create(
-            preferences: Provider.of<AppPreferences>(_context, listen: false),
-            navigator: Provider.of<AppNavigator>(_context, listen: false),
+        ProxyProvider2<AppState, UserState, Router>(
+          create: (_) => Router.create(
+            preferences: Provider.of<AppPreferences>(context, listen: false),
+            navigator: Provider.of<AppNavigator>(context, listen: false),
           ),
-          update: (_, userState, router) => router.updateUser(userState),
+          update: (_, appState, userState, router) => router.update(
+            appState: appState,
+            userState: userState,
+          ),
         ),
       ],
       child: const App(),

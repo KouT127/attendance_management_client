@@ -1,5 +1,5 @@
 import 'package:attendance_management/services/app_navigator.dart';
-import 'package:attendance_management/services/auth.dart';
+import 'package:attendance_management/services/user_state.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -7,14 +7,14 @@ class Model extends ChangeNotifier {
   Model({
     @required this.context,
     @required this.navigator,
-    @required this.auth,
+    @required this.userState,
   }) {
     initialize();
   }
 
   final BuildContext context;
   final AppNavigator navigator;
-  final Auth auth;
+  final UserState userState;
   String email;
   String password;
   FocusNode emailNode;
@@ -22,11 +22,11 @@ class Model extends ChangeNotifier {
 
   factory Model.create(BuildContext context) {
     final navigator = Provider.of<AppNavigator>(context);
-    final auth = Provider.of<Auth>(context);
+    final userState = Provider.of<UserState>(context);
     return Model(
       context: context,
       navigator: navigator,
-      auth: auth,
+      userState: userState,
     );
   }
 
@@ -52,7 +52,7 @@ class Model extends ChangeNotifier {
   }
 
   void login() {
-    auth.signIn(
+    userState.signIn(
       email: 'test@test.com',
       password: 'abcd1234',
     );

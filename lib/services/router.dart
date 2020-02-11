@@ -1,9 +1,9 @@
-import 'package:attendance_management/models/user.dart';
 import 'package:attendance_management/pages/home/home.dart';
 import 'package:attendance_management/pages/login/login_page.dart';
 import 'package:attendance_management/services/app_navigator.dart';
 import 'package:attendance_management/services/shared_preference.dart';
-import 'package:attendance_management/services/user_state.dart';
+
+import 'services.dart';
 
 class Router {
   Router({
@@ -13,7 +13,6 @@ class Router {
 
   final AppPreferences preferences;
   final AppNavigator navigator;
-  User user;
 
   factory Router.create({
     AppPreferences preferences,
@@ -26,20 +25,22 @@ class Router {
     );
   }
 
-  Router updateUser(UserState userState) {
-    this.user = userState.user;
-    _navigateByUser(this.user);
+  Router update({AppState appState, UserState userState}) {
+    this._navigateByUser(appState, userState);
     return this;
   }
 
-  void _navigateByUser(User user) {
-    if (user == null) {
+  Future<void> _navigateByUser(AppState appState, UserState userState) async {
+    if (appState?.application == null || !appState.application.initialLoaded) {
       return;
     }
-    if (user.isAnonymous) {
+
+    final user = userState.user;
+    if (user == null || user?.uid == null) {
       navigator.pushReplacementNamed(LoginPage.loginPath);
     }
-    if (user.uid != null && !user.isAnonymous) {
+
+    if (user.uid != null) {
       navigator.pushReplacementNamed(HomePage.homePath);
     }
   }

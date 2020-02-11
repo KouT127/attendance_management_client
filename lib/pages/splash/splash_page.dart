@@ -9,19 +9,12 @@ import 'package:provider/provider.dart';
 class SplashPageProvider extends StatelessWidget {
   bool isInitial = true;
 
-//  void onInit(BuildContext context) {
-//    final router = Provider.of<Router>(context);
-//    final preferences = Provider.of<AppPreferences>(context);
-//    final auth = Provider.of<Auth>(context);
-//    SchedulerBinding.instance.addPostFrameCallback((_) async {});
-//  }
-
   @override
   Widget build(BuildContext context) {
     return Provider(
       create: (_) => Model.create(
         preferences: Provider.of<AppPreferences>(context),
-        auth: Provider.of<Auth>(context),
+        userState: Provider.of<UserState>(context),
         router: Provider.of<Router>(context),
         client: Provider.of<HttpClient>(context),
       ),
