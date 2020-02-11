@@ -34,16 +34,6 @@ class DependencyProviders extends StatelessWidget {
                 Provider.of<AppState>(context, listen: false).update,
           ),
         ),
-        ProxyProvider2<AppState, UserState, Router>(
-          create: (_) => Router.create(
-            preferences: Provider.of<AppPreferences>(context, listen: false),
-            navigator: Provider.of<AppNavigator>(context, listen: false),
-          ),
-          update: (_, appState, userState, router) => router.update(
-            appState: appState,
-            userState: userState,
-          ),
-        ),
       ],
       child: const App(),
     );

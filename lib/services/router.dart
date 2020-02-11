@@ -39,7 +39,7 @@ class Router {
       navigator.pushReplacementNamed(LoginPage.loginPath);
     }
 
-    if (user.uid != null) {
+    if (user != null && user.uid != null) {
       navigator.pushReplacementNamed(HomePage.homePath);
     }
   }

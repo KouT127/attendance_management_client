@@ -4,39 +4,48 @@ import 'package:simple_logger/simple_logger.dart';
 
 class Model {
   Model({
-    this.auth,
     this.preferences,
-    this.router,
-    this.client,
-  }) {
-    initialize();
-  }
-
-  final AppPreferences preferences;
-  final UserState auth;
-  final Router router;
-  final HttpClient client;
-  bool isInitial = true;
+    this.navigator,
+  });
 
   factory Model.create({
-    Router router,
+    AppNavigator navigator,
     AppPreferences preferences,
-    UserState userState,
-    HttpClient client,
   }) {
     return Model(
-      auth: userState,
       preferences: preferences,
-      router: router,
-      client: client,
+      navigator: navigator,
     );
   }
 
-  Future<void> initialize() async {
-    SimpleLogger().info('initialize splash');
-    final hadStarted = await preferences.getHadStarted();
-    if (!hadStarted) {
-      await preferences.setHadStarted(true);
+  final AppPreferences preferences;
+  final AppNavigator navigator;
+
+  AppState appState;
+  UserState userState;
+
+  Model update({AppState appState, UserState userState}) {
+    if (appState == null || userState == null) {
+      return this;
+    }
+    SimpleLogger().info('update splash');
+    this._navigateByUser(appState, userState);
+    return this;
+  }
+
+  Future<void> _navigateByUser(AppState appState, UserState userState) async {
+    if (appState?.application == null || !appState.application.initialLoaded) {
+      return;
+    }
+
+    final user = userState.user;
+    if (user == null || user?.uid == null) {
+//      navigator.pushReplacementNamed(LoginPage.loginPath);
+      return;
+    }
+
+    if (user != null && user.uid != null) {
+//      navigator.pushReplacementNamed(HomePage.homePath);
     }
   }
 }

@@ -5,18 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-// ignore: must_be_immutable
 class SplashPageProvider extends StatelessWidget {
-  bool isInitial = true;
-
   @override
   Widget build(BuildContext context) {
-    return Provider(
+    return ProxyProvider2<AppState, UserState, Model>(
       create: (_) => Model.create(
-        preferences: Provider.of<AppPreferences>(context),
-        userState: Provider.of<UserState>(context),
-        router: Provider.of<Router>(context),
-        client: Provider.of<HttpClient>(context),
+        preferences: Provider.of<AppPreferences>(context, listen: false),
+        navigator: Provider.of<AppNavigator>(context, listen: false),
+      ),
+      update: (_, appState, userState, model) => model.update(
+        appState: appState,
+        userState: userState,
       ),
       child: SplashPage(),
     );

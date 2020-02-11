@@ -40,13 +40,14 @@ class UserState extends ChangeNotifier {
   }
 
   Future<void> handleChangeAuthState(FirebaseUser user) async {
+    this.updateAppState(initialLoaded: true);
     final response = await client.get(
       'http://localhost:8080/v1/users/mine',
       getToken: user?.getIdToken,
     );
     print(response.body);
-    this.updateAppState(initialLoaded: true);
-    if (user == null || user?.uid == null) {
+    SimpleLogger().info('change auth');
+    if (response.statusCode >= 400) {
       this.user = User.initial();
       notifyListeners();
       return;
