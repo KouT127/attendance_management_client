@@ -45,8 +45,7 @@ class UserState extends ChangeNotifier {
       'http://localhost:8080/v1/users/mine',
       getToken: user?.getIdToken,
     );
-    print(response.body);
-    SimpleLogger().info('change auth');
+    SimpleLogger().info(response.body);
     if (response.statusCode >= 400) {
       this.user = User.initial();
       notifyListeners();

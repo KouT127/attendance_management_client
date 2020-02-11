@@ -1,3 +1,5 @@
+import 'package:attendance_management/services/app_navigator.dart';
+import 'package:attendance_management/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -9,8 +11,11 @@ class LoginPageProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => Model.create(context),
+    return ChangeNotifierProxyProvider<UserState, Model>(
+      create: (_) => Model.create(
+        navigator: Provider.of<AppNavigator>(context, listen: false),
+      ),
+      update: (_, userState, model) => model.update(userState: userState),
       child: const LoginPage(),
     );
   }

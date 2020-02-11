@@ -1,46 +1,41 @@
+import 'package:attendance_management/pages/pages.dart';
 import 'package:attendance_management/services/app_navigator.dart';
-import 'package:attendance_management/services/shared_preference.dart';
 import 'package:attendance_management/services/user_state.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 import 'package:simple_logger/simple_logger.dart';
 
 class Model extends ChangeNotifier {
   Model({
     @required this.navigator,
-    @required this.auth,
-    @required this.preferences,
   }) {
-    initialize();
-  }
-
-  final AppNavigator navigator;
-  final AppPreferences preferences;
-
-  final UserState auth;
-
-  factory Model.create(BuildContext context) {
-    final navigator = Provider.of<AppNavigator>(context);
-    final auth = Provider.of<UserState>(context);
-    final preferences = Provider.of<AppPreferences>(context);
-    return Model(
-      navigator: navigator,
-      auth: auth,
-      preferences: preferences,
-    );
-  }
-
-  void initialize() {
     SimpleLogger().info('initialize home');
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  final AppNavigator navigator;
+  UserState userState;
+
+  factory Model.create({AppNavigator navigator}) {
+    return Model(
+      navigator: navigator,
+    );
   }
 
-  void signOut() {
-    auth.signOut();
-    preferences.setHadStarted(false);
+  Model update({UserState userState}) {
+    this.userState = userState;
+    _navigate(userState);
+    return this;
+  }
+
+  void _navigate(UserState userState) {
+    if (userState?.user?.uid == null) {
+      navigator.pushReplacementNamed(LoginPage.loginPath);
+    }
+  }
+
+  Future<void> signOut() async {
+    if (userState?.user == null) {
+      return;
+    }
+    userState.signOut();
   }
 }

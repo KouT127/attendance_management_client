@@ -1,34 +1,33 @@
+import 'package:attendance_management/pages/pages.dart';
 import 'package:attendance_management/services/app_navigator.dart';
 import 'package:attendance_management/services/user_state.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 import 'package:simple_logger/simple_logger.dart';
 
 class Model extends ChangeNotifier {
   Model({
-    @required this.context,
     @required this.navigator,
-    @required this.userState,
   }) {
     initialize();
   }
 
-  final BuildContext context;
   final AppNavigator navigator;
-  final UserState userState;
+  UserState userState;
   String email;
   String password;
   FocusNode emailNode;
   FocusNode passwordNode;
 
-  factory Model.create(BuildContext context) {
-    final navigator = Provider.of<AppNavigator>(context);
-    final userState = Provider.of<UserState>(context);
+  factory Model.create({AppNavigator navigator}) {
     return Model(
-      context: context,
       navigator: navigator,
-      userState: userState,
     );
+  }
+
+  Model update({UserState userState}) {
+    this.userState = userState;
+    _navigate(userState);
+    return this;
   }
 
   void initialize() {
@@ -43,6 +42,16 @@ class Model extends ChangeNotifier {
     emailNode.dispose();
     passwordNode.dispose();
     super.dispose();
+  }
+
+  Future<void> _navigate(UserState userState) async {
+    if (userState == null || userState?.user == null) {
+      return;
+    }
+    final user = userState.user;
+    if (user.uid != null) {
+      navigator.pushReplacementNamed(HomePage.homePath);
+    }
   }
 
   void handleChangeEmail(String email) {

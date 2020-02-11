@@ -1,6 +1,9 @@
+import 'package:attendance_management/pages/pages.dart';
 import 'package:attendance_management/services/services.dart';
 import 'package:attendance_management/services/shared_preference.dart';
 import 'package:simple_logger/simple_logger.dart';
+
+const SplashLeaveTime = 200;
 
 class Model {
   Model({
@@ -25,27 +28,28 @@ class Model {
   UserState userState;
 
   Model update({AppState appState, UserState userState}) {
-    if (appState == null || userState == null) {
+    if (appState == null || userState == null || userState.user == null) {
       return this;
     }
-    SimpleLogger().info('update splash');
+    final user = userState.user;
+    SimpleLogger().info('update splash ' + user.toString());
     this._navigateByUser(appState, userState);
     return this;
   }
 
   Future<void> _navigateByUser(AppState appState, UserState userState) async {
-    if (appState?.application == null || !appState.application.initialLoaded) {
+    if (!appState.application.initialLoaded) {
       return;
     }
 
     final user = userState.user;
-    if (user == null || user?.uid == null) {
-//      navigator.pushReplacementNamed(LoginPage.loginPath);
+    if (appState.application.initialLoaded && user.uid != null) {
+      navigator.pushReplacementNamed(HomePage.homePath);
       return;
     }
 
-    if (user != null && user.uid != null) {
-//      navigator.pushReplacementNamed(HomePage.homePath);
+    if (appState.application.initialLoaded && user.uid == null) {
+      navigator.pushReplacementNamed(LoginPage.loginPath);
     }
   }
 }

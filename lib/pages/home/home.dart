@@ -1,3 +1,4 @@
+import 'package:attendance_management/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,8 +9,13 @@ class HomePageProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => Model.create(context),
+    return ChangeNotifierProxyProvider<UserState, Model>(
+      create: (_) => Model.create(
+        navigator: Provider.of<AppNavigator>(context),
+      ),
+      update: (_, userState, model) => model.update(
+        userState: userState,
+      ),
       child: const HomePage(),
     );
   }
