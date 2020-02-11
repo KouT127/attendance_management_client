@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:simple_logger/simple_logger.dart';
 
 class AppNavigator {
   const AppNavigator(
@@ -8,7 +9,7 @@ class AppNavigator {
   final GlobalKey<NavigatorState> navigatorKey;
 
   factory AppNavigator.create() {
-    print('create navigator');
+    SimpleLogger().info('create navigator');
     return AppNavigator(
       GlobalKey<NavigatorState>(),
     );

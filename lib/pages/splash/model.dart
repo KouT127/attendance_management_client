@@ -1,5 +1,6 @@
 import 'package:attendance_management/services/services.dart';
 import 'package:attendance_management/services/shared_preference.dart';
+import 'package:simple_logger/simple_logger.dart';
 
 class Model {
   Model({
@@ -32,7 +33,7 @@ class Model {
   }
 
   Future<void> initialize() async {
-    print('splash initialize');
+    SimpleLogger().info('initialize splash');
     final hadStarted = await preferences.getHadStarted();
     if (!hadStarted) {
       await preferences.setHadStarted(true);

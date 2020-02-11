@@ -4,6 +4,7 @@ import 'package:attendance_management/models/user.dart';
 import 'package:attendance_management/services/http_client.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:simple_logger/simple_logger.dart';
 
 typedef GetToken = Future<IdTokenResult> Function({bool refresh});
 typedef UpdateAppState = void Function({bool initialLoaded});
@@ -26,7 +27,7 @@ class UserState extends ChangeNotifier {
     HttpClient client,
     UpdateAppState updateAppState,
   }) {
-    print('user state create');
+    SimpleLogger().info('create user state');
     return UserState(
       client: client,
       auth: FirebaseAuth.instance,

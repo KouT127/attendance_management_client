@@ -2,6 +2,7 @@ import 'package:attendance_management/services/app_navigator.dart';
 import 'package:attendance_management/services/user_state.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_logger/simple_logger.dart';
 
 class Model extends ChangeNotifier {
   Model({
@@ -31,13 +32,14 @@ class Model extends ChangeNotifier {
   }
 
   void initialize() {
-    print('initialize');
+    SimpleLogger().info('initialize login');
     emailNode = FocusNode();
     passwordNode = FocusNode();
   }
 
   @override
   void dispose() {
+    SimpleLogger().info('dispose login');
     emailNode.dispose();
     passwordNode.dispose();
     super.dispose();
