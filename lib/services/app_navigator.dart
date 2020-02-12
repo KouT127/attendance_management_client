@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:simple_logger/simple_logger.dart';
 
@@ -17,23 +19,24 @@ class AppNavigator {
   }
 
   Future<void> push<T>(Route<T> route) async {
-    await Future.delayed(Duration(microseconds: 1));
-    navigatorKey.currentState.push<T>(route);
+    scheduleMicrotask(() => {navigatorKey.currentState.push<T>(route)});
   }
 
   Future<void> pushNamed(name, {Object arguments}) async {
-    await Future.delayed(Duration(microseconds: 1));
-    navigatorKey.currentState.pushNamed(
-      name,
-      arguments: arguments,
-    );
+    scheduleMicrotask(() => {
+          navigatorKey.currentState.pushNamed(
+            name,
+            arguments: arguments,
+          )
+        });
   }
 
   Future<void> pushReplacementNamed(name, {Object arguments}) async {
-    await Future.delayed(Duration(microseconds: 1));
-    navigatorKey.currentState.pushReplacementNamed(
-      name,
-      arguments: arguments,
-    );
+    scheduleMicrotask(() => {
+          navigatorKey.currentState.pushReplacementNamed(
+            name,
+            arguments: arguments,
+          )
+        });
   }
 }
