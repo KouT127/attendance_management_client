@@ -30,12 +30,45 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = Provider.of<Model>(context);
     return Scaffold(
-      body: Center(
-        child: RaisedButton(
-          child: Text('sign out'),
-          onPressed: () {
-            model.signOut();
-          },
+      appBar: AppBar(
+        title: Text('Dashbord'),
+        centerTitle: true,
+        backgroundColor: const Color(0xff4dc1e9),
+      ),
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Center(
+              child: FractionallySizedBox(
+                widthFactor: 0.95,
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Column(
+                        children: <Widget>[
+                          Icon(
+                            Icons.timer,
+                            size: 50,
+                          ),
+                          Text(
+                            model.formattedDate,
+                            style: TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.w600),
+                          ),
+                          Text(
+                            model.formattedTime,
+                            style: TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.w600),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
