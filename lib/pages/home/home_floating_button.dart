@@ -1,3 +1,4 @@
+import 'package:attendance_management/pages/attendance_input/attendance_input.dart';
 import 'package:attendance_management/widgets/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -18,7 +19,14 @@ class HomeFloatingButton extends StatelessWidget {
             minHeight: 50,
           ),
           child: FloatingActionButton.extended(
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AttendanceInputPage();
+                },
+              );
+            },
             icon: Icon(
               Icons.add,
               color: SkyBlue,

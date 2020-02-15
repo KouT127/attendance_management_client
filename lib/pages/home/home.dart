@@ -39,50 +39,52 @@ class HomePage extends StatelessWidget {
         child: SafeArea(
           child: Stack(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 30),
-                child: Center(
-                  child: FractionallySizedBox(
-                    widthFactor: 0.9,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const HomeTimerSection(),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            const HomeDisplayBox(
-                              title: 'Over Time',
-                              time: 7.5,
-                              isLeft: true,
-                            ),
-                            const HomeDisplayBox(
-                              title: 'Max Time',
-                              time: 170.0,
-                              isRight: true,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          children: <Widget>[
-                            const HomeDisplayBox(
-                              title: 'Total Time',
-                              time: 170.0,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          children: <Widget>[
-                            const HomeDisplayBox(
-                              title: 'Total Time',
-                              time: 170.0,
-                            ),
-                          ],
-                        ),
-                      ],
+              SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 30),
+                  child: Center(
+                    child: FractionallySizedBox(
+                      widthFactor: 0.9,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          const HomeTimerSection(),
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              const HomeDisplayBox(
+                                title: 'Over Time',
+                                time: 7.5,
+                                isLeft: true,
+                              ),
+                              const HomeDisplayBox(
+                                title: 'Max Time',
+                                time: 170.0,
+                                isRight: true,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          Row(
+                            children: <Widget>[
+                              const HomeDisplayBox(
+                                title: 'Total Time',
+                                time: 170.0,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          Row(
+                            children: <Widget>[
+                              const HomeDisplayBox(
+                                title: 'Total Time',
+                                time: 170.0,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
