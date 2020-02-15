@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:attendance_management/pages/pages.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:simple_logger/simple_logger.dart';
 
@@ -15,6 +17,22 @@ class AppNavigator {
     SimpleLogger().info('create navigator');
     return AppNavigator(
       GlobalKey<NavigatorState>(),
+    );
+  }
+
+  Route<dynamic> onGenerate(RouteSettings settings) {
+    if (settings.name == '/login') {
+      return MaterialPageRoute(
+        builder: (_) => LoginPageProvider(),
+      );
+    }
+    if (settings.name == '/home') {
+      return MaterialPageRoute(
+        builder: (_) => HomePageProvider(),
+      );
+    }
+    return MaterialPageRoute(
+      builder: (_) => SplashPageProvider(),
     );
   }
 
