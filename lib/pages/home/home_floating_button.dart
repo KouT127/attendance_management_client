@@ -1,8 +1,6 @@
 import 'package:attendance_management/pages/attendance_input/attendance_input.dart';
-import 'package:attendance_management/widgets/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomeFloatingButton extends StatelessWidget {
   const HomeFloatingButton({Key key}) : super(key: key);
@@ -29,17 +27,13 @@ class HomeFloatingButton extends StatelessWidget {
             },
             icon: Icon(
               Icons.add,
-              color: SkyBlue,
+              color: Theme.of(context).primaryIconTheme.color,
             ),
             label: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Text(
                 'ClockIn',
-                style: GoogleFonts.roboto(
-                  color: SkyBlue,
-                  fontSize: 25,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: Theme.of(context).textTheme.button,
               ),
             ),
             backgroundColor: Colors.white,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomeDisplayBox extends StatelessWidget {
   const HomeDisplayBox({
@@ -32,7 +31,7 @@ class HomeDisplayBox extends StatelessWidget {
         padding: inset,
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: Colors.black12,
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Padding(
@@ -41,21 +40,13 @@ class HomeDisplayBox extends StatelessWidget {
               children: <Widget>[
                 Text(
                   title,
-                  style: GoogleFonts.roboto(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: Theme.of(context).textTheme.body2,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 40),
                   child: Text(
                     time.toString() + ' Hours',
-                    style: GoogleFonts.roboto(
-                      color: Colors.white70,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: Theme.of(context).textTheme.body1,
                   ),
                 ),
               ],
