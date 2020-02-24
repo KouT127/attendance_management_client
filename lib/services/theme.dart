@@ -17,6 +17,9 @@ final theme = ThemeData(
   primaryIconTheme: IconThemeData(
     color: SkyBlue,
   ),
+  iconTheme: IconThemeData(
+    color: Colors.white,
+  ),
   floatingActionButtonTheme: FloatingActionButtonThemeData(
     foregroundColor: SkyBlue,
     backgroundColor: Colors.white,

@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:attendance_management/pages/attendance_list/attendance_list_page.dart';
 import 'package:attendance_management/pages/pages.dart';
+import 'package:attendance_management/utils/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:simple_logger/simple_logger.dart';
@@ -22,15 +24,22 @@ class AppNavigator {
 
   Route<dynamic> onGenerate(RouteSettings settings) {
     if (settings.name == '/login') {
-      return MaterialPageRoute(
+      return FadeRoute(
         builder: (_) => LoginPageProvider(),
       );
     }
     if (settings.name == '/home') {
-      return MaterialPageRoute(
+      return FadeRoute(
         builder: (_) => HomePageProvider(),
       );
     }
+
+    if (settings.name == '/attendances') {
+      return MaterialPageRoute(
+        builder: (_) => AttendanceListPage(),
+      );
+    }
+
     return MaterialPageRoute(
       builder: (_) => SplashPageProvider(),
     );
