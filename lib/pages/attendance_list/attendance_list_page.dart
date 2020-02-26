@@ -22,7 +22,7 @@ class AttendanceListPage extends StatelessWidget {
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
                   title: Text(
-                    "History",
+                    "12月",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.0,
@@ -36,29 +36,57 @@ class AttendanceListPage extends StatelessWidget {
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    return DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: FractionallySizedBox(
-                        widthFactor: .9,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            const SizedBox(height: 20),
-                            Text(
-                              index.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .body1
-                                  .copyWith(color: Colors.black),
+                    return FractionallySizedBox(
+                      widthFactor: .95,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: Colors.black12,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              children: <Widget>[
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white70,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: buildLeftItem(context),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text('IN'),
+                                      Text(
+                                        "10:00",
+                                        style:
+                                            Theme.of(context).textTheme.body1,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text('OUT'),
+                                      Text(
+                                        "19:00",
+                                        style:
+                                            Theme.of(context).textTheme.body1,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(height: 20),
-                            Divider(
-                              height: 2,
-                              color: Colors.grey,
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     );
@@ -69,6 +97,34 @@ class AttendanceListPage extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildLeftItem(BuildContext context) {
+    return SizedBox(
+      height: 120,
+      width: 100,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            '28日',
+            style:
+                Theme.of(context).textTheme.body1.copyWith(color: Colors.grey),
+          ),
+          const Divider(
+            height: 10,
+            indent: 10,
+            endIndent: 10,
+            color: Colors.grey,
+          ),
+          Text(
+            '火',
+            style:
+                Theme.of(context).textTheme.body1.copyWith(color: Colors.grey),
+          ),
+        ],
       ),
     );
   }
