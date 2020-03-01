@@ -21,7 +21,7 @@ class ShadowlessAppBar extends StatelessWidget implements PreferredSizeWidget {
                   size: 30,
                 ),
                 onPressed: () {
-                  print('fire');
+                  Navigator.of(context).pushNamed('/attendances');
                 },
               ),
             ],

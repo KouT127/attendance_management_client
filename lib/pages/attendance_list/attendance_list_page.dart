@@ -33,70 +33,71 @@ class AttendanceListPage extends StatelessWidget {
                   ),
                 ),
               ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return FractionallySizedBox(
-                      widthFactor: .95,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10.0),
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: Colors.black12,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Row(
-                              children: <Widget>[
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: DecoratedBox(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white70,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: buildLeftItem(context),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text('IN'),
-                                      Text(
-                                        "10:00",
-                                        style:
-                                            Theme.of(context).textTheme.body1,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text('OUT'),
-                                      Text(
-                                        "19:00",
-                                        style:
-                                            Theme.of(context).textTheme.body1,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                  childCount: 30,
-                ),
-              )
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildSliverList(BuildContext context) {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          return FractionallySizedBox(
+            widthFactor: .95,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: Colors.black12,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: Colors.white70,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: buildLeftItem(context),
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: <Widget>[
+                            Text('IN'),
+                            Text(
+                              "10:00",
+                              style: Theme.of(context).textTheme.body1,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: <Widget>[
+                            Text('OUT'),
+                            Text(
+                              "19:00",
+                              style: Theme.of(context).textTheme.body1,
+                            ),
+                          ],
+                        ),
+                      ),
+                      buildSliverList(context),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+        childCount: 30,
       ),
     );
   }
