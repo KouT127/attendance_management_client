@@ -5,26 +5,6 @@ import 'package:provider/provider.dart';
 
 typedef TabBuilder = Widget Function(int index);
 typedef TabViewBuilder = Widget Function(int index);
-//
-//class TabBarScaffold extends StatefulWidget {
-//  const TabBarScaffold({
-//    Key key,
-//    this.initialPosition = 0,
-//    this.floatingActionButton,
-//    this.itemCount,
-//    this.tabBuilder,
-//    this.tabViewBuilder,
-//  }) : super(key: key);
-//
-//  final Widget floatingActionButton;
-//  final int itemCount;
-//  final int initialPosition;
-//  final TabBuilder tabBuilder;
-//  final TabViewBuilder tabViewBuilder;
-//
-//  @override
-//  _TabBarScaffoldState createState() => _TabBarScaffoldState();
-//}
 
 class TabBarScaffold extends StatelessWidget {
   const TabBarScaffold({
@@ -35,10 +15,12 @@ class TabBarScaffold extends StatelessWidget {
     this.tabBuilder,
     this.tabViewBuilder,
     this.controller,
+    this.title,
   }) : super(key: key);
 
   final Widget floatingActionButton;
   final int itemCount;
+  final String title;
   final int initialPosition;
   final TabBuilder tabBuilder;
   final TabViewBuilder tabViewBuilder;
@@ -48,15 +30,8 @@ class TabBarScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(title),
         backgroundColor: SkyBlue,
-        bottom: TabBar(
-          controller: controller,
-          isScrollable: true,
-          tabs: List.generate(
-            itemCount,
-            tabBuilder,
-          ),
-        ),
       ),
       body: TabBarView(
         controller: controller,
@@ -99,6 +74,7 @@ class TabBarNotifier extends ChangeNotifier {
     this.initialPosition,
   }) {
     position = initialPosition;
+    title = tabs[position];
     createController();
   }
 
@@ -112,6 +88,7 @@ class TabBarNotifier extends ChangeNotifier {
 
   TabController controller;
   int position;
+  String title = '';
 
   final int initialPosition;
   final TickerProvider tickerProvider;
@@ -150,6 +127,9 @@ class TabBarNotifier extends ChangeNotifier {
   }
 
   void onSwipe() {
-    position = controller.index;
+    final index = controller.index;
+    position = index;
+    title = tabs[index];
+    notifyListeners();
   }
 }

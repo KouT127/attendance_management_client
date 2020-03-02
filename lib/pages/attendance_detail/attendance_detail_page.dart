@@ -9,6 +9,7 @@ class AttendanceDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final notifier = Provider.of<TabBarNotifier>(context);
     return TabBarScaffold(
+      title: notifier.title,
       tabBuilder: (index) {
         return Tab(
           text: notifier.tabs[index],
