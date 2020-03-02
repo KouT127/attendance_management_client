@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:attendance_management/pages/attendance_detail/attendance_detail_page.dart';
 import 'package:attendance_management/pages/pages.dart';
 import 'package:attendance_management/utils/route.dart';
+import 'package:attendance_management/widgets/TabBarScaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:simple_logger/simple_logger.dart';
@@ -36,7 +37,9 @@ class AppNavigator {
 
     if (settings.name == '/attendances') {
       return MaterialPageRoute(
-        builder: (_) => AttendanceDetailPage(),
+        builder: (_) => TabBarControllerProvider(
+          child: AttendanceDetailPage(),
+        ),
       );
     }
 
