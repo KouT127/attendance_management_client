@@ -84,7 +84,7 @@ class TabBarNotifier extends ChangeNotifier {
     '2020/02',
     '2020/03',
     '2020/04',
-  ];
+  ].toList(growable: true);
 
   TabController controller;
   int position;
@@ -95,7 +95,7 @@ class TabBarNotifier extends ChangeNotifier {
 
   factory TabBarNotifier.create(
     TickerProvider tickerProvider, {
-    int initialPosition = 0,
+    int initialPosition = 2,
   }) {
     return TabBarNotifier(
       tickerProvider: tickerProvider,
@@ -105,9 +105,6 @@ class TabBarNotifier extends ChangeNotifier {
 
   void addTab() {
     tabs.add('Page ${tabs.length}');
-    disposeController();
-    createController();
-    notifyListeners();
   }
 
   void createController() {
@@ -116,6 +113,10 @@ class TabBarNotifier extends ChangeNotifier {
       vsync: this.tickerProvider,
       length: tabs.length,
     );
+    final idx = controller.index;
+    final len = controller.length;
+    print("idx: $idx len: $len");
+    controller.animation.addStatusListener(onScroll);
     controller.addListener(onSwipe);
   }
 
@@ -126,10 +127,26 @@ class TabBarNotifier extends ChangeNotifier {
     }
   }
 
+  void onScroll(AnimationStatus status) {
+    print(status.toString());
+  }
+
   void onSwipe() {
     final index = controller.index;
     position = index;
     title = tabs[index];
+
+    if (index == 0) {
+      tabs.insert(0, 'page $index');
+      position++;
+    }
+
+    if (index == tabs.length - 1) {
+      addTab();
+    }
+
+    print(tabs);
+    createController();
     notifyListeners();
   }
 }
