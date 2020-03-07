@@ -5,6 +5,7 @@ import 'package:attendance_management/pages/home/model.dart';
 import 'package:attendance_management/services/services.dart';
 import 'package:attendance_management/widgets/app_bar.dart';
 import 'package:attendance_management/widgets/colors.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,8 +14,8 @@ class HomePageProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProxyProvider<UserState, Model>(
-      create: (_) => Model.create(
+    return ChangeNotifierProxyProvider<UserState, TimerNotifier>(
+      create: (_) => TimerNotifier.create(
         navigator: Provider.of<AppNavigator>(context),
       ),
       update: (_, userState, model) => model.update(
@@ -36,7 +37,7 @@ class HomePage extends StatelessWidget {
       appBar: ShadowlessAppBar(),
       body: DecoratedBox(
         decoration: BoxDecoration(
-          color: SkyBlue,
+          color: Theme.of(context).colorScheme.primary,
         ),
         child: SafeArea(
           top: false,
@@ -52,38 +53,25 @@ class HomePage extends StatelessWidget {
                         const HomeTimerSection(),
                         const SizedBox(height: 20),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            const HomeDisplayBox(
-                              title: 'Over Time',
-                              time: 7.5,
-                              isLeft: true,
-                            ),
-                            const HomeDisplayBox(
-                              title: 'Max Time',
-                              time: 170.0,
-                              isRight: true,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          children: <Widget>[
-                            const HomeDisplayBox(
-                              title: 'Total Time',
+                            const HomeRadialChartBox(
+                              title: 'Total ',
                               time: 170.0,
                             ),
                           ],
                         ),
                         const SizedBox(height: 20),
-                        Row(
-                          children: <Widget>[
-                            const HomeDisplayBox(
-                              title: 'Total Time',
-                              time: 170.0,
-                            ),
+                        WeeklyChartBox(
+                          title: 'Weekly',
+                          workedTimes: [
+                            WorkedTime(workedTime: 8),
+                            WorkedTime(workedTime: 10.5),
+                            WorkedTime(workedTime: 8.8),
+                            WorkedTime(workedTime: 8),
+                            WorkedTime(workedTime: 3),
                           ],
                         ),
+                        const SizedBox(height: 80),
                       ],
                     ),
                   ),
@@ -96,4 +84,134 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+class WeeklyChartBox extends StatelessWidget {
+  const WeeklyChartBox({
+    @required this.title,
+    @required this.workedTimes,
+  });
+
+  final String title;
+  final List<WorkedTime> workedTimes;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.white,
+        ),
+        child: Column(
+          children: <Widget>[
+            const SizedBox(height: 8),
+            Row(
+              children: <Widget>[
+                const SizedBox(width: 10),
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+              ],
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: BarChart(
+                BarChartData(
+                  alignment: BarChartAlignment.spaceAround,
+                  maxY: 15,
+                  barTouchData: BarTouchData(
+                    enabled: false,
+                    touchTooltipData: BarTouchTooltipData(
+                      tooltipBgColor: Colors.transparent,
+                      tooltipPadding: const EdgeInsets.all(0),
+                      tooltipBottomMargin: 0,
+                      getTooltipItem: (
+                        BarChartGroupData group,
+                        int groupIndex,
+                        BarChartRodData rod,
+                        int rodIndex,
+                      ) {
+                        return BarTooltipItem(
+                          rod.y.toString(),
+                          TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  titlesData: FlTitlesData(
+                    show: true,
+                    bottomTitles: SideTitles(
+                      showTitles: true,
+                      textStyle: TextStyle(
+                        color: const Color(0xff7589a2),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                      margin: 8,
+                      getTitles: (double value) {
+                        switch (value.toInt()) {
+                          case 0:
+                            return '月';
+                          case 1:
+                            return '火';
+                          case 2:
+                            return '水';
+                          case 3:
+                            return '木';
+                          case 4:
+                            return '金';
+                          case 5:
+                            return '土';
+                          case 6:
+                            return '日';
+                          default:
+                            return '';
+                        }
+                      },
+                    ),
+                    leftTitles: const SideTitles(showTitles: false),
+                  ),
+                  borderData: FlBorderData(
+                    show: false,
+                  ),
+                  barGroups: buildChartRods(this.workedTimes),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8)
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<BarChartGroupData> buildChartRods(List<WorkedTime> workedTimes) {
+    List<BarChartGroupData> chartGroup = List();
+    workedTimes.asMap().forEach((index, time) {
+      chartGroup.add(BarChartGroupData(
+        x: index,
+        barRods: [
+          BarChartRodData(y: time.workedTime, color: SkyBlue),
+        ],
+        showingTooltipIndicators: [0],
+      ));
+    });
+    return chartGroup;
+  }
+}
+
+class WorkedTime {
+  const WorkedTime({
+    this.workedTime,
+    this.dayOfWeek,
+  });
+
+  final double workedTime;
+  final String dayOfWeek;
 }

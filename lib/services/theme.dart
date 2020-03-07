@@ -7,9 +7,10 @@ final theme = ThemeData(
   primaryColorBrightness: Brightness.light,
   primaryColor: Colors.white,
   colorScheme: ColorScheme.light().copyWith(
-    primary: Colors.white,
-    secondary: Colors.white70,
-  ),
+      primary: Colors.grey.withOpacity(.1),
+      secondary: Colors.white70,
+      primaryVariant: Colors.green,
+      error: Colors.red.withOpacity(.8)),
   cardColor: Colors.black12,
   backgroundColor: SkyBlue,
   accentColor: Colors.black,
@@ -25,25 +26,30 @@ final theme = ThemeData(
     backgroundColor: Colors.white,
   ),
   textTheme: GoogleFonts.robotoTextTheme().copyWith(
-    title: TextStyle(
-      color: Colors.white,
+    headline2: TextStyle(
+      color: Colors.black.withOpacity(.8),
       fontSize: 35,
       fontWeight: FontWeight.w600,
     ),
-    subtitle: TextStyle(
+    headline1: TextStyle(
+      color: Colors.black.withOpacity(.6),
+      fontSize: 29,
+      fontWeight: FontWeight.w500,
+    ),
+    headline6: TextStyle(
+      color: Colors.black.withOpacity(.5),
+      fontSize: 30,
+      fontWeight: FontWeight.w600,
+    ),
+    bodyText1: TextStyle(
       color: Colors.white70,
       fontSize: 30,
       fontWeight: FontWeight.w300,
     ),
-    body1: TextStyle(
+    bodyText2: TextStyle(
       color: Colors.white70,
       fontSize: 25,
       fontWeight: FontWeight.w400,
-    ),
-    body2: TextStyle(
-      color: Colors.white,
-      fontSize: 20,
-      fontWeight: FontWeight.w600,
     ),
     button: TextStyle(
       color: SkyBlue,

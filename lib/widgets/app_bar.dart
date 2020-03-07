@@ -1,4 +1,3 @@
-import 'package:attendance_management/widgets/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -9,7 +8,7 @@ class ShadowlessAppBar extends StatelessWidget implements PreferredSizeWidget {
       height: 80,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: SkyBlue,
+          color: Theme.of(context).colorScheme.primary,
         ),
         child: SafeArea(
           child: Row(

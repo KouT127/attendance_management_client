@@ -1,59 +1,89 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 
-class HomeDisplayBox extends StatelessWidget {
-  const HomeDisplayBox({
+class HomeRadialChartBox extends StatelessWidget {
+  const HomeRadialChartBox({
     Key key,
     this.title,
     this.time,
-    this.isLeft = false,
-    this.isRight = false,
   }) : super(key: key);
 
   final String title;
   final double time;
-  final bool isLeft;
-
-  final bool isRight;
+  final _chartSize = const Size(250.0, 250.0);
 
   @override
   Widget build(BuildContext context) {
-    var inset = const EdgeInsets.all(0);
-    if (isLeft) {
-      inset = const EdgeInsets.only(right: 5);
-    }
-    if (isRight) {
-      inset = const EdgeInsets.only(left: 5);
-    }
+    final totalTime = 170;
+    final workedTime = 170;
+    final double workedTimePercentage = workedTime / totalTime;
     return Expanded(
       flex: 1,
-      child: Padding(
-        padding: inset,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.white,
+        ),
+        child: Column(
+          children: <Widget>[
+            const SizedBox(height: 5),
+            Row(
               children: <Widget>[
+                const SizedBox(width: 10),
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.body2,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 40),
-                  child: Text(
-                    time.toString() + ' Hours',
-                    style: Theme.of(context).textTheme.body1,
-                  ),
+                  style: Theme.of(context).textTheme.headline1,
                 ),
               ],
             ),
-          ),
+            AnimatedCircularChart(
+              size: _chartSize,
+              initialChartData: buildChart(context, workedTimePercentage),
+              chartType: CircularChartType.Radial,
+              percentageValues: true,
+              holeLabel: '$workedTime / $totalTime',
+              labelStyle: Theme.of(context).textTheme.headline1,
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  List<CircularStackEntry> buildChart(
+    BuildContext context,
+    double workedTimePercentage,
+  ) {
+    final stackList = [
+      CircularStackEntry(
+        <CircularSegmentEntry>[
+          CircularSegmentEntry(
+              workedTimePercentage * 100,
+              workedTimePercentage > 1
+                  ? Theme.of(context).colorScheme.error
+                  : Theme.of(context).colorScheme.primaryVariant,
+              rankKey: 'worked'),
+          CircularSegmentEntry((1 - workedTimePercentage) * 100,
+              Theme.of(context).colorScheme.primary,
+              rankKey: 'total'),
+        ],
+        rankKey: 'percentage',
+      ),
+    ];
+
+    if (workedTimePercentage > 1.0) {
+      stackList.add(CircularStackEntry(
+        <CircularSegmentEntry>[
+          CircularSegmentEntry(
+            (workedTimePercentage - 1) * 100,
+            Theme.of(context).colorScheme.error,
+          ),
+        ],
+        rankKey: 'overpercentage',
+      ));
+    }
+
+    return stackList;
   }
 }

@@ -8,8 +8,8 @@ import 'package:intl/intl.dart';
 import 'package:simple_logger/simple_logger.dart';
 import 'package:tuple/tuple.dart';
 
-class Model extends ChangeNotifier {
-  Model({
+class TimerNotifier extends ChangeNotifier {
+  TimerNotifier({
     @required this.navigator,
   }) {
     initialize();
@@ -35,15 +35,15 @@ class Model extends ChangeNotifier {
     super.dispose();
   }
 
-  factory Model.create({
+  factory TimerNotifier.create({
     AppNavigator navigator,
   }) {
-    return Model(
+    return TimerNotifier(
       navigator: navigator,
     );
   }
 
-  Model update({UserState userState}) {
+  TimerNotifier update({UserState userState}) {
     this.userState = userState;
     _navigate(userState);
     return this;

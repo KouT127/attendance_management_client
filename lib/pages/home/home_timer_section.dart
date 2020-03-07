@@ -5,11 +5,14 @@ import 'package:provider/provider.dart';
 import 'model.dart';
 
 class HomeTimerSection extends StatelessWidget {
-  const HomeTimerSection({Key key}) : super(key: key);
+  const HomeTimerSection({
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<Model>(context);
+    final date = context.watch<TimerNotifier>().formattedDate;
+    final time = context.watch<TimerNotifier>().formattedTime;
     return SizedBox(
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -20,15 +23,15 @@ class HomeTimerSection extends StatelessWidget {
           children: <Widget>[
             Text(
               "ASIA/TOKYO",
-              style: Theme.of(context).textTheme.title,
+              style: Theme.of(context).textTheme.headline2,
             ),
             Text(
-              model.formattedDate,
-              style: Theme.of(context).textTheme.subtitle,
+              date,
+              style: Theme.of(context).textTheme.headline1,
             ),
             Text(
-              model.formattedTime,
-              style: Theme.of(context).textTheme.subtitle,
+              time,
+              style: Theme.of(context).textTheme.headline1,
             ),
           ],
         ),

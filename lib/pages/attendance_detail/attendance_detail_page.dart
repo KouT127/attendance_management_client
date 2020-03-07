@@ -11,11 +11,11 @@ class AttendanceDetailPage extends StatelessWidget {
     return TabBarScaffold(
       title: notifier.title,
       controller: notifier.controller,
-      itemCount: notifier.tabs.length,
+      itemCount: notifier.datetimeList.length,
       initialPosition: notifier.position,
       tabBuilder: (index) {
         return Tab(
-          text: notifier.tabs[index],
+          text: notifier.datetimeList[index].toIso8601String(),
         );
       },
       tabViewBuilder: (index) {
