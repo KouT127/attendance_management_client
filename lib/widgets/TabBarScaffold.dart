@@ -40,11 +40,14 @@ class TabBarScaffold extends StatelessWidget {
               Theme.of(context).textTheme.body2.copyWith(color: Colors.black87),
         ),
       ),
-      body: TabBarView(
-        controller: controller,
-        children: List.generate(
-          itemCount,
-          tabViewBuilder,
+      body: ColoredBox(
+        color: Theme.of(context).colorScheme.primary,
+        child: TabBarView(
+          controller: controller,
+          children: List.generate(
+            itemCount,
+            tabViewBuilder,
+          ),
         ),
       ),
       floatingActionButton: floatingActionButton,

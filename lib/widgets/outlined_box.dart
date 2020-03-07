@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class OutlinedBox extends StatelessWidget {
   const OutlinedBox({
-    @required this.color,
+    @required this.labelColor,
     @required this.date,
     @required this.clockInTime,
     @required this.clockOutTime,
@@ -12,7 +12,7 @@ class OutlinedBox extends StatelessWidget {
   final DateTime clockInTime;
   final DateTime clockOutTime;
 
-  final Color color;
+  final Color labelColor;
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +21,10 @@ class OutlinedBox extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Material(
+          color: Colors.white,
           child: InkWell(
-            highlightColor: color.withOpacity(.1),
-            splashColor: color.withOpacity(.3),
+            highlightColor: labelColor.withOpacity(.1),
+            splashColor: labelColor.withOpacity(.3),
             onTap: () {
               print('tap');
             },
@@ -31,8 +32,8 @@ class OutlinedBox extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
-                  width: 1,
-                  color: color.withOpacity(.6),
+                  width: 0,
+                  color: Colors.white,
                 ),
               ),
               child: Row(
@@ -59,14 +60,14 @@ class OutlinedBox extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .body1
-                .copyWith(color: color.withOpacity(.6), fontSize: 18),
+                .copyWith(color: labelColor.withOpacity(.6), fontSize: 18),
           ),
           Text(
             time,
             style: Theme.of(context)
                 .textTheme
                 .body1
-                .copyWith(color: color.withOpacity(.6), fontSize: 18),
+                .copyWith(color: labelColor.withOpacity(.6), fontSize: 18),
           ),
           const SizedBox(height: 5),
         ],
@@ -86,14 +87,14 @@ class OutlinedBox extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .body2
-                .copyWith(color: color.withOpacity(.8), fontSize: 12),
+                .copyWith(color: labelColor.withOpacity(.8), fontSize: 12),
           ),
           Text(
             '28',
             style: Theme.of(context)
                 .textTheme
                 .body2
-                .copyWith(color: color, fontSize: 18),
+                .copyWith(color: labelColor, fontSize: 18),
           ),
         ],
       ),

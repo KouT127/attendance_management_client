@@ -17,23 +17,17 @@ class AttendanceListPage extends StatelessWidget {
       title: tabBarNotifier.title,
       tabViewBuilder: (index) {
         return FractionallySizedBox(
-          widthFactor: .97,
-          child: DecoratedBox(
-            key: Key(index.toString()),
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
-            child: SafeArea(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return OutlinedBox(
-                    color: Colors.grey,
-                    date: DateTime.now(),
-                    clockInTime: DateTime.now(),
-                    clockOutTime: DateTime.now(),
-                  );
-                },
-              ),
+          widthFactor: .95,
+          child: SafeArea(
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return OutlinedBox(
+                  labelColor: Colors.grey,
+                  date: DateTime.now(),
+                  clockInTime: DateTime.now(),
+                  clockOutTime: DateTime.now(),
+                );
+              },
             ),
           ),
         );
