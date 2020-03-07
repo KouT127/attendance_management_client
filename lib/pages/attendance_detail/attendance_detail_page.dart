@@ -7,9 +7,12 @@ import 'package:provider/provider.dart';
 class AttendanceDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final notifier = Provider.of<TabBarNotifier>(context);
+    final notifier = Provider.of<DateTimeTabBarNotifier>(context);
     return TabBarScaffold(
       title: notifier.title,
+      controller: notifier.controller,
+      itemCount: notifier.tabs.length,
+      initialPosition: notifier.position,
       tabBuilder: (index) {
         return Tab(
           text: notifier.tabs[index],
@@ -18,18 +21,16 @@ class AttendanceDetailPage extends StatelessWidget {
       tabViewBuilder: (index) {
         return Container(
           child: Center(
-            child: Text('$index'),
+            child: Text(
+              '$index',
+              style: TextStyle().copyWith(color: Colors.black),
+            ),
           ),
         );
       },
-      controller: notifier.controller,
-      itemCount: notifier.tabs.length,
-      initialPosition: notifier.position,
       floatingActionButton: FloatingActionButton(
         backgroundColor: SkyBlue,
-        onPressed: () {
-          notifier.addTab();
-        },
+        onPressed: () {},
       ),
     );
   }

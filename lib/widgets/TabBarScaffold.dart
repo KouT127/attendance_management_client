@@ -1,10 +1,13 @@
-import 'package:attendance_management/widgets/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 typedef TabBuilder = Widget Function(int index);
 typedef TabViewBuilder = Widget Function(int index);
+typedef onEmpty = Widget Function();
+
+final formatter = DateFormat('yyyy / MM');
 
 class TabBarScaffold extends StatelessWidget {
   const TabBarScaffold({
@@ -30,8 +33,12 @@ class TabBarScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
-        backgroundColor: SkyBlue,
+        iconTheme: Theme.of(context).iconTheme.copyWith(color: Colors.black87),
+        title: Text(
+          title,
+          style:
+              Theme.of(context).textTheme.body2.copyWith(color: Colors.black87),
+        ),
       ),
       body: TabBarView(
         controller: controller,
@@ -62,61 +69,62 @@ class _TabBarControllerProviderState extends State<TabBarControllerProvider>
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => TabBarNotifier.create(this),
+      create: (_) => DateTimeTabBarNotifier.create(this),
       child: widget.child,
     );
   }
 }
 
-class TabBarNotifier extends ChangeNotifier {
-  TabBarNotifier({
+class DateTimeTabBarNotifier extends ChangeNotifier {
+  DateTimeTabBarNotifier({
     this.tickerProvider,
     this.initialPosition,
+    this.datetimeList,
   }) {
     position = initialPosition;
-    title = tabs[position];
+    title = formatter.format(datetimeList[position]);
     createController();
   }
-
-  var tabs = [
-    '2019/12',
-    '2020/01',
-    '2020/02',
-    '2020/03',
-    '2020/04',
-  ].toList(growable: true);
 
   TabController controller;
   int position;
   String title = '';
+  DateTime now;
+  List<DateTime> datetimeList = [];
 
   final int initialPosition;
   final TickerProvider tickerProvider;
 
-  factory TabBarNotifier.create(
+  factory DateTimeTabBarNotifier.create(
     TickerProvider tickerProvider, {
-    int initialPosition = 2,
+    int initialPosition = 4,
   }) {
-    return TabBarNotifier(
+    final now = DateTime.now();
+    final _datetimeList = [
+      DateTime(now.year, now.month, now.day, 0, 0, 0, 0, 0),
+      DateTime(now.year, now.month + 1, now.day, 0, 0, 0, 0, 0),
+      DateTime(now.year, now.month + 2, now.day, 0, 0, 0, 0, 0),
+      DateTime(now.year, now.month + 3, now.day, 0, 0, 0, 0, 0),
+      DateTime(now.year, now.month + 4, now.day, 0, 0, 0, 0, 0),
+      DateTime(now.year, now.month + 5, now.day, 0, 0, 0, 0, 0),
+    ];
+
+    return DateTimeTabBarNotifier(
       tickerProvider: tickerProvider,
       initialPosition: initialPosition,
+      datetimeList: _datetimeList,
     );
-  }
-
-  void addTab() {
-    tabs.add('Page ${tabs.length}');
   }
 
   void createController() {
     controller = TabController(
       initialIndex: position,
       vsync: this.tickerProvider,
-      length: tabs.length,
+      length: datetimeList.length,
     );
     final idx = controller.index;
     final len = controller.length;
     print("idx: $idx len: $len");
-    controller.animation.addStatusListener(onScroll);
     controller.addListener(onSwipe);
   }
 
@@ -127,25 +135,17 @@ class TabBarNotifier extends ChangeNotifier {
     }
   }
 
-  void onScroll(AnimationStatus status) {
-    print(status.toString());
-  }
-
   void onSwipe() {
     final index = controller.index;
     position = index;
-    title = tabs[index];
+    title = formatter.format(datetimeList[index]);
 
     if (index == 0) {
-      tabs.insert(0, 'page $index');
-      position++;
+//      datetimeList.insert(0, DateTime.now());
+//      position++;
     }
 
-    if (index == tabs.length - 1) {
-      addTab();
-    }
-
-    print(tabs);
+    controller.removeListener(onSwipe);
     createController();
     notifyListeners();
   }

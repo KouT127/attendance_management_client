@@ -28,7 +28,7 @@ class HomePageProvider extends StatelessWidget {
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
 
-  static String homePath = '/home';
+  static String routeName = '/home';
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
               SingleChildScrollView(
                 child: Center(
                   child: FractionallySizedBox(
-                    widthFactor: 0.9,
+                    widthFactor: .9,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
