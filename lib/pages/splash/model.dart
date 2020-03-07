@@ -44,7 +44,7 @@ class Model {
 
     final user = userState.user;
     if (appState.application.initialLoaded && user.uid != null) {
-      navigator.pushReplacementNamed(HomePage.homePath);
+      navigator.pushReplacementNamed(HomePage.routeName);
       return;
     }
 

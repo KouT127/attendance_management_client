@@ -40,7 +40,7 @@ class Router {
     }
 
     if (user != null && user.uid != null) {
-      navigator.pushReplacementNamed(HomePage.homePath);
+      navigator.pushReplacementNamed(HomePage.routeName);
     }
   }
 }

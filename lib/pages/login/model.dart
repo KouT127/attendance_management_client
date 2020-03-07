@@ -50,7 +50,7 @@ class Model extends ChangeNotifier {
     }
     final user = userState.user;
     if (user.uid != null) {
-      navigator.pushReplacementNamed(HomePage.homePath);
+      navigator.pushReplacementNamed(HomePage.routeName);
     }
   }
 
