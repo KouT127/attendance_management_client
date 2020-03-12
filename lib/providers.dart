@@ -30,7 +30,7 @@ class DependencyProviders extends StatelessWidget {
         ChangeNotifierProvider<UserState>(
           create: (_) => UserState.create(
             client: Provider.of<HttpClient>(context, listen: false),
-            updateAppState:
+            onUpdateAppState:
                 Provider.of<AppState>(context, listen: false).update,
           ),
         ),

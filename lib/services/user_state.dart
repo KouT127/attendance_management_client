@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:simple_logger/simple_logger.dart';
 
 typedef GetToken = Future<IdTokenResult> Function({bool refresh});
-typedef UpdateAppState = void Function({bool initialLoaded});
+typedef OnUpdateAppState = void Function({bool initialLoaded});
 
 class UserState extends ChangeNotifier {
   UserState({
     this.client,
-    this.updateAppState,
+    this.onUpdateAppState,
     FirebaseAuth auth,
   }) : this._auth = auth {
     listenAuthState();
@@ -20,18 +20,18 @@ class UserState extends ChangeNotifier {
 
   final HttpClient client;
   final FirebaseAuth _auth;
-  final UpdateAppState updateAppState;
+  final OnUpdateAppState onUpdateAppState;
   User user;
 
   factory UserState.create({
     HttpClient client,
-    UpdateAppState updateAppState,
+    OnUpdateAppState onUpdateAppState,
   }) {
     SimpleLogger().info('create user state');
     return UserState(
       client: client,
       auth: FirebaseAuth.instance,
-      updateAppState: updateAppState,
+      onUpdateAppState: onUpdateAppState,
     );
   }
 
@@ -40,7 +40,7 @@ class UserState extends ChangeNotifier {
   }
 
   Future<void> handleChangeAuthState(FirebaseUser user) async {
-    this.updateAppState(initialLoaded: true);
+    this.onUpdateAppState(initialLoaded: true);
     final response = await client.get(
       'http://localhost:8080/v1/users/mine',
       getToken: user?.getIdToken,
