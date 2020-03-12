@@ -1,5 +1,5 @@
-import 'package:attendance_management/widgets/TabBarScaffold.dart';
 import 'package:attendance_management/widgets/colors.dart';
+import 'package:attendance_management/widgets/tab_bar_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';

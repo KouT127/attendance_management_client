@@ -1,32 +1,32 @@
 import 'dart:async';
 
-import 'package:attendance_management/pages/pages.dart';
-import 'package:attendance_management/services/app_navigator.dart';
-import 'package:attendance_management/services/user_state.dart';
+import 'package:attendance_management/pages/home/home_state.dart';
+import 'package:attendance_management/pages/login/login_page.dart';
+import 'package:attendance_management/services/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_logger/simple_logger.dart';
-import 'package:tuple/tuple.dart';
 
-class TimerNotifier extends ChangeNotifier {
-  TimerNotifier({
-    @required this.navigator,
-  }) {
+class HomeNotifier extends ChangeNotifier {
+  HomeNotifier(
+    this.locator,
+  )   : navigator = locator<AppNavigator>(),
+        auth = locator<UserState>() {
     initialize();
   }
 
+  final Locator locator;
   final AppNavigator navigator;
-  UserState userState;
+  final UserState auth;
   Timer _timer;
-  String formattedDate;
-  String formattedTime;
+
+  HomeState homeState = const HomeState(formattedTime: '', formattedDate: '');
 
   void initialize() {
     SimpleLogger().info('initialize home');
-    final now = formattedNow();
-    formattedDate = now.item1;
-    formattedTime = now.item2;
-    this._timer = Timer.periodic(Duration(seconds: 1), _onChangeTimer);
+    _timer = Timer.periodic(Duration(seconds: 1), _onChangeTimer);
   }
 
   @override
@@ -35,44 +35,33 @@ class TimerNotifier extends ChangeNotifier {
     super.dispose();
   }
 
-  factory TimerNotifier.create({
-    AppNavigator navigator,
-  }) {
-    return TimerNotifier(
-      navigator: navigator,
-    );
-  }
-
-  TimerNotifier update({UserState userState}) {
-    this.userState = userState;
-    _navigate(userState);
+  HomeNotifier update({UserState userState}) {
+    homeState = homeState.copyWith(user: userState?.user);
+    _navigate();
     return this;
   }
 
-  Tuple2<String, String> formattedNow() {
+  void _onChangeTimer(Timer timer) {
     final now = DateTime.now();
     final dateFormatter = DateFormat("y/MM/dd");
     final timeFormatter = DateFormat("HH:mm:ss");
-    return Tuple2(dateFormatter.format(now), timeFormatter.format(now));
-  }
-
-  void _onChangeTimer(Timer timer) {
-    final now = formattedNow();
-    formattedDate = now.item1;
-    formattedTime = now.item2;
+    homeState = homeState.copyWith(
+      formattedDate: dateFormatter.format(now),
+      formattedTime: timeFormatter.format(now),
+    );
     notifyListeners();
   }
 
-  void _navigate(UserState userState) {
-    if (userState?.user?.uid == null) {
+  void _navigate() {
+    if (this.homeState.user?.uid == null) {
       navigator.pushReplacementNamed(LoginPage.loginPath);
     }
   }
 
   Future<void> signOut() async {
-    if (userState?.user == null) {
+    if (homeState.user == null) {
       return;
     }
-    userState.signOut();
+    auth.signOut();
   }
 }

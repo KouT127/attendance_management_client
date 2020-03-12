@@ -14,13 +14,9 @@ class HomePageProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProxyProvider<UserState, TimerNotifier>(
-      create: (_) => TimerNotifier.create(
-        navigator: Provider.of<AppNavigator>(context),
-      ),
-      update: (_, userState, model) => model.update(
-        userState: userState,
-      ),
+    return ChangeNotifierProxyProvider<UserState, HomeNotifier>(
+      create: (_context) => HomeNotifier(_context.read),
+      update: (_, userState, notifier) => notifier.update(userState: userState),
       child: const HomePage(),
     );
   }
