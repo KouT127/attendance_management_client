@@ -13,13 +13,13 @@ class HomeNotifier extends ChangeNotifier {
   HomeNotifier(
     this.locator,
   )   : navigator = locator<AppNavigator>(),
-        auth = locator<UserState>() {
+        auth = locator<Auth>() {
     initialize();
   }
 
   final Locator locator;
   final AppNavigator navigator;
-  final UserState auth;
+  final Auth auth;
   Timer _timer;
 
   HomeState homeState = const HomeState(formattedTime: '', formattedDate: '');

@@ -1,43 +1,52 @@
 import 'package:attendance_management/pages/pages.dart';
 import 'package:attendance_management/services/services.dart';
 import 'package:attendance_management/services/shared_preference.dart';
-import 'package:simple_logger/simple_logger.dart';
+import 'package:provider/provider.dart';
 
 const SplashLeaveTime = 200;
 
 class Model {
   Model({
-    this.preferences,
-    this.navigator,
-  });
+    this.locator,
+    this.userState,
+    this.appState,
+  })  : auth = locator<Auth>(),
+        navigator = locator<AppNavigator>(),
+        preferences = locator<AppPreferences>() {
+    _navigateByUser();
+  }
 
   factory Model.create({
-    AppNavigator navigator,
-    AppPreferences preferences,
+    Locator locator,
+    AppState appState,
+    UserState userState,
   }) {
     return Model(
-      preferences: preferences,
-      navigator: navigator,
+      locator: locator,
+      appState: appState,
+      userState: userState,
     );
   }
 
+  final Locator locator;
+  final Auth auth;
   final AppPreferences preferences;
   final AppNavigator navigator;
 
-  AppState appState;
-  UserState userState;
+  final AppState appState;
+  final UserState userState;
 
-  Model update({AppState appState, UserState userState}) {
-    if (appState == null || userState == null || userState.user == null) {
-      return this;
-    }
-    final user = userState.user;
-    SimpleLogger().info('update splash ' + user.toString());
-    this._navigateByUser(appState, userState);
-    return this;
-  }
+//  Model update({AppState appState, UserState userState}) {
+//    if (appState == null || userState == null || userState.user == null) {
+//      return this;
+//    }
+//    final user = userState.user;
+//    SimpleLogger().info('update splash ' + user.toString());
+//    this._navigateByUser(appState, userState);
+//    return this;
+//  }
 
-  Future<void> _navigateByUser(AppState appState, UserState userState) async {
+  Future<void> _navigateByUser() async {
     if (!appState.application.initialLoaded) {
       return;
     }

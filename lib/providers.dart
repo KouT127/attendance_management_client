@@ -16,6 +16,7 @@ class Providers extends StatelessWidget {
         Provider<AppPreferences>(create: (_) => AppPreferences.create()),
         Provider<HttpClient>(create: (_) => HttpClient.create()),
         Provider<AppState>(create: (_) => AppState.create()),
+        Provider<Auth>(create: (_) => Auth.create()),
       ],
       child: DependencyProviders(),
     );
@@ -28,11 +29,7 @@ class DependencyProviders extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<UserState>(
-          create: (_) => UserState.create(
-            client: Provider.of<HttpClient>(context, listen: false),
-            onUpdateAppState:
-                Provider.of<AppState>(context, listen: false).update,
-          ),
+          create: (_) => UserState.create(locator: context.read),
         ),
       ],
       child: const App(),
