@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:attendance_management/models/models.dart';
 import 'package:attendance_management/pages/pages.dart';
 import 'package:attendance_management/services/services.dart';
-import 'package:attendance_management/services/shared_preference_service.dart';
 import 'package:attendance_management/stores/stores.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
@@ -12,12 +13,8 @@ const SplashLeaveTime = 200;
 class SplashRouter {
   SplashRouter({
     this.locator,
-  })  : _auth = locator<AuthService>(),
-        _navigator = locator<AppNavigator>(),
-        _preferences = locator<PreferenceService>(),
-        _appStore = locator<AppStore>(),
-        _userStore = locator<UserStore>() {
-    CombineLatestStream.combine2(
+  }) {
+    _subscription = CombineLatestStream.combine2(
       _appStore.appState,
       _userStore.user,
       (app, user) => Tuple2<AppState, User>(app, user),
@@ -29,11 +26,19 @@ class SplashRouter {
   }
 
   final Locator locator;
-  final AuthService _auth;
-  final PreferenceService _preferences;
-  final AppNavigator _navigator;
-  final AppStore _appStore;
-  final UserStore _userStore;
+  StreamSubscription _subscription;
+
+  AppNavigator get _navigator => locator();
+
+  AppStore get _appStore => locator();
+
+  UserStore get _userStore => locator();
+
+  void dispose() {
+    if (_subscription != null) {
+      _subscription.cancel();
+    }
+  }
 
   Future<void> _navigateByUser(User user, AppState appState) async {
     if (appState == null || !appState.initialLoaded) {
@@ -46,7 +51,7 @@ class SplashRouter {
     }
 
     if (appState.initialLoaded && user.uid == null) {
-      _navigator.pushReplacementNamed(LoginPage.loginPath);
+      _navigator.pushReplacementNamed(LoginPage.routeName);
     }
   }
 }

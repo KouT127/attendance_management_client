@@ -8,6 +8,7 @@ class SplashPageProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider<SplashRouter>(
       create: (_) => SplashRouter(locator: context.read),
+      dispose: (_, router) => router.dispose(),
       child: SplashPage(),
     );
   }
