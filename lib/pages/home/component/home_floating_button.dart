@@ -1,4 +1,4 @@
-import 'package:attendance_management/pages/attendance_input/attendance_input.dart';
+import 'package:attendance_management/pages/attendance_input/attendance_input_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

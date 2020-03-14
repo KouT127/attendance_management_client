@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class AttendanceInputPage extends StatelessWidget {
+  static String routeName = '/attendances/add';
+
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
