@@ -2,17 +2,11 @@ import 'package:attendance_management/models/models.dart';
 import 'package:http/http.dart';
 
 class HttpClientService {
-  HttpClientService(
+  const HttpClientService(
     this._client,
   );
 
   final Client _client;
-
-  factory HttpClientService.create() {
-    return HttpClientService(
-      Client(),
-    );
-  }
 
   Future<Response> get(String url, {GetIdToken getToken}) async {
     Map<String, String> headers = Map();
