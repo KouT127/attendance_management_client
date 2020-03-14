@@ -10,21 +10,21 @@ import 'package:rxdart/rxdart.dart';
 import 'package:simple_logger/simple_logger.dart';
 
 class UserStore {
-  UserStore({this.locator})
-      : _auth = locator(),
-        _client = locator(),
-        _appStore = locator<AppStore>() {
+  UserStore({this.locator}) {
     _auth.firebaseUser.listen(handleChangeAuthState);
   }
 
   final Locator locator;
-  final HttpClientService _client;
-  final AuthService _auth;
-  final AppStore _appStore;
 
   final PublishSubject<User> _user = PublishSubject();
 
   Stream<User> get user => _user.stream;
+
+  AuthService get _auth => locator();
+
+  HttpClientService get _client => locator();
+
+  AppStore get _appStore => locator();
 
   void dispose() {
     _user.close();

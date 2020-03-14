@@ -21,7 +21,7 @@ class ShadowlessAppBar extends StatelessWidget implements PreferredSizeWidget {
                   size: 30,
                 ),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(UserPage.routeName);
+                  Navigator.of(context).pushNamed(SettingsPage.routeName);
                 },
               ),
             ],
