@@ -1,16 +1,38 @@
+import 'package:attendance_management/services/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class UserPage extends StatelessWidget {
-  const UserPage({Key key}) : super(key: key);
+class _Model extends ChangeNotifier {
+  _Model({
+    this.locator,
+  });
 
-  static String routeName = '/user';
+  Locator locator;
+
+  AuthService get auth => locator();
+}
+
+class SettingsProvider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<_Model>(
+      create: (_context) => _Model(locator: context.read),
+      child: SettingsPage(),
+    );
+  }
+}
+
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({Key key}) : super(key: key);
+
+  static String routeName = '/settings';
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: Theme.of(context).colorScheme.primary,
-      child: Scaffold(
-        body: SafeArea(
+    return Scaffold(
+      body: ColoredBox(
+        color: Theme.of(context).colorScheme.primary,
+        child: SafeArea(
           child: Center(
             child: FractionallySizedBox(
               widthFactor: .9,
@@ -41,7 +63,9 @@ class UserPage extends StatelessWidget {
                           UserSettingButton(
                             title: 'Logout',
                             buttonPosition: ButtonPosition.top,
-                            onTap: () {},
+                            onTap: () {
+                              context.read<AuthService>().signOut();
+                            },
                           ),
                           UserSettingButton(
                             title: '',
@@ -136,10 +160,10 @@ class UserSettingButton extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 12.0),
                 child: Text(
                   title,
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 20,
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1
+                      .copyWith(fontSize: 18),
                 ),
               ),
               Icon(
