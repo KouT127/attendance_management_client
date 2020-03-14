@@ -19,7 +19,7 @@ class LoginPageProvider extends StatelessWidget {
 class LoginPage extends StatelessWidget {
   const LoginPage({Key key}) : super(key: key);
 
-  static final loginPath = '/login';
+  static final routeName = '/login';
 
   @override
   Widget build(BuildContext context) {
