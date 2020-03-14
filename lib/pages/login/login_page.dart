@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import 'model.dart';
+import 'login_notifier.dart';
 
 class LoginPageProvider extends StatelessWidget {
   const LoginPageProvider({Key key}) : super(key: key);

@@ -1,24 +1,19 @@
-import 'package:attendance_management/services/app_navigator.dart';
 import 'package:attendance_management/services/auth_service.dart';
+import 'package:attendance_management/utils/utils.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_logger/simple_logger.dart';
-
-final logger = SimpleLogger();
 
 class LoginNotifier extends ChangeNotifier {
   LoginNotifier({
     this.locator,
-  })  : navigator = locator<AppNavigator>(),
-        auth = locator<AuthService>() {
+  }) {
     initialize();
   }
 
-  final AppNavigator navigator;
   final Locator locator;
-  final AuthService auth;
 
-//  UserState userState;
+  AuthService get _auth => locator();
+
   String email;
   String password;
   FocusNode emailNode;
@@ -47,7 +42,7 @@ class LoginNotifier extends ChangeNotifier {
   }
 
   void login() {
-    auth.signIn(
+    _auth.signIn(
       email: 'test@test.com',
       password: 'abcd1234',
     );

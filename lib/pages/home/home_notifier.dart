@@ -5,15 +5,15 @@ import 'package:attendance_management/pages/home/home_state.dart';
 import 'package:attendance_management/services/auth_service.dart';
 import 'package:attendance_management/services/services.dart';
 import 'package:attendance_management/stores/stores.dart';
+import 'package:attendance_management/utils/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_logger/simple_logger.dart';
 
 class HomeNotifier extends ChangeNotifier {
   HomeNotifier(this.locator) {
-    SimpleLogger().info('initialize home');
+    logger.info('initialize home');
     homeState = HomeState(datetime: DateTime.now());
     _timer = Timer.periodic(Duration(seconds: 1), _onChangeTimer);
     _userStore.user.listen(_onChangeUser);

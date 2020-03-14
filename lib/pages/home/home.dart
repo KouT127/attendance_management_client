@@ -1,7 +1,7 @@
-import 'package:attendance_management/pages/home/home_display_box.dart';
-import 'package:attendance_management/pages/home/home_floating_button.dart';
-import 'package:attendance_management/pages/home/home_timer_section.dart';
-import 'package:attendance_management/pages/home/model.dart';
+import 'package:attendance_management/pages/home/component/home_display_box.dart';
+import 'package:attendance_management/pages/home/component/home_floating_button.dart';
+import 'package:attendance_management/pages/home/component/home_timer_section.dart';
+import 'package:attendance_management/pages/home/home_notifier.dart';
 import 'package:attendance_management/widgets/app_bar.dart';
 import 'package:attendance_management/widgets/colors.dart';
 import 'package:fl_chart/fl_chart.dart';

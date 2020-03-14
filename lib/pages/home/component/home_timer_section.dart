@@ -1,4 +1,4 @@
-import 'package:attendance_management/pages/home/model.dart';
+import 'package:attendance_management/pages/home/home_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';

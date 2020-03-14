@@ -6,10 +6,8 @@ import 'package:rxdart/rxdart.dart';
 class AppStore {
   AppStore();
 
-  final BehaviorSubject<AppState> _appState =
-      BehaviorSubject.seeded(const AppState(
-    initialLoaded: false,
-  ));
+  final _appState =
+      BehaviorSubject.seeded(const AppState(initialLoaded: false));
 
   Stream<AppState> get appState => _appState.stream;
 
