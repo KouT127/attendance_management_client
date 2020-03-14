@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:attendance_management/models/models.dart';
 import 'package:attendance_management/pages/home/home_state.dart';
-import 'package:attendance_management/pages/login/login_page.dart';
+import 'package:attendance_management/services/auth_service.dart';
 import 'package:attendance_management/services/services.dart';
+import 'package:attendance_management/stores/stores.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -10,24 +12,27 @@ import 'package:provider/provider.dart';
 import 'package:simple_logger/simple_logger.dart';
 
 class HomeNotifier extends ChangeNotifier {
-  HomeNotifier(
-    this.locator,
-  )   : navigator = locator<AppNavigator>(),
-        auth = locator<Auth>() {
-    initialize();
+  HomeNotifier(this.locator) {
+    SimpleLogger().info('initialize home');
+    homeState = HomeState(datetime: DateTime.now());
+    _timer = Timer.periodic(Duration(seconds: 1), _onChangeTimer);
+    _userStore.user.listen(_onChangeUser);
   }
 
   final Locator locator;
-  final AppNavigator navigator;
-  final Auth auth;
+  final dateFormatter = DateFormat("y/MM/dd");
+  final timeFormatter = DateFormat("HH:mm:ss");
+
   Timer _timer;
+  HomeState homeState;
 
-  HomeState homeState = const HomeState(formattedTime: '', formattedDate: '');
+  AuthService get _auth => locator();
 
-  void initialize() {
-    SimpleLogger().info('initialize home');
-    _timer = Timer.periodic(Duration(seconds: 1), _onChangeTimer);
-  }
+  UserStore get _userStore => locator();
+
+  String get formattedDate => dateFormatter.format(homeState.datetime);
+
+  String get formattedTime => timeFormatter.format(homeState.datetime);
 
   @override
   void dispose() {
@@ -35,33 +40,21 @@ class HomeNotifier extends ChangeNotifier {
     super.dispose();
   }
 
-  HomeNotifier update({UserState userState}) {
-    homeState = homeState.copyWith(user: userState?.user);
-    _navigate();
-    return this;
-  }
-
   void _onChangeTimer(Timer timer) {
     final now = DateTime.now();
-    final dateFormatter = DateFormat("y/MM/dd");
-    final timeFormatter = DateFormat("HH:mm:ss");
-    homeState = homeState.copyWith(
-      formattedDate: dateFormatter.format(now),
-      formattedTime: timeFormatter.format(now),
-    );
+    homeState = homeState.copyWith(datetime: now);
     notifyListeners();
   }
 
-  void _navigate() {
-    if (this.homeState.user?.uid == null) {
-      navigator.pushReplacementNamed(LoginPage.loginPath);
-    }
+  void _onChangeUser(User user) {
+    homeState = homeState.copyWith(user: user);
+    notifyListeners();
   }
 
   Future<void> signOut() async {
     if (homeState.user == null) {
       return;
     }
-    auth.signOut();
+    _auth.signOut();
   }
 }

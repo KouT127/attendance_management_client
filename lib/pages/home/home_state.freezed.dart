@@ -8,20 +8,18 @@ part of 'home_state.dart';
 // **************************************************************************
 
 mixin _$HomeState {
-  String get formattedDate;
-  String get formattedTime;
+  DateTime get datetime;
   User get user;
 
-  HomeState copyWith({String formattedDate, String formattedTime, User user});
+  HomeState copyWith({DateTime datetime, User user});
 }
 
 class _$HomeStateTearOff {
   const _$HomeStateTearOff();
 
-  _HomeState call({String formattedDate, String formattedTime, User user}) {
+  _HomeState call({DateTime datetime, User user}) {
     return _HomeState(
-      formattedDate: formattedDate,
-      formattedTime: formattedTime,
+      datetime: datetime,
       user: user,
     );
   }
@@ -30,30 +28,25 @@ class _$HomeStateTearOff {
 const $HomeState = _$HomeStateTearOff();
 
 class _$_HomeState implements _HomeState {
-  const _$_HomeState({this.formattedDate, this.formattedTime, this.user});
+  const _$_HomeState({this.datetime, this.user});
 
   @override
-  final String formattedDate;
-  @override
-  final String formattedTime;
+  final DateTime datetime;
   @override
   final User user;
 
   @override
   String toString() {
-    return 'HomeState(formattedDate: $formattedDate, formattedTime: $formattedTime, user: $user)';
+    return 'HomeState(datetime: $datetime, user: $user)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _HomeState &&
-            (identical(other.formattedDate, formattedDate) ||
+            (identical(other.datetime, datetime) ||
                 const DeepCollectionEquality()
-                    .equals(other.formattedDate, formattedDate)) &&
-            (identical(other.formattedTime, formattedTime) ||
-                const DeepCollectionEquality()
-                    .equals(other.formattedTime, formattedTime)) &&
+                    .equals(other.datetime, datetime)) &&
             (identical(other.user, user) ||
                 const DeepCollectionEquality().equals(other.user, user)));
   }
@@ -61,39 +54,29 @@ class _$_HomeState implements _HomeState {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(formattedDate) ^
-      const DeepCollectionEquality().hash(formattedTime) ^
+      const DeepCollectionEquality().hash(datetime) ^
       const DeepCollectionEquality().hash(user);
 
   @override
   _$_HomeState copyWith({
-    Object formattedDate = freezed,
-    Object formattedTime = freezed,
+    Object datetime = freezed,
     Object user = freezed,
   }) {
     return _$_HomeState(
-      formattedDate: formattedDate == freezed
-          ? this.formattedDate
-          : formattedDate as String,
-      formattedTime: formattedTime == freezed
-          ? this.formattedTime
-          : formattedTime as String,
+      datetime: datetime == freezed ? this.datetime : datetime as DateTime,
       user: user == freezed ? this.user : user as User,
     );
   }
 }
 
 abstract class _HomeState implements HomeState {
-  const factory _HomeState(
-      {String formattedDate, String formattedTime, User user}) = _$_HomeState;
+  const factory _HomeState({DateTime datetime, User user}) = _$_HomeState;
 
   @override
-  String get formattedDate;
-  @override
-  String get formattedTime;
+  DateTime get datetime;
   @override
   User get user;
 
   @override
-  _HomeState copyWith({String formattedDate, String formattedTime, User user});
+  _HomeState copyWith({DateTime datetime, User user});
 }

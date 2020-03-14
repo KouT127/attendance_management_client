@@ -1,64 +1,52 @@
+import 'package:attendance_management/models/models.dart';
 import 'package:attendance_management/pages/pages.dart';
 import 'package:attendance_management/services/services.dart';
 import 'package:attendance_management/services/shared_preference.dart';
+import 'package:attendance_management/stores/stores.dart';
 import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:tuple/tuple.dart';
 
 const SplashLeaveTime = 200;
 
-class Model {
-  Model({
+class SplashRouter {
+  SplashRouter({
     this.locator,
-    this.userState,
-    this.appState,
-  })  : auth = locator<Auth>(),
-        navigator = locator<AppNavigator>(),
-        preferences = locator<AppPreferences>() {
-    _navigateByUser();
-  }
-
-  factory Model.create({
-    Locator locator,
-    AppState appState,
-    UserState userState,
-  }) {
-    return Model(
-      locator: locator,
-      appState: appState,
-      userState: userState,
-    );
+  })  : _auth = locator<AuthService>(),
+        _navigator = locator<AppNavigator>(),
+        _preferences = locator<AppPreferences>(),
+        _appStore = locator<AppStore>(),
+        _userStore = locator<UserStore>() {
+    CombineLatestStream.combine2(
+      _appStore.appState,
+      _userStore.user,
+      (app, user) => Tuple2<AppState, User>(app, user),
+    ).listen((state) {
+      final app = state.item1;
+      final user = state.item2;
+      _navigateByUser(user, app);
+    });
   }
 
   final Locator locator;
-  final Auth auth;
-  final AppPreferences preferences;
-  final AppNavigator navigator;
+  final AuthService _auth;
+  final AppPreferences _preferences;
+  final AppNavigator _navigator;
+  final AppStore _appStore;
+  final UserStore _userStore;
 
-  final AppState appState;
-  final UserState userState;
-
-//  Model update({AppState appState, UserState userState}) {
-//    if (appState == null || userState == null || userState.user == null) {
-//      return this;
-//    }
-//    final user = userState.user;
-//    SimpleLogger().info('update splash ' + user.toString());
-//    this._navigateByUser(appState, userState);
-//    return this;
-//  }
-
-  Future<void> _navigateByUser() async {
-    if (!appState.application.initialLoaded) {
+  Future<void> _navigateByUser(User user, AppState appState) async {
+    if (appState == null || !appState.initialLoaded) {
       return;
     }
 
-    final user = userState.user;
-    if (appState.application.initialLoaded && user.uid != null) {
-      navigator.pushReplacementNamed(HomePage.routeName);
+    if (appState.initialLoaded && user.uid != null) {
+      _navigator.pushReplacementNamed(HomePage.routeName);
       return;
     }
 
-    if (appState.application.initialLoaded && user.uid == null) {
-      navigator.pushReplacementNamed(LoginPage.loginPath);
+    if (appState.initialLoaded && user.uid == null) {
+      _navigator.pushReplacementNamed(LoginPage.loginPath);
     }
   }
 }

@@ -1,20 +1,20 @@
-import 'package:attendance_management/services/user_state.dart';
+import 'package:attendance_management/models/models.dart';
 import 'package:http/http.dart';
 
-class HttpClient {
-  HttpClient(
+class HttpClientService {
+  HttpClientService(
     this._client,
   );
 
   final Client _client;
 
-  factory HttpClient.create() {
-    return HttpClient(
+  factory HttpClientService.create() {
+    return HttpClientService(
       Client(),
     );
   }
 
-  Future<Response> get(String url, {GetToken getToken}) async {
+  Future<Response> get(String url, {GetIdToken getToken}) async {
     Map<String, String> headers = Map();
     if (getToken == null) {
       return _client.get(url);
@@ -24,7 +24,7 @@ class HttpClient {
     return _client.get(url, headers: headers);
   }
 
-  Future<Response> post(String url, dynamic body, {GetToken getToken}) async {
+  Future<Response> post(String url, dynamic body, {GetIdToken getToken}) async {
     Map<String, String> headers = Map();
     if (getToken != null) {
       return _client.post(url);

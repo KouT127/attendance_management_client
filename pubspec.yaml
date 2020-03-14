@@ -39,11 +39,14 @@ dependencies:
   tuple: ^1.0.3
 
   google_fonts: ^0.3.8
+  rxdart: any
+  freezed_annotation:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  json_serializable: ^3.2.5
+  build_runner:
+  freezed:
 
 
 

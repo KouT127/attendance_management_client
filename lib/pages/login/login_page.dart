@@ -1,4 +1,3 @@
-import 'package:attendance_management/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -10,9 +9,8 @@ class LoginPageProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProxyProvider<UserState, Model>(
-      create: (_) => Model.create(locator: context.read),
-      update: (_, userState, model) => model.update(userState: userState),
+    return ChangeNotifierProvider<LoginNotifier>(
+      create: (_) => LoginNotifier(locator: context.read),
       child: const LoginPage(),
     );
   }
@@ -25,7 +23,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<Model>(context);
+    final model = Provider.of<LoginNotifier>(context);
     return Scaffold(
       key: key,
       body: SafeArea(

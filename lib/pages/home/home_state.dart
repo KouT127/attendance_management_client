@@ -6,8 +6,7 @@ part 'home_state.freezed.dart';
 @freezed
 abstract class HomeState with _$HomeState {
   const factory HomeState({
-    String formattedDate,
-    String formattedTime,
+    DateTime datetime,
     User user,
   }) = _HomeState;
 }

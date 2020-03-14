@@ -24,12 +24,12 @@ class HomeTimerSection extends StatelessWidget {
             ),
             Text(
               context.select<HomeNotifier, String>(
-                  (HomeNotifier notifier) => notifier.homeState.formattedDate),
+                  (HomeNotifier notifier) => notifier.formattedDate),
               style: Theme.of(context).textTheme.headline1,
             ),
             Text(
               context.select<HomeNotifier, String>(
-                  (HomeNotifier notifier) => notifier.homeState.formattedTime),
+                  (HomeNotifier notifier) => notifier.formattedTime),
               style: Theme.of(context).textTheme.headline1,
             ),
           ],

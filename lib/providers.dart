@@ -1,4 +1,6 @@
 import 'package:attendance_management/services/shared_preference.dart';
+import 'package:attendance_management/stores/stores.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -14,9 +16,9 @@ class Providers extends StatelessWidget {
       providers: [
         Provider<AppNavigator>(create: (_) => AppNavigator.create()),
         Provider<AppPreferences>(create: (_) => AppPreferences.create()),
-        Provider<HttpClient>(create: (_) => HttpClient.create()),
-        Provider<AppState>(create: (_) => AppState.create()),
-        Provider<Auth>(create: (_) => Auth.create()),
+        Provider<HttpClientService>(create: (_) => HttpClientService.create()),
+        Provider<AuthService>(
+            create: (_) => AuthService(auth: FirebaseAuth.instance)),
       ],
       child: DependencyProviders(),
     );
@@ -28,9 +30,10 @@ class DependencyProviders extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<UserState>(
-          create: (_) => UserState.create(locator: context.read),
-        ),
+        Provider<AppStore>(create: (_) => AppStore()),
+        Provider<UserStore>(
+          create: (_context) => UserStore(locator: _context.read),
+        )
       ],
       child: const App(),
     );

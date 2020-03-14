@@ -2,7 +2,6 @@ import 'package:attendance_management/pages/home/home_display_box.dart';
 import 'package:attendance_management/pages/home/home_floating_button.dart';
 import 'package:attendance_management/pages/home/home_timer_section.dart';
 import 'package:attendance_management/pages/home/model.dart';
-import 'package:attendance_management/services/services.dart';
 import 'package:attendance_management/widgets/app_bar.dart';
 import 'package:attendance_management/widgets/colors.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -14,9 +13,8 @@ class HomePageProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProxyProvider<UserState, HomeNotifier>(
+    return ChangeNotifierProvider<HomeNotifier>(
       create: (_context) => HomeNotifier(_context.read),
-      update: (_, userState, notifier) => notifier.update(userState: userState),
       child: const HomePage(),
     );
   }

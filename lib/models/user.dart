@@ -1,29 +1,19 @@
-import 'package:attendance_management/services/user_state.dart';
-import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class User {
-  User({
-    @required this.uid,
-    @required this.email,
-    @required this.displayName,
-    @required this.getToken,
-    this.photoUrl,
-    this.isEmailVerified = false,
-  });
+part 'user.freezed.dart';
 
-  factory User.initial() {
-    return User(
-      uid: null,
-      email: null,
-      displayName: null,
-      getToken: null,
-    );
-  }
+typedef GetIdToken = Future<IdTokenResult> Function({bool refresh});
 
-  String uid;
-  String email;
-  String displayName;
-  String photoUrl;
-  bool isEmailVerified;
-  GetToken getToken;
+@freezed
+abstract class User with _$User {
+  const factory User({
+    String uid,
+    String email,
+    String displayName,
+    String photoUrl,
+    bool isEmailVerified,
+    GetIdToken getIdToken,
+  }) = _User;
 }
