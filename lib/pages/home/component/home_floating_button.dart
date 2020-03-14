@@ -41,6 +41,5 @@ class HomeFloatingButton extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

@@ -1,3 +1,4 @@
+import 'package:attendance_management/pages/user/user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -20,7 +21,7 @@ class ShadowlessAppBar extends StatelessWidget implements PreferredSizeWidget {
                   size: 30,
                 ),
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/attendances');
+                  Navigator.of(context).pushNamed(UserPage.routeName);
                 },
               ),
             ],

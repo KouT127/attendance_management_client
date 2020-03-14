@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:attendance_management/pages/attendance_list/attendance_list_page.dart';
 import 'package:attendance_management/pages/pages.dart';
+import 'package:attendance_management/pages/user/user_page.dart';
 import 'package:attendance_management/utils/route.dart';
 import 'package:attendance_management/widgets/tab_bar_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,11 @@ class AppNavigator {
     if (settings.name == '/login') {
       return FadeRoute(
         builder: (_) => LoginPageProvider(),
+      );
+    }
+    if (settings.name == '/user') {
+      return FadeRoute(
+        builder: (_) => UserPage(),
       );
     }
     if (settings.name == '/home') {
