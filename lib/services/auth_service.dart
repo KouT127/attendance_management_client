@@ -13,12 +13,12 @@ class AuthService {
 
   User _handleStateChange(FirebaseUser user) {
     return User(
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoUrl: user.photoUrl,
-      isEmailVerified: user.isEmailVerified,
-      getIdToken: user.getIdToken,
+      uid: user?.uid,
+      email: user?.email,
+      displayName: user?.displayName,
+      photoUrl: user?.photoUrl,
+      isEmailVerified: user?.isEmailVerified,
+      getIdToken: user?.getIdToken,
     );
   }
 
