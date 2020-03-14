@@ -2,12 +2,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const HadStarted = 'HAD_STARTED';
 
-class AppPreferences {
-  AppPreferences();
-
-  factory AppPreferences.create() {
-    return AppPreferences();
-  }
+class PreferenceService {
+  PreferenceService();
 
   Future<bool> getHadStarted() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
