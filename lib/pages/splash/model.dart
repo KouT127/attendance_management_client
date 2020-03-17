@@ -3,45 +3,34 @@ import 'dart:async';
 import 'package:attendance_management/models/models.dart';
 import 'package:attendance_management/pages/pages.dart';
 import 'package:attendance_management/services/services.dart';
-import 'package:attendance_management/stores/stores.dart';
-import 'package:provider/provider.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:tuple/tuple.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:state_notifier/state_notifier.dart';
 
 const SplashLeaveTime = 200;
 
-class SplashRouter {
-  SplashRouter({
-    this.locator,
-  }) {
-    _subscription = CombineLatestStream.combine2(
-      _appStore.appState,
-      _userStore.user,
-      (app, user) => Tuple2<AppState, User>(app, user),
-    ).listen((state) {
-      final app = state.item1;
-      final user = state.item2;
-      _navigateByUser(user, app);
-    });
+class SplashRouter extends StateNotifier<int> with LocatorMixin {
+  SplashRouter() : super(0);
+
+  AppNavigator get _navigator => read();
+
+  AppState appState;
+
+  FirebaseUser user;
+
+  @override
+  void initState() {
+    _navigateByUser(user, appState);
+    super.initState();
   }
 
-  final Locator locator;
-  StreamSubscription _subscription;
-
-  AppNavigator get _navigator => locator();
-
-  AppStore get _appStore => locator();
-
-  UserStore get _userStore => locator();
-
-  void dispose() {
-    if (_subscription != null) {
-      _subscription.cancel();
-    }
+  @override
+  void update(T Function<T>() watch) {
+    super.update(watch);
   }
 
-  Future<void> _navigateByUser(User user, AppState appState) async {
+  Future<void> _navigateByUser(FirebaseUser user, AppState appState) async {
     if (appState == null || !appState.initialLoaded) {
+      _navigator.pushReplacementNamed(LoginPage.routeName);
       return;
     }
 

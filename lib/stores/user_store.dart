@@ -1,54 +1,46 @@
 import 'dart:async';
 
 import 'package:attendance_management/models/user.dart';
-import 'package:attendance_management/services/auth_service.dart';
 import 'package:attendance_management/services/http_client_service.dart';
 import 'package:attendance_management/services/services.dart';
 import 'package:attendance_management/stores/stores.dart';
-import 'package:provider/provider.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:simple_logger/simple_logger.dart';
+import 'package:state_notifier/state_notifier.dart';
 
-class UserStore {
-  UserStore({this.locator}) {
-    _auth.firebaseUser.listen(handleChangeAuthState);
+class UserStateNotifier extends StateNotifier<User> with LocatorMixin {
+  UserStateNotifier({this.user}) : super(const User());
+
+  FirebaseUser user;
+
+  AppStateNotifier get _appState => read();
+
+  @override
+  void initState() {
+    this.handleChangeAuthState(user);
+    super.initState();
   }
 
-  final Locator locator;
-
-  final PublishSubject<User> _user = PublishSubject();
-
-  Stream<User> get user => _user.stream;
-
-  AuthService get _auth => locator();
-
-  HttpClientService get _client => locator();
-
-  AppStore get _appStore => locator();
-
-  void dispose() {
-    _user.close();
-  }
-
-  Future<void> handleChangeAuthState(User user) async {
-    final response = await _client.get(
+  Future<void> handleChangeAuthState(FirebaseUser authUser) async {
+    _appState.state;
+    final client = read<HttpClientService>();
+    final response = await client.get(
       'http://localhost:8080/v1/users/mine',
-      getToken: user?.getIdToken,
+      getToken: authUser?.getIdToken,
     );
-    _appStore.loaded();
+    _appState.loaded();
     SimpleLogger().info(response.body);
     if (response.statusCode >= 400) {
-      _user.add(User());
+      state = User();
       return;
     }
-    final newUser = User(
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoUrl: user.photoUrl,
-      isEmailVerified: user.isEmailVerified,
-      getIdToken: user.getIdToken,
+    state = User(
+      uid: authUser.uid,
+      email: authUser.email,
+      displayName: authUser.displayName,
+      photoUrl: authUser.photoUrl,
+      isEmailVerified: authUser.isEmailVerified,
+      getIdToken: authUser.getIdToken,
     );
-    _user.add(newUser);
   }
 }

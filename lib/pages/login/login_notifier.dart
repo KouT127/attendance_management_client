@@ -14,7 +14,6 @@ class LoginNotifier extends ChangeNotifier {
     this.locator,
   }) {
     initialize();
-    _subscription = _userStore.user.listen(handleUserChanged);
   }
 
   final Locator locator;
@@ -23,7 +22,7 @@ class LoginNotifier extends ChangeNotifier {
 
   AuthService get _auth => locator();
 
-  UserStore get _userStore => locator();
+  UserStateNotifier get _userStore => locator();
 
   String email;
   String password;

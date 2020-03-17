@@ -2,19 +2,20 @@ import 'package:attendance_management/pages/home/component/home_display_box.dart
 import 'package:attendance_management/pages/home/component/home_floating_button.dart';
 import 'package:attendance_management/pages/home/component/home_timer_section.dart';
 import 'package:attendance_management/pages/home/home_notifier.dart';
+import 'package:attendance_management/pages/home/home_state.dart';
 import 'package:attendance_management/widgets/app_bar.dart';
 import 'package:attendance_management/widgets/colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 
 class HomePageProvider extends StatelessWidget {
   const HomePageProvider({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<HomeNotifier>(
-      create: (_context) => HomeNotifier(_context.read),
+    return StateNotifierProvider<HomeNotifier, HomeState>(
+      create: (_) => HomeNotifier(),
       child: const HomePage(),
     );
   }
