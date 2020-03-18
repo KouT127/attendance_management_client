@@ -25,7 +25,7 @@ class _Model {
 
   AppNavigator get _appNavigator => locator();
 
-  UserStore get _userStore => locator();
+  UserState get _userStore => locator();
 
   void dispose() {
     _subscription?.cancel();
@@ -33,7 +33,10 @@ class _Model {
 }
 
 class ProtectedRoute extends StatelessWidget {
-  ProtectedRoute({Key key, this.child}) : super(key: key);
+  ProtectedRoute({
+    Key key,
+    this.child,
+  }) : super(key: key);
 
   final Widget child;
 

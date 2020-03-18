@@ -43,8 +43,8 @@ class StoreProviders extends StatelessWidget {
         Provider<AppStore>(
           create: (_) => AppStore(),
         ),
-        Provider<UserStore>(
-          create: (_context) => UserStore(locator: _context.read),
+        Provider<UserState>(
+          create: (_context) => UserState(locator: _context.read),
         )
       ],
       child: const App(),

@@ -5,12 +5,14 @@ import 'package:attendance_management/services/auth_service.dart';
 import 'package:attendance_management/services/http_client_service.dart';
 import 'package:attendance_management/services/services.dart';
 import 'package:attendance_management/stores/stores.dart';
+import 'package:attendance_management/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:simple_logger/simple_logger.dart';
 
-class UserStore {
-  UserStore({this.locator}) {
+class UserState {
+  UserState({
+    this.locator,
+  }) {
     _auth.firebaseUser.listen(handleChangeAuthState);
   }
 
@@ -36,7 +38,7 @@ class UserStore {
       getToken: user?.getIdToken,
     );
     _appStore.loaded();
-    SimpleLogger().info(response.body);
+    logger.info(response.body);
     if (response.statusCode >= 400) {
       _user.add(User());
       return;
