@@ -23,7 +23,7 @@ class LoginNotifier extends ChangeNotifier {
 
   AuthService get _auth => locator();
 
-  UserStore get _userStore => locator();
+  UserState get _userStore => locator();
 
   String email;
   String password;
