@@ -6,30 +6,20 @@ import 'package:attendance_management/services/auth_service.dart';
 import 'package:attendance_management/services/services.dart';
 import 'package:attendance_management/stores/stores.dart';
 import 'package:attendance_management/utils/utils.dart';
-import 'package:intl/intl.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 class HomeNotifier extends StateNotifier<HomeState> with LocatorMixin {
-  HomeNotifier() : super(const HomeState());
-
-  final dateFormatter = DateFormat("y/MM/dd");
-  final timeFormatter = DateFormat("HH:mm:ss");
+  HomeNotifier() : super(HomeState(datetime: DateTime.now()));
 
   Timer _timer;
-  HomeState homeState;
 
   AuthService get _auth => read();
 
   UserState get _userState => read();
 
-  String get formattedDate => dateFormatter.format(homeState.datetime);
-
-  String get formattedTime => timeFormatter.format(homeState.datetime);
-
   @override
   void initState() {
     logger.info('initialize home');
-    homeState = HomeState(datetime: DateTime.now());
     _timer = Timer.periodic(Duration(seconds: 1), _onChangeTimer);
     _userState.user.listen(_onChangeUser);
     super.initState();
@@ -43,15 +33,19 @@ class HomeNotifier extends StateNotifier<HomeState> with LocatorMixin {
 
   void _onChangeTimer(Timer timer) {
     final now = DateTime.now();
-    homeState = homeState.copyWith(datetime: now);
+    state = state?.copyWith(
+      datetime: now,
+      totalTime: 180.0,
+      workedTime: 100.0,
+    );
   }
 
   void _onChangeUser(User user) {
-    homeState = homeState.copyWith(user: user);
+    state = state.copyWith(user: user);
   }
 
   Future<void> signOut() async {
-    if (homeState.user == null) {
+    if (state.user == null) {
       return;
     }
     _auth.signOut();

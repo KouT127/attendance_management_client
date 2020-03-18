@@ -1,4 +1,5 @@
-import 'package:attendance_management/pages/home/home_notifier.dart';
+import 'package:attendance_management/pages/home/home_state.dart';
+import 'package:attendance_management/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -23,13 +24,15 @@ class HomeTimerSection extends StatelessWidget {
               style: Theme.of(context).textTheme.headline2,
             ),
             Text(
-              context.select<HomeNotifier, String>(
-                  (HomeNotifier notifier) => notifier.formattedDate),
+              context.select<HomeState, String>(
+                (HomeState state) => state.datetime.formattedDate,
+              ),
               style: Theme.of(context).textTheme.headline1,
             ),
             Text(
-              context.select<HomeNotifier, String>(
-                  (HomeNotifier notifier) => notifier.formattedTime),
+              context.select<HomeState, String>(
+                (HomeState state) => state.datetime.formattedTime,
+              ),
               style: Theme.of(context).textTheme.headline1,
             ),
           ],
