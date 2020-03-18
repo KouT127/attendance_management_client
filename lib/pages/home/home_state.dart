@@ -8,5 +8,7 @@ abstract class HomeState with _$HomeState {
   const factory HomeState({
     DateTime datetime,
     User user,
+    @Default(0) double totalTime,
+    @Default(0) double workedTime,
   }) = _HomeState;
 }

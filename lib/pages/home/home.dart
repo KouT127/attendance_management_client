@@ -2,10 +2,12 @@ import 'package:attendance_management/pages/home/component/home_display_box.dart
 import 'package:attendance_management/pages/home/component/home_floating_button.dart';
 import 'package:attendance_management/pages/home/component/home_timer_section.dart';
 import 'package:attendance_management/pages/home/home_notifier.dart';
+import 'package:attendance_management/pages/home/home_state.dart';
 import 'package:attendance_management/widgets/app_bar.dart';
 import 'package:attendance_management/widgets/colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 
 class HomePageProvider extends StatelessWidget {
@@ -13,8 +15,8 @@ class HomePageProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<HomeNotifier>(
-      create: (_context) => HomeNotifier(_context.read),
+    return StateNotifierProvider<HomeNotifier, HomeState>(
+      create: (_) => HomeNotifier(),
       child: const HomePage(),
     );
   }
@@ -48,9 +50,14 @@ class HomePage extends StatelessWidget {
                         const SizedBox(height: 20),
                         Row(
                           children: <Widget>[
-                            const HomeRadialChartBox(
+                            HomeRadialChartBox(
                               title: 'Total ',
-                              time: 170.0,
+                              workedTime: context.select<HomeState, double>(
+                                (state) => state.workedTime,
+                              ),
+                              totalTime: context.select<HomeState, double>(
+                                (state) => state.totalTime,
+                              ),
                             ),
                           ],
                         ),

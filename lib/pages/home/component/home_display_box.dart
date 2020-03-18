@@ -6,17 +6,17 @@ class HomeRadialChartBox extends StatelessWidget {
   const HomeRadialChartBox({
     Key key,
     this.title,
-    this.time,
+    this.workedTime,
+    this.totalTime,
   }) : super(key: key);
 
   final String title;
-  final double time;
+  final double workedTime;
+  final double totalTime;
   final _chartSize = const Size(250.0, 250.0);
 
   @override
   Widget build(BuildContext context) {
-    final totalTime = 170;
-    final workedTime = 170;
     final double workedTimePercentage = workedTime / totalTime;
     return Expanded(
       flex: 1,
