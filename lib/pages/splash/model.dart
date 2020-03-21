@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:async_redux/async_redux.dart';
 import 'package:attendance_management/models/app_state.dart';
 import 'package:attendance_management/pages/pages.dart';
 import 'package:attendance_management/services/services.dart';
@@ -7,20 +8,18 @@ import 'package:state_notifier/state_notifier.dart';
 
 const SplashLeaveTime = 200;
 
-class SplashRouter extends StateNotifier<int> with LocatorMixin {
-  SplashRouter({
-    this.appState,
-  }) : super(0);
+class SplashRouter extends StateNotifier<void> with LocatorMixin {
+  SplashRouter() : super(null);
 
   StreamSubscription _subscription;
 
   AppNavigator get _navigator => read();
 
-  final Stream<AppState> appState;
+  Store<AppState> get _store => read();
 
   @override
   void initState() {
-    _subscription = appState.listen(_handleNavigate);
+    _subscription = _store.onChange.listen(_handleNavigate);
     super.initState();
   }
 

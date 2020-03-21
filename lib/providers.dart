@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
+import 'package:provider_for_redux/provider_for_redux.dart';
 
 import 'app.dart';
 import 'services/services.dart';
@@ -20,49 +21,31 @@ class Providers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<AppNavigator>(
-          create: (_) => AppNavigator(navigatorKey: navigatorKey),
-        ),
-        Provider<PreferenceService>(
-          create: (_) => PreferenceService(),
-        ),
-        Provider<HttpClientService>(
-          create: (_) => HttpClientService(client),
-        ),
-        Provider<AuthService>(
-          create: (_) => AuthService(auth: auth),
-        ),
-      ],
-      child: AppStateProvider(
-        store: store,
-        auth: auth,
-      ),
-    );
-  }
-}
-
-class AppStateProvider extends StatelessWidget {
-  const AppStateProvider({
-    this.store,
-    this.auth,
-  });
-
-  final Store<AppState> store;
-  final FirebaseAuth auth;
-
-  @override
-  Widget build(BuildContext context) {
-    return StoreProvider(
-      store: store,
-      child: Provider(
-        create: (_context) => AuthRouter(
-          auth: auth,
-          store: store,
-          locator: _context.read,
-        )..listen(),
-        dispose: (_, AuthRouter router) => router..dispose(),
+    return AsyncReduxProvider<AppState>.value(
+      value: store,
+      child: MultiProvider(
+        providers: [
+          Provider<AppNavigator>(
+            create: (_) => AppNavigator(navigatorKey: navigatorKey),
+          ),
+          Provider<PreferenceService>(
+            create: (_) => PreferenceService(),
+          ),
+          Provider<HttpClientService>(
+            create: (_) => HttpClientService(client),
+          ),
+          Provider<AuthService>(
+            create: (_) => AuthService(auth: auth),
+          ),
+          Provider(
+            create: (_context) => AuthRouter(
+              auth: auth,
+              store: store,
+              locator: _context.read,
+            )..listen(),
+            dispose: (_, AuthRouter router) => router..dispose(),
+          ),
+        ],
         child: const App(),
       ),
     );

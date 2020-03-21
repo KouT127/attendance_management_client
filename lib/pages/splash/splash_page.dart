@@ -1,5 +1,3 @@
-import 'package:async_redux/async_redux.dart';
-import 'package:attendance_management/models/models.dart';
 import 'package:attendance_management/pages/splash/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -9,10 +7,8 @@ import 'package:provider/provider.dart';
 class SplashPageProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StateNotifierProvider<SplashRouter, int>(
-      create: (_) => SplashRouter(
-        appState: StoreProvider.of<AppState>(context, false).onChange,
-      ),
+    return StateNotifierProvider<SplashRouter, void>(
+      create: (_) => SplashRouter(),
       child: SplashPage(),
     );
   }
