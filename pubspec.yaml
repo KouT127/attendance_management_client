@@ -39,6 +39,7 @@ dependencies:
   freezed_annotation:
   flutter_state_notifier: ^0.4.0
   provider: ^4.1.0-dev
+  async_redux:
 
 
 dev_dependencies:

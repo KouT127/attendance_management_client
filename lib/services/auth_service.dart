@@ -1,4 +1,3 @@
-import 'package:attendance_management/models/models.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -7,20 +6,6 @@ class AuthService {
   });
 
   final FirebaseAuth auth;
-
-  Stream<User> get firebaseUser =>
-      auth.onAuthStateChanged.map(_handleStateChange);
-
-  User _handleStateChange(FirebaseUser user) {
-    return User(
-      uid: user?.uid,
-      email: user?.email,
-      displayName: user?.displayName,
-      photoUrl: user?.photoUrl,
-      isEmailVerified: user?.isEmailVerified,
-      getIdToken: user?.getIdToken,
-    );
-  }
 
   Future<void> signIn({
     String email,

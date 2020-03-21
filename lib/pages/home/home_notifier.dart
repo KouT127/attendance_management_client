@@ -1,10 +1,8 @@
 import 'dart:async';
 
-import 'package:attendance_management/models/models.dart';
 import 'package:attendance_management/pages/home/home_state.dart';
 import 'package:attendance_management/services/auth_service.dart';
 import 'package:attendance_management/services/services.dart';
-import 'package:attendance_management/stores/stores.dart';
 import 'package:attendance_management/utils/utils.dart';
 import 'package:state_notifier/state_notifier.dart';
 
@@ -15,13 +13,10 @@ class HomeNotifier extends StateNotifier<HomeState> with LocatorMixin {
 
   AuthService get _auth => read();
 
-  UserState get _userState => read();
-
   @override
   void initState() {
     logger.info('initialize home');
     _timer = Timer.periodic(Duration(seconds: 1), _onChangeTimer);
-    _userState.user.listen(_onChangeUser);
     super.initState();
   }
 
@@ -40,9 +35,9 @@ class HomeNotifier extends StateNotifier<HomeState> with LocatorMixin {
     );
   }
 
-  void _onChangeUser(User user) {
-    state = state.copyWith(user: user);
-  }
+//  void _onChangeUser(UserState user) {
+//    state = state.copyWith(user: user);
+//  }
 
   Future<void> signOut() async {
     if (state.user == null) {

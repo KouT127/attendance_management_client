@@ -1,3 +1,4 @@
+import 'package:attendance_management/services/auth_router.dart';
 import 'package:attendance_management/services/services.dart';
 import 'package:attendance_management/services/theme.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,8 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final navigator = Provider.of<AppNavigator>(context);
+    final navigator = context.watch<AppNavigator>();
+    context.watch<AuthRouter>();
     return MaterialApp(
       theme: theme,
       onGenerateRoute: navigator.onGenerate,

@@ -2,7 +2,6 @@ import 'package:attendance_management/pages/attendance_list/attendance_list_page
 import 'package:attendance_management/pages/pages.dart';
 import 'package:attendance_management/pages/user/user_page.dart';
 import 'package:attendance_management/utils/route.dart';
-import 'package:attendance_management/widgets/protected_route.dart';
 import 'package:attendance_management/widgets/tab_bar_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -17,16 +16,12 @@ class AppNavigator {
   Route<dynamic> onGenerate(RouteSettings settings) {
     if (settings.name == '/settings') {
       return FadeRoute(
-        builder: (_) => ProtectedRoute(
-          child: SettingsProvider(),
-        ),
+        builder: (_) => SettingsProvider(),
       );
     }
     if (settings.name == '/home') {
       return FadeRoute(
-        builder: (_) => ProtectedRoute(
-          child: HomePageProvider(),
-        ),
+        builder: (_) => HomePageProvider(),
       );
     }
 

@@ -10,15 +10,15 @@ part of 'login_state.dart';
 mixin _$LoginState {
   String get email;
   String get password;
-  User get user;
+  UserState get user;
 
-  LoginState copyWith({String email, String password, User user});
+  LoginState copyWith({String email, String password, UserState user});
 }
 
 class _$LoginStateTearOff {
   const _$LoginStateTearOff();
 
-  _LoginState call({String email, String password, User user}) {
+  _LoginState call({String email, String password, UserState user}) {
     return _LoginState(
       email: email,
       password: password,
@@ -37,7 +37,7 @@ class _$_LoginState with DiagnosticableTreeMixin implements _LoginState {
   @override
   final String password;
   @override
-  final User user;
+  final UserState user;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -83,13 +83,13 @@ class _$_LoginState with DiagnosticableTreeMixin implements _LoginState {
     return _$_LoginState(
       email: email == freezed ? this.email : email as String,
       password: password == freezed ? this.password : password as String,
-      user: user == freezed ? this.user : user as User,
+      user: user == freezed ? this.user : user as UserState,
     );
   }
 }
 
 abstract class _LoginState implements LoginState {
-  const factory _LoginState({String email, String password, User user}) =
+  const factory _LoginState({String email, String password, UserState user}) =
       _$_LoginState;
 
   @override
@@ -97,8 +97,8 @@ abstract class _LoginState implements LoginState {
   @override
   String get password;
   @override
-  User get user;
+  UserState get user;
 
   @override
-  _LoginState copyWith({String email, String password, User user});
+  _LoginState copyWith({String email, String password, UserState user});
 }

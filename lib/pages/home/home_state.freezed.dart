@@ -9,12 +9,12 @@ part of 'home_state.dart';
 
 mixin _$HomeState {
   DateTime get datetime;
-  User get user;
+  UserState get user;
   double get totalTime;
   double get workedTime;
 
   HomeState copyWith(
-      {DateTime datetime, User user, double totalTime, double workedTime});
+      {DateTime datetime, UserState user, double totalTime, double workedTime});
 }
 
 class _$HomeStateTearOff {
@@ -22,7 +22,7 @@ class _$HomeStateTearOff {
 
   _HomeState call(
       {DateTime datetime,
-      User user,
+      UserState user,
       double totalTime = 0,
       double workedTime = 0}) {
     return _HomeState(
@@ -43,7 +43,7 @@ class _$_HomeState implements _HomeState {
   @override
   final DateTime datetime;
   @override
-  final User user;
+  final UserState user;
   @JsonKey(defaultValue: 0)
   @override
   final double totalTime;
@@ -90,7 +90,7 @@ class _$_HomeState implements _HomeState {
   }) {
     return _$_HomeState(
       datetime: datetime == freezed ? this.datetime : datetime as DateTime,
-      user: user == freezed ? this.user : user as User,
+      user: user == freezed ? this.user : user as UserState,
       totalTime: totalTime == freezed ? this.totalTime : totalTime as double,
       workedTime:
           workedTime == freezed ? this.workedTime : workedTime as double,
@@ -101,14 +101,14 @@ class _$_HomeState implements _HomeState {
 abstract class _HomeState implements HomeState {
   const factory _HomeState(
       {DateTime datetime,
-      User user,
+      UserState user,
       double totalTime,
       double workedTime}) = _$_HomeState;
 
   @override
   DateTime get datetime;
   @override
-  User get user;
+  UserState get user;
   @override
   double get totalTime;
   @override
@@ -116,5 +116,5 @@ abstract class _HomeState implements HomeState {
 
   @override
   _HomeState copyWith(
-      {DateTime datetime, User user, double totalTime, double workedTime});
+      {DateTime datetime, UserState user, double totalTime, double workedTime});
 }

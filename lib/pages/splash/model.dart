@@ -1,37 +1,26 @@
 import 'dart:async';
 
-import 'package:attendance_management/models/models.dart';
+import 'package:attendance_management/models/app_state.dart';
 import 'package:attendance_management/pages/pages.dart';
 import 'package:attendance_management/services/services.dart';
-import 'package:attendance_management/stores/stores.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:state_notifier/state_notifier.dart';
-import 'package:tuple/tuple.dart';
 
 const SplashLeaveTime = 200;
 
 class SplashRouter extends StateNotifier<int> with LocatorMixin {
-  SplashRouter() : super(0);
+  SplashRouter({
+    this.appState,
+  }) : super(0);
 
   StreamSubscription _subscription;
 
   AppNavigator get _navigator => read();
 
-  AppStore get _appStore => read();
-
-  UserState get _userStore => read();
+  final Stream<AppState> appState;
 
   @override
   void initState() {
-    _subscription = CombineLatestStream.combine2(
-      _appStore.appState,
-      _userStore.user,
-      (app, user) => Tuple2<AppState, User>(app, user),
-    ).listen((state) {
-      final app = state.item1;
-      final user = state.item2;
-      _navigateByUser(user, app);
-    });
+    _subscription = appState.listen(_handleNavigate);
     super.initState();
   }
 
@@ -43,17 +32,17 @@ class SplashRouter extends StateNotifier<int> with LocatorMixin {
     super.dispose();
   }
 
-  Future<void> _navigateByUser(User user, AppState appState) async {
+  Future<void> _handleNavigate(AppState appState) async {
     if (appState == null || !appState.initialLoaded) {
       return;
     }
 
-    if (appState.initialLoaded && user.uid != null) {
+    if (appState.initialLoaded && appState.userState.uid != null) {
       _navigator.pushReplacementNamed(HomePage.routeName);
       return;
     }
 
-    if (appState.initialLoaded && user.uid == null) {
+    if (appState.initialLoaded && appState.userState.uid == null) {
       _navigator.pushReplacementNamed(LoginPage.routeName);
     }
   }

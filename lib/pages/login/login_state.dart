@@ -9,6 +9,6 @@ abstract class LoginState with _$LoginState {
   const factory LoginState({
     String email,
     String password,
-    User user,
+    UserState user,
   }) = _LoginState;
 }

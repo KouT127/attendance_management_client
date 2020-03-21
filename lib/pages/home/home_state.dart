@@ -7,7 +7,7 @@ part 'home_state.freezed.dart';
 abstract class HomeState with _$HomeState {
   const factory HomeState({
     DateTime datetime,
-    User user,
+    UserState user,
     @Default(0) double totalTime,
     @Default(0) double workedTime,
   }) = _HomeState;

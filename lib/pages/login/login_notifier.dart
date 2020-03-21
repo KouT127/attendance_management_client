@@ -1,10 +1,7 @@
 import 'dart:async';
 
-import 'package:attendance_management/models/models.dart';
-import 'package:attendance_management/pages/home/home.dart';
 import 'package:attendance_management/services/app_navigator.dart';
 import 'package:attendance_management/services/auth_service.dart';
-import 'package:attendance_management/stores/stores.dart';
 import 'package:attendance_management/utils/utils.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +11,6 @@ class LoginNotifier extends ChangeNotifier {
     this.locator,
   }) {
     initialize();
-    _subscription = _userStore.user.listen(handleUserChanged);
   }
 
   final Locator locator;
@@ -22,8 +18,6 @@ class LoginNotifier extends ChangeNotifier {
   AppNavigator get _navigator => locator();
 
   AuthService get _auth => locator();
-
-  UserState get _userStore => locator();
 
   String email;
   String password;
@@ -61,11 +55,11 @@ class LoginNotifier extends ChangeNotifier {
     );
   }
 
-  void handleUserChanged(User user) {
-    if (user != null && user?.uid != null) {
-      _navigator.popRoot();
-      _navigator.pushReplacementNamed(HomePage.routeName);
-      return;
-    }
-  }
+//  void handleUserChanged(UserState user) {
+//    if (user != null && user?.uid != null) {
+//      _navigator.popRoot();
+//      _navigator.pushReplacementNamed(HomePage.routeName);
+//      return;
+//    }
+//  }
 }
