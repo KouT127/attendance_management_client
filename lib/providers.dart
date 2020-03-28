@@ -21,32 +21,24 @@ class Providers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AsyncReduxProvider<AppState>.value(
-      value: store,
-      child: MultiProvider(
-        providers: [
-          Provider<AppNavigator>(
-            create: (_) => AppNavigator(navigatorKey: navigatorKey),
-          ),
-          Provider<PreferenceService>(
-            create: (_) => PreferenceService(),
-          ),
-          Provider<HttpClientService>(
-            create: (_) => HttpClientService(client),
-          ),
-          Provider<AuthService>(
-            create: (_) => AuthService(auth: auth),
-          ),
-          Provider(
-            create: (_context) => AuthRouter(
-              auth: auth,
-              store: store,
-              locator: _context.read,
-            )..listen(),
-            dispose: (_, AuthRouter router) => router..dispose(),
-          ),
-        ],
-        child: const App(),
+    return MultiProvider(
+      providers: [
+        Provider(create: (_) => AppNavigator(navigatorKey: navigatorKey)),
+        Provider(create: (_) => PreferenceService()),
+        Provider(create: (_) => HttpClientService(client)),
+        Provider(create: (_) => AuthService(auth: auth)),
+      ],
+      child: AsyncReduxProvider<AppState>(
+        builder: (_) => store,
+        child: Provider(
+          create: (_context) => AuthRouter(
+            auth: auth,
+            store: store,
+            locator: _context.read,
+          )..listen(),
+          dispose: (_, AuthRouter router) => router..dispose(),
+          child: const App(),
+        ),
       ),
     );
   }
