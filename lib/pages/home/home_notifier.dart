@@ -5,7 +5,6 @@ import 'package:attendance_management/models/models.dart';
 import 'package:attendance_management/pages/home/home_state.dart';
 import 'package:attendance_management/services/auth_service.dart';
 import 'package:attendance_management/services/services.dart';
-import 'package:attendance_management/utils/utils.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 class HomeNotifier extends StateNotifier<HomeState> with LocatorMixin {
@@ -21,7 +20,6 @@ class HomeNotifier extends StateNotifier<HomeState> with LocatorMixin {
 
   @override
   void initState() {
-    logger.info('initialize home');
     _onInitialize(_store.state);
     _subscription = _store.onChange.listen(_onChangeUser);
     _timer = Timer.periodic(Duration(seconds: 1), _onChangeTimer);

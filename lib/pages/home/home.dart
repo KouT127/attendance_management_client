@@ -79,9 +79,6 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               const HomeFloatingButton(),
-              Text(context.select<HomeState, String>(
-                (value) => value.user.email,
-              ))
             ],
           ),
         ),
