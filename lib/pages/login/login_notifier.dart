@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:async_redux/async_redux.dart';
+import 'package:attendance_management/models/models.dart';
+import 'package:attendance_management/pages/pages.dart';
 import 'package:attendance_management/services/app_navigator.dart';
 import 'package:attendance_management/services/auth_service.dart';
 import 'package:attendance_management/utils/utils.dart';
@@ -19,6 +22,8 @@ class LoginNotifier extends ChangeNotifier {
 
   AuthService get _auth => locator();
 
+  Store<AppState> get _store => locator();
+
   String email;
   String password;
   FocusNode emailNode;
@@ -26,7 +31,7 @@ class LoginNotifier extends ChangeNotifier {
   StreamSubscription _subscription;
 
   void initialize() {
-    logger.info('initialize login');
+    _subscription = _store.onChange.listen(_handleUserChanged);
     emailNode = FocusNode();
     passwordNode = FocusNode();
   }
@@ -55,11 +60,11 @@ class LoginNotifier extends ChangeNotifier {
     );
   }
 
-//  void handleUserChanged(UserState user) {
-//    if (user != null && user?.uid != null) {
-//      _navigator.popRoot();
-//      _navigator.pushReplacementNamed(HomePage.routeName);
-//      return;
-//    }
-//  }
+  void _handleUserChanged(AppState state) {
+    if (state?.userState != null && state?.userState?.uid != null) {
+      _navigator.popRoot();
+      _navigator.pushReplacementNamed(HomePage.routeName);
+      return;
+    }
+  }
 }

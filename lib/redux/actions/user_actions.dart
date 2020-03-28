@@ -15,7 +15,7 @@ class LoadUser extends ReduxAction<AppState> {
   @override
   Future<AppState> reduce() async {
     final response = await client.get(
-      'http://localhost:8080/v1/users/mine',
+      'http://192.168.1.5:8080/v1/users/mine',
       getToken: userState?.getIdToken,
     );
     logger.info(response.body);

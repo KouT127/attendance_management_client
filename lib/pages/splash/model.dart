@@ -32,10 +32,6 @@ class SplashRouter extends StateNotifier<void> with LocatorMixin {
   }
 
   Future<void> _handleNavigate(AppState appState) async {
-    if (appState == null || !appState.initialLoaded) {
-      return;
-    }
-
     if (appState.initialLoaded && appState.userState.uid != null) {
       _navigator.pushReplacementNamed(HomePage.routeName);
       return;
