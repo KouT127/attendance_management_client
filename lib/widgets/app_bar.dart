@@ -1,4 +1,4 @@
-import 'package:attendance_management/pages/user/user_page.dart';
+import 'package:attendance_management/pages/setting/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
