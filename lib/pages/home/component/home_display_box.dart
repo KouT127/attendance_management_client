@@ -19,7 +19,6 @@ class HomeRadialChartBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final double workedTimePercentage = workedTime / totalTime;
     return Expanded(
-      flex: 1,
       child: DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
@@ -37,14 +36,20 @@ class HomeRadialChartBox extends StatelessWidget {
                 ),
               ],
             ),
-            AnimatedCircularChart(
-              size: _chartSize,
-              initialChartData: buildChart(context, workedTimePercentage),
-              chartType: CircularChartType.Radial,
-              percentageValues: true,
-              holeLabel: '$workedTime / $totalTime',
-              labelStyle: Theme.of(context).textTheme.headline1,
-            ),
+            totalTime == 0
+                ? SizedBox(height: 250)
+                : AnimatedCircularChart(
+                    size: _chartSize,
+                    initialChartData: buildChart(
+                        context,
+                        workedTimePercentage.isNaN
+                            ? 0.0
+                            : workedTimePercentage),
+                    chartType: CircularChartType.Radial,
+                    percentageValues: true,
+                    holeLabel: '$workedTime / $totalTime',
+                    labelStyle: Theme.of(context).textTheme.headline1,
+                  ),
           ],
         ),
       ),
@@ -59,14 +64,17 @@ class HomeRadialChartBox extends StatelessWidget {
       CircularStackEntry(
         <CircularSegmentEntry>[
           CircularSegmentEntry(
-              workedTimePercentage * 100,
-              workedTimePercentage > 1
-                  ? Theme.of(context).colorScheme.error
-                  : Theme.of(context).colorScheme.primaryVariant,
-              rankKey: 'worked'),
-          CircularSegmentEntry((1 - workedTimePercentage) * 100,
-              Theme.of(context).colorScheme.primary,
-              rankKey: 'total'),
+            workedTimePercentage * 100,
+            workedTimePercentage > 1
+                ? Theme.of(context).colorScheme.error
+                : Theme.of(context).colorScheme.primaryVariant,
+            rankKey: 'worked',
+          ),
+          CircularSegmentEntry(
+            (1 - workedTimePercentage) * 100,
+            Theme.of(context).colorScheme.primary,
+            rankKey: 'total',
+          ),
         ],
         rankKey: 'percentage',
       ),
