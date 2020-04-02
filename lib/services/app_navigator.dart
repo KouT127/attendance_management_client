@@ -1,3 +1,4 @@
+import 'package:attendance_management/pages/attendance_input/attendance_input_page.dart';
 import 'package:attendance_management/pages/attendance_list/attendance_list_page.dart';
 import 'package:attendance_management/pages/pages.dart';
 import 'package:attendance_management/pages/setting/setting_page.dart';
@@ -19,6 +20,7 @@ class AppNavigator {
         builder: (_) => SettingsProvider(),
       );
     }
+
     if (settings.name == HomePage.routeName) {
       return FadeRoute(
         builder: (_) => HomePageProvider(),
@@ -36,6 +38,12 @@ class AppNavigator {
     if (settings.name == LoginPage.routeName) {
       return FadeRoute(
         builder: (_) => LoginPageProvider(),
+      );
+    }
+
+    if (settings.name == AttendanceInputPage.routeName) {
+      return OverlaySlideUpRoute(
+        child: BottomInputField(),
       );
     }
 

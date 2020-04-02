@@ -1,6 +1,8 @@
 import 'package:attendance_management/pages/attendance_input/attendance_input_page.dart';
+import 'package:attendance_management/services/app_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class HomeFloatingButton extends StatelessWidget {
   const HomeFloatingButton({Key key}) : super(key: key);
@@ -18,12 +20,8 @@ class HomeFloatingButton extends StatelessWidget {
           ),
           child: FloatingActionButton.extended(
             onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AttendanceInputPage();
-                },
-              );
+              Provider.of<AppNavigator>(context, listen: false)
+                  .pushNamed(AttendanceInputPage.routeName);
             },
             icon: Icon(
               Icons.add,
@@ -32,7 +30,7 @@ class HomeFloatingButton extends StatelessWidget {
             label: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Text(
-                'ClockIn',
+                'Check In',
                 style: Theme.of(context).textTheme.button,
               ),
             ),
