@@ -111,7 +111,7 @@ class BottomInputField extends StatelessWidget {
       widthFactor: .9,
       child: FlatButton(
         shape: RoundedRectangleBorder(
-          side: BorderSide(
+          side: const BorderSide(
             width: 2,
             color: Colors.black,
           ),

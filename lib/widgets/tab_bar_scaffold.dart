@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 typedef TabBuilder = Widget Function(int index);
 typedef TabViewBuilder = Widget Function(int index);
@@ -55,101 +54,69 @@ class TabBarScaffold extends StatelessWidget {
   }
 }
 
-class TabBarControllerProvider extends StatefulWidget {
-  const TabBarControllerProvider({
-    this.child,
+const PageViewInitialIndex = 1000;
+
+enum PageSwipePositionType {
+  none,
+  left,
+  right,
+}
+
+class PageSwipeParameter {
+  PageSwipeParameter({
+    this.index,
+    this.pageSwipePositionType,
   });
 
-  final Widget child;
+  final PageSwipePositionType pageSwipePositionType;
+  final int index;
 
   @override
-  _TabBarControllerProviderState createState() =>
-      _TabBarControllerProviderState();
+  String toString() {
+    return "PageSwipeParameter(index: $index, positionType: $pageSwipePositionType)";
+  }
 }
 
-class _TabBarControllerProviderState extends State<TabBarControllerProvider>
-    with TickerProviderStateMixin {
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => DateTimeTabBarNotifier.create(this),
-      child: widget.child,
+class PageViewNotifier<T> extends ChangeNotifier {
+  PageViewNotifier({
+    this.initialIndex,
+    this.items,
+    this.onPageSwipe,
+  }) {
+    _selectedIndex = initialIndex;
+    title = formatter.format(items[_selectedIndex]);
+    controller = PageController(
+      initialPage: _selectedIndex,
     );
   }
-}
 
-class DateTimeTabBarNotifier extends ChangeNotifier {
-  DateTimeTabBarNotifier({
-    this.tickerProvider,
-    this.initialPosition,
-    this.datetimeList,
-  }) {
-    position = initialPosition;
-    title = formatter.format(datetimeList[position]);
-    createController();
-  }
+  final ValueChanged<PageSwipeParameter> onPageSwipe;
+  final int initialIndex;
 
-  TabController controller;
-  int position;
+  PageController controller;
   String title = '';
-  DateTime now;
-  List<DateTime> datetimeList = [];
+  Map<int, DateTime> items = {};
+  int _selectedIndex;
 
-  final int initialPosition;
-  final TickerProvider tickerProvider;
-
-  factory DateTimeTabBarNotifier.create(
-    TickerProvider tickerProvider, {
-    int initialPosition = 4,
-  }) {
-    final now = DateTime.now();
-    final _datetimeList = [
-      DateTime(now.year, now.month, now.day, 0, 0, 0, 0, 0),
-      DateTime(now.year, now.month + 1, now.day, 0, 0, 0, 0, 0),
-      DateTime(now.year, now.month + 2, now.day, 0, 0, 0, 0, 0),
-      DateTime(now.year, now.month + 3, now.day, 0, 0, 0, 0, 0),
-      DateTime(now.year, now.month + 4, now.day, 0, 0, 0, 0, 0),
-      DateTime(now.year, now.month + 5, now.day, 0, 0, 0, 0, 0),
-    ];
-
-    return DateTimeTabBarNotifier(
-      tickerProvider: tickerProvider,
-      initialPosition: initialPosition,
-      datetimeList: _datetimeList,
-    );
-  }
-
-  void createController() {
-    controller = TabController(
-      initialIndex: position,
-      vsync: this.tickerProvider,
-      length: datetimeList.length,
-    );
-    final idx = controller.index;
-    final len = controller.length;
-    print("idx: $idx len: $len");
-    controller.addListener(onSwipe);
-  }
-
-  void disposeController() {
-    if (controller != null) {
-      controller.removeListener(onSwipe);
-      controller.dispose();
-    }
-  }
-
-  void onSwipe() {
-    final index = controller.index;
-    position = index;
-    title = formatter.format(datetimeList[index]);
-
-    if (index == 0) {
-//      datetimeList.insert(0, DateTime.now());
-//      position++;
-    }
-
-    controller.removeListener(onSwipe);
-    createController();
+  void onSwipe(int nextIndex) {
+    final positionType = _detectPositionType(nextIndex);
+    _selectedIndex = nextIndex;
+    onPageSwipe(PageSwipeParameter(
+      index: nextIndex,
+      pageSwipePositionType: positionType,
+    ));
+    title = formatter.format(items[nextIndex]);
     notifyListeners();
+  }
+
+  PageSwipePositionType _detectPositionType(int nextIndex) {
+    PageSwipePositionType swipePositionType;
+    if (_selectedIndex > nextIndex) {
+      swipePositionType = PageSwipePositionType.left;
+    }
+    if (nextIndex > _selectedIndex) {
+      swipePositionType = PageSwipePositionType.right;
+    }
+    return swipePositionType;
   }
 }

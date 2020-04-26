@@ -17,7 +17,7 @@ class OutlinedBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Material(
@@ -32,8 +32,8 @@ class OutlinedBox extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
-                  width: 0,
-                  color: Colors.white,
+                  width: 2,
+                  color: Colors.grey.withOpacity(.6),
                 ),
               ),
               child: Row(
