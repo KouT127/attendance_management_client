@@ -73,12 +73,12 @@ class AttendanceListPage extends StatelessWidget {
         ),
       ],
       child: Builder(builder: (context) {
-        return ChangeNotifierProvider.value(
-          value: PageViewNotifier(
+        return ChangeNotifierProvider(
+          create: (_context) => PageViewNotifier(
             onPageSwipe:
-                context.watch<AttendanceListNotifier>().handlePageSwipe,
-            initialIndex: context.watch<AttendanceListNotifier>().selectedIndex,
-            items: context.watch<AttendanceListNotifier>().datetimeList,
+                _context.read<AttendanceListNotifier>().handlePageSwipe,
+            initialIndex: _context.read<AttendanceListNotifier>().selectedIndex,
+            items: _context.read<AttendanceListNotifier>().datetimeList,
           ),
           child: _AttendanceListPage(),
         );
@@ -106,7 +106,6 @@ class _AttendanceListPage extends StatelessWidget {
                 widthFactor: .95,
                 child: ListView.builder(
                   itemBuilder: (context, index) {
-                    final model = Provider.of<AttendanceListNotifier>(context);
                     return OutlinedBox(
                       labelColor: Colors.grey,
                       date: DateTime.now(),

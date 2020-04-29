@@ -12,20 +12,22 @@ class _Model extends ChangeNotifier {
   AuthService get auth => locator();
 }
 
-class SettingsProvider extends StatelessWidget {
+class SettingsPage extends StatelessWidget {
+  const SettingsPage();
+
+  static String routeName = '/settings';
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<_Model>(
       create: (_context) => _Model(locator: context.read),
-      child: SettingsPage(),
+      child: _SettingsPage(),
     );
   }
 }
 
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({Key key}) : super(key: key);
-
-  static String routeName = '/settings';
+class _SettingsPage extends StatelessWidget {
+  const _SettingsPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
