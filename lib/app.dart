@@ -1,3 +1,4 @@
+import 'package:attendance_management/pages/splash/splash_page.dart';
 import 'package:attendance_management/services/auth_router.dart';
 import 'package:attendance_management/services/services.dart';
 import 'package:attendance_management/services/theme.dart';
@@ -14,9 +15,9 @@ class App extends StatelessWidget {
     context.watch<AuthRouter>();
     return MaterialApp(
       theme: theme,
-      onGenerateRoute: navigator.onGenerate,
-      initialRoute: '/',
       navigatorKey: navigator.navigatorKey,
+      onGenerateRoute: navigator.onGenerate,
+      home: const SplashPage(),
     );
   }
 }
