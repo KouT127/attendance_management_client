@@ -40,6 +40,8 @@ dependencies:
   flutter_state_notifier: ^0.4.0
   provider: ^4.1.0-dev
   async_redux:
+  provider_for_redux:
+
 
 
 dev_dependencies:
