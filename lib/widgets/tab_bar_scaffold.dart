@@ -77,7 +77,7 @@ class PageSwipeParameter {
   }
 }
 
-class PageViewNotifier<T> extends ChangeNotifier {
+class PageViewNotifier extends ChangeNotifier {
   PageViewNotifier({
     this.initialIndex,
     this.items,

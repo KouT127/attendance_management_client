@@ -1,8 +1,10 @@
-import 'package:attendance_management/pages/setting/setting_page.dart';
+import 'package:attendance_management/pages/attendance_list/attendance_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class ShadowlessAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const ShadowlessAppBar();
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -21,7 +23,7 @@ class ShadowlessAppBar extends StatelessWidget implements PreferredSizeWidget {
                   size: 30,
                 ),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(SettingsPage.routeName);
+                  Navigator.of(context).pushNamed(AttendanceListPage.routeName);
                 },
               ),
             ],

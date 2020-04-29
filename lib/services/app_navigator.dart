@@ -1,7 +1,6 @@
 import 'package:attendance_management/pages/attendance_input/attendance_input_page.dart';
-import 'package:attendance_management/pages/attendance_list/attendance_list_page.dart';
 import 'package:attendance_management/pages/pages.dart';
-import 'package:attendance_management/pages/setting/setting_page.dart';
+import 'package:attendance_management/pages/tab/tab_page.dart';
 import 'package:attendance_management/utils/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -14,21 +13,9 @@ class AppNavigator {
   final GlobalKey<NavigatorState> navigatorKey;
 
   Route<dynamic> onGenerate(RouteSettings settings) {
-    if (settings.name == SettingsPage.routeName) {
-      return FadeRoute(
-        builder: (_) => SettingsProvider(),
-      );
-    }
-
     if (settings.name == HomePage.routeName) {
       return FadeRoute(
-        builder: (_) => HomePageProvider(),
-      );
-    }
-
-    if (settings.name == '/attendances') {
-      return MaterialPageRoute(
-        builder: (_) => AttendanceListPage(),
+        builder: (_) => TabPage(),
       );
     }
 
@@ -45,7 +32,7 @@ class AppNavigator {
     }
 
     return MaterialPageRoute(
-      builder: (_) => SplashPageProvider(),
+      builder: (_) => const SplashPage(),
     );
   }
 
