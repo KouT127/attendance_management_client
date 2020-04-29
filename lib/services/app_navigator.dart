@@ -26,8 +26,8 @@ class AppNavigator {
     }
 
     if (settings.name == AttendanceInputPage.routeName) {
-      return OverlaySlideUpRoute(
-        child: BottomInputField(),
+      return MaterialPageRoute(
+        builder: (BuildContext context) => AttendanceInputPage(),
       );
     }
 

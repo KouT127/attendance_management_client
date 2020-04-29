@@ -1,5 +1,6 @@
 import 'package:attendance_management/pages/attendance_input/attendance_input_page.dart';
 import 'package:attendance_management/services/app_navigator.dart';
+import 'package:attendance_management/widgets/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -25,16 +26,21 @@ class HomeFloatingButton extends StatelessWidget {
             },
             icon: Icon(
               Icons.add,
-              color: Theme.of(context).primaryIconTheme.color,
+              color: Theme.of(context)
+                  .primaryIconTheme
+                  .copyWith(color: Colors.white)
+                  .color,
             ),
             label: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Text(
                 'Check In',
-                style: Theme.of(context).textTheme.button,
+                style: Theme.of(context).textTheme.button.copyWith(
+                      color: Colors.white,
+                    ),
               ),
             ),
-            backgroundColor: Colors.white,
+            backgroundColor: SkyBlue,
           ),
         ),
       ),

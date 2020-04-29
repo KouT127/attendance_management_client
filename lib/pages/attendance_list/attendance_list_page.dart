@@ -106,7 +106,7 @@ class _AttendanceListPage extends StatelessWidget {
                 widthFactor: .95,
                 child: ListView.builder(
                   itemBuilder: (context, index) {
-                    return OutlinedBox(
+                    return AttendanceBox(
                       labelColor: Colors.grey,
                       date: DateTime.now(),
                       clockInTime: DateTime.now(),

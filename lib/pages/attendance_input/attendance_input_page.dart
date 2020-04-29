@@ -1,3 +1,5 @@
+import 'package:attendance_management/widgets/colors.dart';
+import 'package:attendance_management/widgets/outlined_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -7,95 +9,41 @@ class AttendanceInputPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FractionallySizedBox(
-      widthFactor: .9,
-      heightFactor: .8,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Column(
-            children: <Widget>[
-              Text('Clock In'),
-              Text('2020/02/15'),
-              Text('Clock Out'),
-              Text('2020/02/15'),
-              Center(
-                child: FractionallySizedBox(
-                  widthFactor: .8,
-                  child: TextField(
-                    autofocus: true,
-                  ),
-                ),
-              ),
-              RaisedButton(
-                onPressed: () {},
-                child: Text('Clock in'),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class BottomInputField extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Stack(
-        children: <Widget>[
-          GestureDetector(
-            onTap: () {
-              FocusScope.of(context).requestFocus(FocusNode());
-              Navigator.pop(context);
-            },
-            child: SizedBox(
-              width: double.infinity,
-              height: double.infinity,
-            ),
-          ),
-          _createBottomTextField(context),
-        ],
+      appBar: AppBar(
+        title: Text('Add'),
       ),
-    );
-  }
-
-  Widget _createBottomTextField(BuildContext context) {
-    return SafeArea(
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: ClipRRect(
-          borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(10.0),
-            topRight: const Radius.circular(10.0),
-          ),
-          child: ColoredBox(
-            color: Colors.white,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Center(
+          child: FractionallySizedBox(
+            widthFactor: .9,
             child: Column(
-              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                const SizedBox(height: 8),
+                AttendanceBox(
+                  labelColor: Colors.grey,
+                  date: DateTime.now(),
+                  clockInTime: DateTime.now(),
+                  clockOutTime: DateTime.now(),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text(
-                        'Attendance',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 30,
-                        ),
+                    Text(
+                      'Reason',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 30,
                       ),
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 8.0,
+                ),
                 MultipleLineTextField(),
+                Spacer(),
                 _buildOutLinedButton(context),
                 SizedBox(height: 10)
               ],
@@ -107,21 +55,21 @@ class BottomInputField extends StatelessWidget {
   }
 
   Widget _buildOutLinedButton(BuildContext context) {
-    return FractionallySizedBox(
-      widthFactor: .9,
+    return SizedBox(
+      width: double.infinity,
       child: FlatButton(
+        color: SkyBlue,
         shape: RoundedRectangleBorder(
-          side: const BorderSide(
-            width: 2,
-            color: Colors.black,
-          ),
-          borderRadius: BorderRadius.circular(20.0),
+          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
         ),
         onPressed: () {},
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
             'Check In',
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
         ),
       ),
@@ -132,18 +80,15 @@ class BottomInputField extends StatelessWidget {
 class MultipleLineTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 8.0,
-        horizontal: 20.0,
-      ),
-      child: SizedBox(
-        height: 300,
+    return ColoredBox(
+      color: Colors.grey.withOpacity(.2),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Scrollbar(
           child: TextFormField(
             autofocus: true,
-            maxLines: 6,
-            minLines: 1,
+            maxLines: 8,
+            minLines: 8,
           ),
         ),
       ),
