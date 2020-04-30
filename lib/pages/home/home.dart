@@ -1,218 +1,131 @@
-import 'package:attendance_management/pages/home/component/home_display_box.dart';
 import 'package:attendance_management/pages/home/component/home_floating_button.dart';
-import 'package:attendance_management/pages/home/component/home_timer_section.dart';
-import 'package:attendance_management/pages/home/home_notifier.dart';
-import 'package:attendance_management/pages/home/home_state.dart';
-import 'package:attendance_management/widgets/app_bar.dart';
-import 'package:attendance_management/widgets/colors.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:attendance_management/widgets/outlined_box.dart';
+import 'package:attendance_management/widgets/tab_bar_scaffold.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 
+class AttendanceListNotifier extends ChangeNotifier {
+  AttendanceListNotifier() {
+    final now = DateTime.now();
+    final currentMonth = DateTime(now.year, now.month, 1, 0, 0, 0, 0, 0);
+    final beforeOneMonth = DateTime(now.year, now.month - 1, 1, 0, 0, 0, 0, 0);
+    final afterOneMonth = DateTime(now.year, now.month + 1, 1, 0, 0, 0, 0, 0);
+
+    datetimeList = {
+      initialIndex - 1: beforeOneMonth,
+      initialIndex: currentMonth,
+      initialIndex + 1: afterOneMonth,
+    };
+  }
+
+  Map<int, DateTime> datetimeList;
+  int selectedIndex = 1000;
+  final initialIndex = 1000;
+
+  void handlePageSwipe(PageSwipeParameter parameter) {
+    selectedIndex = parameter.index;
+    if (parameter.pageSwipePositionType == PageSwipePositionType.left) {
+      final diff = initialIndex - selectedIndex;
+      final now = DateTime.now();
+      addNewData(
+        index: parameter.index,
+        datetime: DateTime(now.year, now.month - diff, 1, 0, 0, 0, 0, 0),
+      );
+      addNewData(
+        index: parameter.index - 1,
+        datetime: DateTime(now.year, now.month - diff - 1, 1, 0, 0, 0, 0, 0),
+      );
+      notifyListeners();
+    }
+    if (parameter.pageSwipePositionType == PageSwipePositionType.right) {
+      final diff = (initialIndex - selectedIndex) * -1;
+      final now = DateTime.now();
+
+      addNewData(
+        index: parameter.index,
+        datetime: DateTime(now.year, now.month + diff, 1, 0, 0, 0, 0, 0),
+      );
+      addNewData(
+        index: parameter.index + 1,
+        datetime: DateTime(now.year, now.month + diff + 1, 1, 0, 0, 0, 0, 0),
+      );
+      notifyListeners();
+    }
+  }
+
+  void addNewData({int index, DateTime datetime}) {
+    if (datetimeList.containsKey(index)) {
+      return;
+    }
+    datetimeList.addAll({index: datetime});
+  }
+}
+
 class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
+  const HomePage();
 
   static String routeName = '/home';
 
   @override
   Widget build(BuildContext context) {
-    return StateNotifierProvider<HomeNotifier, HomeState>(
-      create: (_) => HomeNotifier(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => AttendanceListNotifier(),
+        ),
+        ChangeNotifierProvider(
+          create: (_context) => PageViewNotifier(
+            onPageSwipe:
+                _context.read<AttendanceListNotifier>().handlePageSwipe,
+            initialIndex: _context.read<AttendanceListNotifier>().selectedIndex,
+            items: _context.read<AttendanceListNotifier>().datetimeList,
+          ),
+        ),
+      ],
       child: const _HomePage(),
     );
   }
 }
 
 class _HomePage extends StatelessWidget {
-  const _HomePage({Key key}) : super(key: key);
+  const _HomePage();
 
   @override
   Widget build(BuildContext context) {
+    final notifier = context.watch<PageViewNotifier>();
     return Scaffold(
-      appBar: const ShadowlessAppBar(),
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-        ),
-        child: SafeArea(
-          top: false,
-          child: Stack(
-            children: <Widget>[
-              SingleChildScrollView(
-                child: Center(
-                  child: FractionallySizedBox(
-                    widthFactor: .9,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const HomeTimerSection(),
-                        const SizedBox(height: 20),
-                        Row(
-                          children: <Widget>[
-                            HomeRadialChartBox(
-                              title: 'Total ',
-                              workedTime: context.select<HomeState, double>(
-                                (state) => state.workedTime,
-                              ),
-                              totalTime: context.select<HomeState, double>(
-                                (state) => state.totalTime,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        WeeklyChartBox(
-                          title: 'Weekly',
-                          workedTimes: [
-                            WorkedTime(workedTime: 8),
-                            WorkedTime(workedTime: 10.5),
-                            WorkedTime(workedTime: 8.8),
-                            WorkedTime(workedTime: 8),
-                            WorkedTime(workedTime: 3),
-                          ],
-                        ),
-                        const SizedBox(height: 80),
-                      ],
-                    ),
+      appBar: AppBar(
+        title: Text(notifier.title),
+      ),
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: <Widget>[
+          PageView.builder(
+            controller: notifier.controller,
+            onPageChanged: notifier.onSwipe,
+            itemBuilder: (context, pageIndex) {
+              return Center(
+                child: FractionallySizedBox(
+                  widthFactor: .95,
+                  child: ListView.builder(
+                    itemCount: 10,
+                    padding: const EdgeInsets.only(bottom: 70),
+                    itemBuilder: (context, index) {
+                      return AttendanceBox(
+                        labelColor: Colors.grey,
+                        date: DateTime.now(),
+                        clockInTime: DateTime.now(),
+                        clockOutTime: DateTime.now(),
+                      );
+                    },
                   ),
                 ),
-              ),
-              const HomeFloatingButton(),
-            ],
+              );
+            },
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class WeeklyChartBox extends StatelessWidget {
-  const WeeklyChartBox({
-    @required this.title,
-    @required this.workedTimes,
-  });
-
-  final String title;
-  final List<WorkedTime> workedTimes;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: Colors.white,
-        ),
-        child: Column(
-          children: <Widget>[
-            const SizedBox(height: 8),
-            Row(
-              children: <Widget>[
-                const SizedBox(width: 10),
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-              ],
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: BarChart(
-                BarChartData(
-                  alignment: BarChartAlignment.spaceAround,
-                  maxY: 15,
-                  barTouchData: BarTouchData(
-                    enabled: false,
-                    touchTooltipData: BarTouchTooltipData(
-                      tooltipBgColor: Colors.transparent,
-                      tooltipPadding: const EdgeInsets.all(0),
-                      tooltipBottomMargin: 0,
-                      getTooltipItem: (
-                        BarChartGroupData group,
-                        int groupIndex,
-                        BarChartRodData rod,
-                        int rodIndex,
-                      ) {
-                        return BarTooltipItem(
-                          rod.y.toString(),
-                          TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  titlesData: FlTitlesData(
-                    show: true,
-                    bottomTitles: SideTitles(
-                      showTitles: true,
-                      textStyle: TextStyle(
-                        color: const Color(0xff7589a2),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                      margin: 8,
-                      getTitles: (double value) {
-                        switch (value.toInt()) {
-                          case 0:
-                            return '月';
-                          case 1:
-                            return '火';
-                          case 2:
-                            return '水';
-                          case 3:
-                            return '木';
-                          case 4:
-                            return '金';
-                          case 5:
-                            return '土';
-                          case 6:
-                            return '日';
-                          default:
-                            return '';
-                        }
-                      },
-                    ),
-                    leftTitles: const SideTitles(showTitles: false),
-                  ),
-                  borderData: FlBorderData(
-                    show: false,
-                  ),
-                  barGroups: buildChartRods(this.workedTimes),
-                ),
-              ),
-            ),
-            const SizedBox(height: 8)
-          ],
-        ),
-      ),
-    );
-  }
-
-  List<BarChartGroupData> buildChartRods(List<WorkedTime> workedTimes) {
-    List<BarChartGroupData> chartGroup = List();
-    workedTimes.asMap().forEach((index, time) {
-      chartGroup.add(BarChartGroupData(
-        x: index,
-        barRods: [
-          BarChartRodData(y: time.workedTime, color: SkyBlue),
+          const HomeFloatingButton(),
         ],
-        showingTooltipIndicators: [0],
-      ));
-    });
-    return chartGroup;
+      ),
+    );
   }
-}
-
-class WorkedTime {
-  const WorkedTime({
-    this.workedTime,
-    this.dayOfWeek,
-  });
-
-  final double workedTime;
-  final String dayOfWeek;
 }
