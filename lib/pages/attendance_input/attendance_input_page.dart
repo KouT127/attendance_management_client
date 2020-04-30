@@ -1,5 +1,5 @@
+import 'package:attendance_management/pages/home/component/home_timer_section.dart';
 import 'package:attendance_management/widgets/colors.dart';
-import 'package:attendance_management/widgets/outlined_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -9,32 +9,34 @@ class AttendanceInputPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return const _AttendanceInputPage();
+  }
+}
+
+class _AttendanceInputPage extends StatelessWidget {
+  const _AttendanceInputPage();
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Add'),
-      ),
+      appBar: AppBar(),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: FractionallySizedBox(
             widthFactor: .9,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 const SizedBox(height: 8),
-                AttendanceBox(
-                  labelColor: Colors.grey,
-                  date: DateTime.now(),
-                  clockInTime: DateTime.now(),
-                  clockOutTime: DateTime.now(),
-                ),
+                const HomeTimer(),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       'Reason',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 30,
+                        fontSize: 20,
                       ),
                     ),
                   ],

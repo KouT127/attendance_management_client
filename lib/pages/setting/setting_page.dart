@@ -41,17 +41,6 @@ class _SettingsPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const SizedBox(height: 20),
-                  buildImageBox(context),
-                  const SizedBox(height: 10),
-                  Text(
-                    'kou 127',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        .copyWith(color: Colors.black),
-                  ),
-                  const SizedBox(height: 40),
                   SizedBox(
                     width: double.infinity,
                     child: DecoratedBox(
@@ -86,22 +75,6 @@ class _SettingsPage extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildImageBox(BuildContext context) {
-    return ClipOval(
-      child: SizedBox(
-        height: 55,
-        width: 55,
-        child: ColoredBox(
-          color: Theme.of(context).accentColor,
-          child: Icon(
-            Icons.account_circle,
-            size: 55,
           ),
         ),
       ),

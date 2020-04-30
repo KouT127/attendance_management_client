@@ -1,5 +1,5 @@
-import 'package:attendance_management/pages/attendance_list/attendance_list_page.dart';
 import 'package:attendance_management/pages/home/home.dart';
+import 'package:attendance_management/pages/profile/profile_page.dart';
 import 'package:attendance_management/pages/setting/setting_page.dart';
 import 'package:attendance_management/pages/tab/tab_notifier.dart';
 import 'package:attendance_management/pages/tab/tab_state.dart';
@@ -38,11 +38,7 @@ class _TabPage extends StatelessWidget {
                   return const HomePage();
                 });
               }
-              if (settings.name == '/attendances') {
-                return FadeRoute(
-                  builder: (_) => AttendanceListPage(),
-                );
-              }
+
               return null;
             },
           ),
@@ -51,7 +47,7 @@ class _TabPage extends StatelessWidget {
             onGenerateRoute: (RouteSettings settings) {
               if (settings.name == '/') {
                 return MaterialPageRoute(builder: (BuildContext context) {
-                  return const SettingsPage();
+                  return const ProfilePage();
                 });
               }
               return null;
@@ -66,15 +62,15 @@ class _TabPage extends StatelessWidget {
         onTap: context.watch<TabNotifier>().onTap,
         items: [
           BottomNavigationBarItem(
-            title: Text('DashBoard'),
+            title: Text('Home'),
             icon: Icon(
-              Icons.dashboard,
+              Icons.home,
             ),
           ),
           BottomNavigationBarItem(
-            title: Text('Settings'),
+            title: Text('Profile'),
             icon: Icon(
-              Icons.edit,
+              Icons.account_box,
             ),
           ),
         ],
