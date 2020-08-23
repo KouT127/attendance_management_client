@@ -21,3 +21,4 @@ doc/api/
 *.js.map
 ios/Runner/GoogleService-Info.plist
 *.json
+*.freezed.dart
