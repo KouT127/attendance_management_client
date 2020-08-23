@@ -26,11 +26,9 @@ dependencies:
   flutter_circular_chart: ^0.1.0
   fl_chart: ^0.8.3
 
-  provider:
-    git:
-      url: git://github.com/rrousselGit/provider.git
-      ref: extensions
-  firebase_auth: ^0.15.4
+  provider: 4.3.2+1
+  firebase_core: 0.5.0
+  firebase_auth: ^0.18.0+1
   http: ^0.12.0+4
   shared_preferences: ^0.5.6+1
   simple_logger: ^1.6.0+1
@@ -41,6 +39,9 @@ dependencies:
   google_fonts: ^0.3.8
   rxdart: any
   freezed_annotation:
+  state_notifier: ^0.6.0
+  flutter_state_notifier: ^0.6.1
+  behavior_subject_mixin: ^0.2.0
 
 dev_dependencies:
   flutter_test:

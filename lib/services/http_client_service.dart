@@ -13,18 +13,18 @@ class HttpClientService {
     if (getToken == null) {
       return _client.get(url);
     }
-    final tokenResult = await getToken(refresh: true);
-    headers['Authorization'] = 'Bearer ' + tokenResult.token;
+    final token = await getToken();
+    headers['Authorization'] = 'Bearer ' + token;
     return _client.get(url, headers: headers);
   }
 
   Future<Response> post(String url, dynamic body, {GetIdToken getToken}) async {
     Map<String, String> headers = Map();
-    if (getToken != null) {
+    if (getToken == null) {
       return _client.post(url);
     }
-    final tokenResult = await getToken();
-    headers['Authorization'] = 'Bearer ' + tokenResult.token;
+    final token = await getToken();
+    headers['Authorization'] = 'Bearer ' + token;
     return _client.post(url, headers: headers);
   }
 }
