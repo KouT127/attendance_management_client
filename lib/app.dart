@@ -1,3 +1,4 @@
+import 'package:attendance_management/providers.dart';
 import 'package:attendance_management/services/services.dart';
 import 'package:attendance_management/services/theme.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<Router>();
     final navigator = Provider.of<AppNavigator>(context);
     return MaterialApp(
       theme: theme,
