@@ -1,39 +1,45 @@
 import 'package:attendance_management/pages/home/component/home_display_box.dart';
-import 'package:attendance_management/pages/home/component/home_floating_button.dart';
-import 'package:attendance_management/pages/home/component/home_timer_section.dart';
 import 'package:attendance_management/pages/home/home_notifier.dart';
 import 'package:attendance_management/pages/home/home_state.dart';
 import 'package:attendance_management/widgets/app_bar.dart';
 import 'package:attendance_management/widgets/colors.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
+import 'package:provider/provider.dart';
 
-class HomePageProvider extends StatelessWidget {
-  const HomePageProvider({Key key}) : super(key: key);
+class WorkedTime {
+  const WorkedTime({
+    this.workedTime,
+    this.dayOfWeek,
+  });
+
+  final double workedTime;
+  final String dayOfWeek;
+}
+
+class ProfilePage extends StatelessWidget {
+  const ProfilePage();
 
   @override
   Widget build(BuildContext context) {
     return StateNotifierProvider<HomeNotifier, HomeState>(
       create: (_) => HomeNotifier(),
-      child: const HomePage(),
+      child: const _ProfilePage(),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
-
-  static String routeName = '/home';
+class _ProfilePage extends StatelessWidget {
+  const _ProfilePage();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ShadowlessAppBar(),
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-        ),
+      appBar: const ShadowlessAppBar(),
+      body: ColoredBox(
+        color: Theme.of(context).colorScheme.primary,
         child: SafeArea(
           top: false,
           child: Stack(
@@ -45,13 +51,27 @@ class HomePage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        const HomeTimerSection(),
+                        const SizedBox(height: 20),
+                        buildImageBox(context),
+                        const SizedBox(height: 10),
+                        Text(
+                          'kou 127',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1
+                              .copyWith(color: Colors.black),
+                        ),
                         const SizedBox(height: 20),
                         Row(
                           children: <Widget>[
-                            const HomeRadialChartBox(
+                            HomeRadialChartBox(
                               title: 'Total ',
-                              time: 170.0,
+                              workedTime: context.select<HomeState, double>(
+                                (state) => state.workedTime,
+                              ),
+                              totalTime: context.select<HomeState, double>(
+                                (state) => state.totalTime,
+                              ),
                             ),
                           ],
                         ),
@@ -72,8 +92,23 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              const HomeFloatingButton(),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildImageBox(BuildContext context) {
+    return ClipOval(
+      child: SizedBox(
+        height: 55,
+        width: 55,
+        child: ColoredBox(
+          color: Theme.of(context).accentColor,
+          child: Icon(
+            Icons.account_circle,
+            size: 55,
           ),
         ),
       ),
@@ -199,14 +234,4 @@ class WeeklyChartBox extends StatelessWidget {
     });
     return chartGroup;
   }
-}
-
-class WorkedTime {
-  const WorkedTime({
-    this.workedTime,
-    this.dayOfWeek,
-  });
-
-  final double workedTime;
-  final String dayOfWeek;
 }

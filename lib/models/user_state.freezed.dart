@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named
 
-part of 'user.dart';
+part of 'user_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
 // **************************************************************************
 
-mixin _$User {
+mixin _$UserState {
   String get uid;
   String get email;
   String get displayName;
@@ -15,7 +15,7 @@ mixin _$User {
   bool get isEmailVerified;
   Future<IdTokenResult> Function({bool refresh}) get getIdToken;
 
-  User copyWith(
+  UserState copyWith(
       {String uid,
       String email,
       String displayName,
@@ -24,8 +24,8 @@ mixin _$User {
       Future<IdTokenResult> Function({bool refresh}) getIdToken});
 }
 
-class _$UserTearOff {
-  const _$UserTearOff();
+class _$UserStateTearOff {
+  const _$UserStateTearOff();
 
   _User call(
       {String uid,
@@ -45,7 +45,7 @@ class _$UserTearOff {
   }
 }
 
-const $User = _$UserTearOff();
+const $UserState = _$UserStateTearOff();
 
 class _$_User with DiagnosticableTreeMixin implements _User {
   const _$_User(
@@ -71,14 +71,14 @@ class _$_User with DiagnosticableTreeMixin implements _User {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'User(uid: $uid, email: $email, displayName: $displayName, photoUrl: $photoUrl, isEmailVerified: $isEmailVerified, getIdToken: $getIdToken)';
+    return 'UserState(uid: $uid, email: $email, displayName: $displayName, photoUrl: $photoUrl, isEmailVerified: $isEmailVerified, getIdToken: $getIdToken)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'User'))
+      ..add(DiagnosticsProperty('type', 'UserState'))
       ..add(DiagnosticsProperty('uid', uid))
       ..add(DiagnosticsProperty('email', email))
       ..add(DiagnosticsProperty('displayName', displayName))
@@ -144,7 +144,7 @@ class _$_User with DiagnosticableTreeMixin implements _User {
   }
 }
 
-abstract class _User implements User {
+abstract class _User implements UserState {
   const factory _User(
       {String uid,
       String email,

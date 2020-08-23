@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'user.freezed.dart';
+part 'user_state.freezed.dart';
 
 typedef GetIdToken = Future<String> Function([bool refresh]);
 

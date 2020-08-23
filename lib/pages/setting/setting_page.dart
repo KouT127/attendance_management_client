@@ -12,20 +12,22 @@ class _Model extends ChangeNotifier {
   AuthService get auth => locator();
 }
 
-class SettingsProvider extends StatelessWidget {
+class SettingsPage extends StatelessWidget {
+  const SettingsPage();
+
+  static String routeName = '/settings';
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<_Model>(
       create: (_context) => _Model(locator: context.read),
-      child: SettingsPage(),
+      child: _SettingsPage(),
     );
   }
 }
 
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({Key key}) : super(key: key);
-
-  static String routeName = '/settings';
+class _SettingsPage extends StatelessWidget {
+  const _SettingsPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,17 +41,6 @@ class SettingsPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const SizedBox(height: 20),
-                  buildImageBox(context),
-                  const SizedBox(height: 10),
-                  Text(
-                    'kou 127',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        .copyWith(color: Colors.black),
-                  ),
-                  const SizedBox(height: 40),
                   SizedBox(
                     width: double.infinity,
                     child: DecoratedBox(
@@ -84,22 +75,6 @@ class SettingsPage extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildImageBox(BuildContext context) {
-    return ClipOval(
-      child: SizedBox(
-        height: 55,
-        width: 55,
-        child: ColoredBox(
-          color: Theme.of(context).accentColor,
-          child: Icon(
-            Icons.account_circle,
-            size: 55,
           ),
         ),
       ),

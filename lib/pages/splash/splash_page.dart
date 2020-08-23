@@ -4,23 +4,33 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 
-class SplashPageProvider extends StatelessWidget {
+class SplashPage extends StatelessWidget {
+  const SplashPage();
+
   @override
   Widget build(BuildContext context) {
-    return StateNotifierProvider(
+    return StateNotifierProvider<SplashRouter, void>(
       create: (_) => SplashRouter(),
-      child: SplashPage(),
+      child: const _SplashPage(),
     );
   }
 }
 
-class SplashPage extends StatelessWidget {
+class _SplashPage extends StatelessWidget {
+  const _SplashPage();
+
   @override
   Widget build(BuildContext context) {
     context.watch<SplashRouter>();
     return Scaffold(
       body: Center(
-        child: Text('Splash'),
+        child: SizedBox(
+          height: 100,
+          width: 100,
+          child: ColoredBox(
+            color: Colors.grey,
+          ),
+        ),
       ),
     );
   }

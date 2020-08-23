@@ -1,10 +1,8 @@
-import 'package:attendance_management/pages/attendance_list/attendance_list_page.dart';
+import 'package:attendance_management/pages/attendance_input/attendance_input_page.dart';
 import 'package:attendance_management/pages/pages.dart';
-import 'package:attendance_management/pages/user/user_page.dart';
+import 'package:attendance_management/pages/tab/tab_page.dart';
 import 'package:attendance_management/utils/route.dart';
-import 'package:attendance_management/widgets/tab_bar_scaffold.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class AppNavigator {
   const AppNavigator({
@@ -14,33 +12,26 @@ class AppNavigator {
   final GlobalKey<NavigatorState> navigatorKey;
 
   Route<dynamic> onGenerate(RouteSettings settings) {
-    if (settings.name == '/settings') {
+    if (settings.name == HomePage.routeName) {
       return FadeRoute(
-        builder: (_) => SettingsProvider(),
-      );
-    }
-    if (settings.name == '/home') {
-      return FadeRoute(
-        builder: (_) => HomePageProvider(),
+        builder: (_) => TabPage(),
       );
     }
 
-    if (settings.name == '/attendances') {
-      return MaterialPageRoute(
-        builder: (_) => TabBarControllerProvider(
-          child: AttendanceListPage(),
-        ),
-      );
-    }
-
-    if (settings.name == '/login') {
+    if (settings.name == LoginPage.routeName) {
       return FadeRoute(
         builder: (_) => LoginPageProvider(),
       );
     }
 
+    if (settings.name == AttendanceInputPage.routeName) {
+      return MaterialPageRoute(
+        builder: (BuildContext context) => AttendanceInputPage(),
+      );
+    }
+
     return MaterialPageRoute(
-      builder: (_) => SplashPageProvider(),
+      builder: (_) => const SplashPage(),
     );
   }
 

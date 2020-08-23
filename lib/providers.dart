@@ -1,8 +1,9 @@
-import 'package:attendance_management/models/models.dart';
-import 'package:attendance_management/pages/home/home.dart';
+import 'package:attendance_management/models/app_state.dart';
+import 'package:attendance_management/models/user_state.dart';
+import 'package:attendance_management/pages/home/home_page.dart';
 import 'package:attendance_management/pages/login/login_page.dart';
 import 'package:attendance_management/services/shared_preference_service.dart';
-import 'package:attendance_management/stores/stores.dart';
+import 'package:attendance_management/stores/app_store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
@@ -30,6 +31,7 @@ class Providers extends StatelessWidget {
   Providers({Key key}) : super(key: key);
 
   final navigatorKey = GlobalKey<NavigatorState>();
+
   final firebaseAuth = FirebaseAuth.instance;
 
   @override
