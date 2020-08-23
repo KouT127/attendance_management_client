@@ -38,9 +38,6 @@ class HomeNotifier extends StateNotifier<HomeState> with LocatorMixin {
   }
 
   Future<void> signOut() async {
-    if (homeState.user == null) {
-      return;
-    }
     _auth.signOut();
   }
 }

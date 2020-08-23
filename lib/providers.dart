@@ -1,4 +1,6 @@
 import 'package:attendance_management/models/models.dart';
+import 'package:attendance_management/pages/home/home.dart';
+import 'package:attendance_management/pages/login/login_page.dart';
 import 'package:attendance_management/services/shared_preference_service.dart';
 import 'package:attendance_management/stores/stores.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,14 +13,13 @@ import 'app.dart';
 import 'services/services.dart';
 
 extension onAuthStateChangeEx on Stream<FirebaseUser> {
-  Stream<User> get user {
+  Stream<UserState> get user {
     return this.map((user) {
-      return User(
+      return UserState(
         uid: user?.uid,
         email: user?.email,
         displayName: user?.displayName,
-        photoUrl: user?.photoUrl,
-        isEmailVerified: user?.isEmailVerified,
+        emailVerified: user?.emailVerified,
         getIdToken: user?.getIdToken,
       );
     });
@@ -38,27 +39,49 @@ class Providers extends StatelessWidget {
         Provider(create: (_) => AppNavigator(navigatorKey: navigatorKey)),
         Provider(create: (_) => PreferenceService()),
         Provider(create: (_) => HttpClientService(Client())),
-        Provider(create: (_) => AuthService(auth: firebaseAuth)),
-        StreamProvider<FirebaseUser>.value(
-          value: firebaseAuth.onAuthStateChanged,
+        Provider(
+          create: (context) => AuthService(
+            auth: firebaseAuth,
+            httpClientService: context.read(),
+          ),
+        ),
+        StateNotifierProvider<AppStateNotifier, AppState>(
+          create: (_) => AppStateNotifier(),
+        ),
+        Provider(
+          create: (context) => Router(
+            appStateNotifier: context.read(),
+            authService: context.read(),
+            navigatorKey: navigatorKey,
+          ),
         ),
       ],
-      child: StoreProviders(),
+      child: const App(),
     );
   }
 }
 
-class StoreProviders extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        StateNotifierProvider<AppStateNotifier, AppState>(
-            create: (_) => AppStateNotifier()),
-        StateNotifierProvider<UserStateNotifier, User>(
-            create: (_) => UserStateNotifier())
-      ],
-      child: const App(),
-    );
+class Router {
+  Router({
+    @required this.authService,
+    @required this.appStateNotifier,
+    @required this.navigatorKey,
+  }) {
+    authService.currentUserStream.listen(navigate);
+  }
+
+  final AppStateNotifier appStateNotifier;
+  final AuthService authService;
+  final GlobalKey<NavigatorState> navigatorKey;
+
+  Future<void> navigate(
+    UserState user,
+  ) async {
+    if (user?.uid != null) {
+      navigatorKey.currentState.pushReplacementNamed(HomePage.routeName);
+      return;
+    }
+    navigatorKey.currentState.pushReplacementNamed(LoginPage.routeName);
+    return;
   }
 }

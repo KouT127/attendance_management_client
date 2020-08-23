@@ -1,25 +1,65 @@
 import 'package:attendance_management/models/models.dart';
+import 'package:attendance_management/services/http_client_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+
+extension UserEx on User {
+  bool equal(User user) {
+    final distinct = uid == user?.uid &&
+        email == user?.email &&
+        photoURL == user?.photoURL &&
+        emailVerified == user?.emailVerified &&
+        phoneNumber == user?.phoneNumber &&
+        displayName == user?.displayName &&
+        metadata.creationTime == user?.metadata?.creationTime &&
+        metadata.lastSignInTime == user?.metadata?.lastSignInTime &&
+        isAnonymous == user?.isAnonymous &&
+        tenantId == user?.tenantId;
+    return distinct;
+  }
+}
 
 class AuthService {
   AuthService({
+    this.httpClientService,
     this.auth,
   });
 
+  final HttpClientService httpClientService;
   final FirebaseAuth auth;
+  UserState _userState = UserState();
 
-  Stream<User> get firebaseUser =>
-      auth.onAuthStateChanged.map(_handleStateChange);
+  UserState get currentUser => _userState;
 
-  User _handleStateChange(FirebaseUser user) {
-    return User(
-      uid: user?.uid,
-      email: user?.email,
-      displayName: user?.displayName,
-      photoUrl: user?.photoUrl,
-      isEmailVerified: user?.isEmailVerified,
-      getIdToken: user?.getIdToken,
+  Stream<UserState> get currentUserStream => auth
+      .authStateChanges()
+      .distinct((prev, next) => prev?.equal(next) ?? false)
+      .asyncMap(fetchUserOnAuthChanged);
+
+  Future<UserState> fetchUserOnAuthChanged(User user) async {
+    debugPrint("Updated Auth Info: ${user.toString()}");
+    if (user == null || user?.uid == null) {
+      return UserState();
+    }
+
+    try {
+      final response = await httpClientService.post(
+        'http://10.0.2.2:8080/v1/users/mine',
+        Map(),
+        getToken: auth?.currentUser?.getIdToken,
+      );
+    } on Exception catch (e, s) {
+      return UserState();
+    }
+    _userState = UserState(
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      emailVerified: user.emailVerified,
+      getIdToken: auth?.currentUser?.getIdToken,
     );
+    return _userState;
   }
 
   Future<void> signIn({
