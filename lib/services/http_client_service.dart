@@ -1,4 +1,5 @@
 import 'package:attendance_management/models/models.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart';
 
 class HttpClientService {
@@ -26,5 +27,14 @@ class HttpClientService {
     final token = await getToken();
     headers['Authorization'] = 'Bearer ' + token;
     return _client.post(url, headers: headers);
+  }
+
+  Future<Response> getUserMine() async {
+    final response = await post(
+      'http://10.0.2.2:8080/v1/users/mine',
+      Map(),
+      getToken: FirebaseAuth.instance.currentUser.getIdToken,
+    );
+    return response;
   }
 }
