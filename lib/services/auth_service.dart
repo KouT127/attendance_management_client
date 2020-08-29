@@ -43,11 +43,7 @@ class AuthService {
     }
 
     try {
-      final response = await httpClientService.post(
-        'http://10.0.2.2:8080/v1/users/mine',
-        Map(),
-        getToken: auth?.currentUser?.getIdToken,
-      );
+      final userState = await httpClient.getUserMine();
     } on Exception catch (e, s) {
       return UserState();
     }

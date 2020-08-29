@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:attendance_management/models/models.dart';
+import 'package:attendance_management/models/responses/user_response.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart';
 
@@ -26,15 +29,15 @@ class HttpClientService {
     }
     final token = await getToken();
     headers['Authorization'] = 'Bearer ' + token;
-    return _client.post(url, headers: headers);
+    return await _client.post(url, headers: headers);
   }
 
-  Future<Response> getUserMine() async {
+  Future<ServerResponse<UserResponse>> getUserMine() async {
     final response = await post(
       'http://10.0.2.2:8080/v1/users/mine',
       Map(),
       getToken: FirebaseAuth.instance.currentUser.getIdToken,
     );
-    return response;
+    return ServerResponse.fromJson(json.decode(response.body));
   }
 }
