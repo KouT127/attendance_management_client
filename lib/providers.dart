@@ -44,7 +44,7 @@ class Providers extends StatelessWidget {
         Provider(
           create: (context) => AuthService(
             auth: firebaseAuth,
-            httpClientService: context.read(),
+            httpClient: context.read(),
           ),
         ),
         StateNotifierProvider<AppStateNotifier, AppState>(

@@ -21,11 +21,11 @@ extension UserEx on User {
 
 class AuthService {
   AuthService({
-    this.httpClientService,
+    this.httpClient,
     this.auth,
   });
 
-  final HttpClientService httpClientService;
+  final HttpClientService httpClient;
   final FirebaseAuth auth;
   UserState _userState = UserState();
 
