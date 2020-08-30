@@ -1,27 +1,28 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_response.freezed.dart';
-
-@freezed
-abstract class ServerResponse<T> with _$ServerResponse {
-  const factory ServerResponse({
-    bool isSuccessful,
-    T item,
-  }) = _ServerResponse;
-
-  factory ServerResponse.fromJson(Map<String, dynamic> json) =>
-      _$ServerResponseFromJson(json);
-}
+part 'user_response.g.dart';
 
 @freezed
 abstract class UserResponse with _$UserResponse {
   const factory UserResponse({
-    String id,
-    String name,
-    String imageURL,
-    String email,
+    bool isSuccessful,
+    UserResponseItem user,
   }) = _UserResponse;
 
   factory UserResponse.fromJson(Map<String, dynamic> json) =>
       _$UserResponseFromJson(json);
+}
+
+@freezed
+abstract class UserResponseItem with _$UserResponseItem {
+  const factory UserResponseItem({
+    String id,
+    String name,
+    String imageURL,
+    String email,
+  }) = _UserResponseItem;
+
+  factory UserResponseItem.fromJson(Map<String, dynamic> json) =>
+      _$UserResponseItemFromJson(json);
 }
