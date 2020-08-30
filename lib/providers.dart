@@ -51,7 +51,7 @@ class Providers extends StatelessWidget {
           create: (_) => AppStateNotifier(),
         ),
         Provider(
-          create: (context) => Router(
+          create: (context) => AppRouter(
             appStateNotifier: context.read(),
             authService: context.read(),
             navigatorKey: navigatorKey,
@@ -63,8 +63,8 @@ class Providers extends StatelessWidget {
   }
 }
 
-class Router {
-  Router({
+class AppRouter {
+  AppRouter({
     @required this.authService,
     @required this.appStateNotifier,
     @required this.navigatorKey,

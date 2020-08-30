@@ -11,7 +11,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<Router>();
+    context.watch<AppRouter>();
     final navigator = Provider.of<AppNavigator>(context);
     return MaterialApp(
       theme: theme,
