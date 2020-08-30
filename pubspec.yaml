@@ -20,30 +20,39 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # UI
   cupertino_icons: ^0.1.2
   flutter_circular_chart: ^0.1.0
   fl_chart: ^0.8.3
 
-  provider: 4.3.2+1
-  firebase_core: 0.5.0
-  firebase_auth: ^0.18.0+1
+  # Client
   http: ^0.12.0+4
   shared_preferences: ^0.5.6+1
-  simple_logger: ^1.6.0+1
 
+  # Firebase
+  firebase_core: 0.5.0
+  firebase_auth: ^0.18.0+1
+
+  # Utilities
   intl: ^0.16.1
   tuple: ^1.0.3
+  simple_logger: ^1.6.0+1
+  google_fonts: ^1.1.0
+  rxdart: ^0.24.1
 
-  google_fonts: ^0.3.8
-  rxdart: any
+  # State Management
+  provider: 4.3.2+1
   freezed_annotation:
   state_notifier: ^0.6.0
   flutter_state_notifier: ^0.6.1
   behavior_subject_mixin: ^0.2.0
 
+  json_annotation: ^3.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  json_serializable:
   build_runner:
   freezed:
 
