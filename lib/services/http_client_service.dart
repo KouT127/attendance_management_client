@@ -32,12 +32,12 @@ class HttpClientService {
     return await _client.post(url, headers: headers);
   }
 
-  Future<ServerResponse<UserResponse>> getUserMine() async {
+  Future<UserResponse> getUserMine() async {
     final response = await post(
       'http://10.0.2.2:8080/v1/users/mine',
       Map(),
       getToken: FirebaseAuth.instance.currentUser.getIdToken,
     );
-    return ServerResponse.fromJson(json.decode(response.body));
+    return UserResponse.fromJson(json.decode(response.body));
   }
 }
