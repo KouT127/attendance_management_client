@@ -1,5 +1,5 @@
 import 'package:attendance_management/pages/splash/splash_page.dart';
-import 'package:attendance_management/providers.dart';
+import 'package:attendance_management/services/app_router.dart';
 import 'package:attendance_management/services/services.dart';
 import 'package:attendance_management/services/theme.dart';
 import 'package:flutter/material.dart';
