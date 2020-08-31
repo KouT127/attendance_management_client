@@ -15,9 +15,9 @@ class App extends StatelessWidget {
     final navigator = Provider.of<AppNavigator>(context);
     return MaterialApp(
       theme: theme,
-      navigatorKey: navigator.navigatorKey,
+      home: SplashPage(),
+      navigatorKey: NavigatorHolder.rootKey,
       onGenerateRoute: navigator.onGenerate,
-      home: const SplashPage(),
     );
   }
 }

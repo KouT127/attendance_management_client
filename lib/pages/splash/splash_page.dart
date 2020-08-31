@@ -5,6 +5,8 @@ import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 
 class SplashPage extends StatelessWidget {
+  static String routeName = '/';
+
   const SplashPage();
 
   @override

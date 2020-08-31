@@ -38,7 +38,7 @@ class Providers extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider(create: (_) => AppNavigator(navigatorKey: navigatorKey)),
+        Provider(create: (_) => AppNavigator()),
         Provider(create: (_) => PreferenceService()),
         Provider(create: (_) => HttpClientService(Client())),
         Provider(
@@ -54,7 +54,6 @@ class Providers extends StatelessWidget {
           create: (context) => AppRouter(
             appStateNotifier: context.read(),
             authService: context.read(),
-            navigatorKey: navigatorKey,
           ),
         ),
       ],
@@ -67,23 +66,23 @@ class AppRouter {
   AppRouter({
     @required this.authService,
     @required this.appStateNotifier,
-    @required this.navigatorKey,
   }) {
     authService.currentUserStream.listen(navigate);
   }
 
   final AppStateNotifier appStateNotifier;
   final AuthService authService;
-  final GlobalKey<NavigatorState> navigatorKey;
+
+  NavigatorState get navigator => NavigatorHolder.rootState;
 
   Future<void> navigate(
     UserState user,
   ) async {
     if (user?.uid != null) {
-      navigatorKey.currentState.pushReplacementNamed(HomePage.routeName);
+      navigator.pushReplacementNamed(HomePage.routeName);
       return;
     }
-    navigatorKey.currentState.pushReplacementNamed(LoginPage.routeName);
+    navigator.pushReplacementNamed(LoginPage.routeName);
     return;
   }
 }

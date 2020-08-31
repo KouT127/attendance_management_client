@@ -3,7 +3,6 @@ import 'package:attendance_management/services/app_navigator.dart';
 import 'package:attendance_management/widgets/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 
 class HomeFloatingButton extends StatelessWidget {
   const HomeFloatingButton({Key key}) : super(key: key);
@@ -20,10 +19,8 @@ class HomeFloatingButton extends StatelessWidget {
             minHeight: 50,
           ),
           child: FloatingActionButton.extended(
-            onPressed: () {
-              Provider.of<AppNavigator>(context, listen: false)
-                  .pushNamed(AttendanceInputPage.routeName);
-            },
+            onPressed: () => NavigatorHolder.rootState
+                .pushNamed(AttendanceInputPage.routeName),
             icon: Icon(
               Icons.add,
               color: Theme.of(context)
