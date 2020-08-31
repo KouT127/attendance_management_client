@@ -1,4 +1,4 @@
-import 'package:attendance_management/models/models.dart';
+import 'package:attendance_management/states/app_state.dart';
 import 'package:behavior_subject_mixin/behavior_subject_mixin.dart';
 import 'package:state_notifier/state_notifier.dart';
 

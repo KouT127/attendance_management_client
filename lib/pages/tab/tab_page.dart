@@ -1,7 +1,7 @@
 import 'package:attendance_management/pages/home/home_page.dart';
 import 'package:attendance_management/pages/profile/profile_page.dart';
 import 'package:attendance_management/pages/tab/tab_notifier.dart';
-import 'package:attendance_management/pages/tab/tab_state.dart';
+import 'package:attendance_management/states/tab_state.dart';
 import 'package:attendance_management/utils/route.dart';
 import 'package:attendance_management/widgets/colors.dart';
 import 'package:flutter/material.dart';

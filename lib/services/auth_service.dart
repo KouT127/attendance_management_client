@@ -1,5 +1,5 @@
-import 'package:attendance_management/models/models.dart';
 import 'package:attendance_management/services/http_client_service.dart';
+import 'package:attendance_management/states/user_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 

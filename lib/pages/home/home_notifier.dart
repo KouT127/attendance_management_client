@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:attendance_management/models/models.dart';
-import 'package:attendance_management/pages/home/home_state.dart';
 import 'package:attendance_management/services/auth_service.dart';
+import 'package:attendance_management/states/app_state.dart';
+import 'package:attendance_management/states/home_state.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 class HomeNotifier extends StateNotifier<HomeState> with LocatorMixin {

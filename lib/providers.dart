@@ -1,8 +1,8 @@
-import 'package:attendance_management/models/app_state.dart';
-import 'package:attendance_management/models/user_state.dart';
 import 'package:attendance_management/pages/home/home_page.dart';
 import 'package:attendance_management/pages/login/login_page.dart';
 import 'package:attendance_management/services/shared_preference_service.dart';
+import 'package:attendance_management/states/app_state.dart';
+import 'package:attendance_management/states/user_state.dart';
 import 'package:attendance_management/stores/app_store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:attendance_management/models/models.dart';
-import 'package:attendance_management/models/responses/user_response.dart';
+import 'package:attendance_management/states/responses/user_response.dart';
+import 'package:attendance_management/states/user_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart';
 
