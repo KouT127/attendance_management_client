@@ -15,7 +15,7 @@ class AppNavigator {
 
   final _fadeRoutes = {
     HomePage.routeName: TabPage(),
-    LoginPage.routeName: LoginPageProvider(),
+    LoginPage.routeName: LoginPage(),
   };
 
   final _materialRoutes = {

@@ -4,22 +4,22 @@ import 'package:provider/provider.dart';
 
 import 'login_notifier.dart';
 
-class LoginPageProvider extends StatelessWidget {
-  const LoginPageProvider({Key key}) : super(key: key);
+class LoginPage extends StatelessWidget {
+  static final routeName = '/login';
+
+  const LoginPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<LoginNotifier>(
       create: (_) => LoginNotifier(locator: context.read),
-      child: const LoginPage(),
+      child: const _LoginPage(),
     );
   }
 }
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key key}) : super(key: key);
-
-  static final routeName = '/login';
+class _LoginPage extends StatelessWidget {
+  const _LoginPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
