@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class FadeRoute extends PageRouteBuilder {
+class FadeRoute<T> extends PageRouteBuilder<T> {
   FadeRoute({
     @required this.builder,
   }) : super(pageBuilder: (context, _, __) => builder(context));

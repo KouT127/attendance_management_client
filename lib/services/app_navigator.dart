@@ -26,14 +26,14 @@ class AppNavigator {
   Route<dynamic> onGenerate(RouteSettings settings) {
     final fadePage = _fadeRoutes[settings.name];
     if (fadePage != null) {
-      return FadeRoute(
+      return FadeRoute<dynamic>(
         builder: (context) => fadePage,
       );
     }
 
     final materialPage = _materialRoutes[settings.name];
     if (materialPage != null) {
-      return MaterialPageRoute(
+      return MaterialPageRoute<dynamic>(
         builder: (context) => materialPage,
       );
     }

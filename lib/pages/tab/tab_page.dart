@@ -33,7 +33,7 @@ class _TabPage extends StatelessWidget {
             initialRoute: '/',
             onGenerateRoute: (RouteSettings settings) {
               if (settings.name == '/') {
-                return FadeRoute(builder: (BuildContext context) {
+                return FadeRoute<dynamic>(builder: (BuildContext context) {
                   return const HomePage();
                 });
               }
@@ -45,9 +45,9 @@ class _TabPage extends StatelessWidget {
             initialRoute: '/',
             onGenerateRoute: (RouteSettings settings) {
               if (settings.name == '/') {
-                return MaterialPageRoute(builder: (BuildContext context) {
-                  return const ProfilePage();
-                });
+                return MaterialPageRoute<dynamic>(
+                  builder: (BuildContext context) => const ProfilePage(),
+                );
               }
               return null;
             },

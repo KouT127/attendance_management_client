@@ -89,7 +89,7 @@ enum ButtonPosition {
 }
 
 extension ButtonPositionEx on ButtonPosition {
-  borderRadius() {
+  BorderRadius borderRadius() {
     switch (this) {
       case ButtonPosition.top:
         return const BorderRadius.only(
@@ -101,9 +101,10 @@ extension ButtonPositionEx on ButtonPosition {
           bottomLeft: Radius.circular(10),
           bottomRight: Radius.circular(10),
         );
-      default:
+      case ButtonPosition.center:
         return const BorderRadius.only();
     }
+    return const BorderRadius.only();
   }
 }
 

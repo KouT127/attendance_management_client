@@ -66,8 +66,8 @@ class Theme extends ChangeNotifier {
 
   ThemeData themeData;
 
-  setTheme(ThemeData themeData) async {
-    themeData = themeData;
+  void setTheme(ThemeData themeData) {
+    this.themeData = themeData;
     notifyListeners();
   }
 }
