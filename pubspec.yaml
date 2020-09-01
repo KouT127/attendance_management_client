@@ -55,6 +55,7 @@ dev_dependencies:
   json_serializable:
   build_runner:
   freezed:
+  pedantic_mono: any
 
 
 
