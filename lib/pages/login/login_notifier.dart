@@ -19,7 +19,7 @@ class LoginNotifier extends ChangeNotifier {
 
   AuthService get _auth => locator();
 
-  String email;
+  String _email;
   String password;
   FocusNode emailNode;
   FocusNode passwordNode;
@@ -39,18 +39,18 @@ class LoginNotifier extends ChangeNotifier {
     super.dispose();
   }
 
-  void handleChangeEmail(String email) {
-    this.email = email;
+  void changeEmail(String newEmail) {
+    _email = newEmail;
   }
 
-  void handleChangePassword(String password) {
-    this.password = password;
+  void changePassword(String newPassword) {
+    password = newPassword;
   }
 
   void login() {
     _auth.signIn(
-      email: 'test@test.com',
-      password: 'abcd1234',
+      email: _email,
+      password: password,
     );
   }
 }

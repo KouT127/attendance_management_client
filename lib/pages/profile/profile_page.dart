@@ -166,7 +166,7 @@ class WeeklyChartBox extends StatelessWidget {
                       ) {
                         return BarTooltipItem(
                           rod.y.toString(),
-                          TextStyle(
+                          const TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
                           ),
@@ -178,8 +178,8 @@ class WeeklyChartBox extends StatelessWidget {
                     show: true,
                     bottomTitles: SideTitles(
                       showTitles: true,
-                      textStyle: TextStyle(
-                        color: const Color(0xff7589a2),
+                      textStyle: const TextStyle(
+                        color: Color(0xff7589a2),
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
                       ),
@@ -222,7 +222,7 @@ class WeeklyChartBox extends StatelessWidget {
   }
 
   List<BarChartGroupData> buildChartRods(List<WorkedTime> workedTimes) {
-    List<BarChartGroupData> chartGroup = List();
+    final chartGroup = <BarChartGroupData>[];
     workedTimes.asMap().forEach((index, time) {
       chartGroup.add(BarChartGroupData(
         x: index,

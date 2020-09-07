@@ -16,7 +16,10 @@ class HomeNotifier extends StateNotifier<HomeState> with LocatorMixin {
 
   @override
   void initState() {
-    _timer = Timer.periodic(Duration(seconds: 1), _onChangeTimer);
+    _timer = Timer.periodic(
+      const Duration(seconds: 1),
+      _onChangeTimer,
+    );
     super.initState();
   }
 

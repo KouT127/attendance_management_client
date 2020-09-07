@@ -142,7 +142,7 @@ class UserSettingButton extends StatelessWidget {
                       .copyWith(fontSize: 18),
                 ),
               ),
-              Icon(
+              const Icon(
                 Icons.arrow_forward_ios,
                 size: 23,
                 color: Colors.grey,

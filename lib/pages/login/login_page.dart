@@ -33,7 +33,7 @@ class _LoginPage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Column(
-                  children: <Widget>[
+                  children: const [
                     SizedBox(
                       height: 100,
                     ),
@@ -47,13 +47,13 @@ class _LoginPage extends StatelessWidget {
                     children: <Widget>[
                       TextFormField(
                         textInputAction: TextInputAction.next,
-                        onChanged: model.handleChangeEmail,
+                        onChanged: model.changeEmail,
                         onFieldSubmitted: (_) => FocusScope.of(context)
                             .requestFocus(model.passwordNode),
                       ),
                       TextFormField(
                         focusNode: model.passwordNode,
-                        onChanged: model.handleChangePassword,
+                        onChanged: model.changePassword,
                       ),
                     ],
                   ),
@@ -62,7 +62,7 @@ class _LoginPage extends StatelessWidget {
                   onPressed: () {
                     model.login();
                   },
-                  child: Text('LOGIN'),
+                  child: const Text('LOGIN'),
                 )
               ],
             ),

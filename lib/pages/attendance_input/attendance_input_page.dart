@@ -31,7 +31,7 @@ class _AttendanceInputPage extends StatelessWidget {
                 const SizedBox(height: 8),
                 const HomeTimer(),
                 Row(
-                  children: <Widget>[
+                  children: const [
                     Text(
                       'Reason',
                       style: TextStyle(
@@ -41,13 +41,13 @@ class _AttendanceInputPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 8.0,
+                const SizedBox(
+                  height: 8,
                 ),
                 MultipleLineTextField(),
-                Spacer(),
+                const Spacer(),
                 _buildOutLinedButton(context),
-                SizedBox(height: 10)
+                const SizedBox(height: 10)
               ],
             ),
           ),

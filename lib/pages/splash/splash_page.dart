@@ -24,7 +24,7 @@ class _SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.watch<SplashRouter>();
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: SizedBox(
           height: 100,

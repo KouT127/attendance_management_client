@@ -59,7 +59,7 @@ class _TabPage extends StatelessWidget {
         selectedItemColor: SkyBlue,
         unselectedItemColor: Colors.grey,
         onTap: context.watch<TabNotifier>().onTap,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             title: Text('Home'),
             icon: Icon(
