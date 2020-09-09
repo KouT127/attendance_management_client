@@ -1,9 +1,10 @@
 import 'package:attendance_management/pages/attendance_input/attendance_input_page.dart';
 import 'package:attendance_management/pages/pages.dart';
 import 'package:attendance_management/pages/tab/tab_page.dart';
-import 'package:attendance_management/utils/route.dart';
+import 'package:attendance_management/utlities/route.dart';
 import 'package:flutter/material.dart';
 
+// ignore: avoid_classes_with_only_static_members
 class NavigatorHolder {
   static GlobalKey<NavigatorState> rootKey = GlobalKey<NavigatorState>();
 

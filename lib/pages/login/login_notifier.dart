@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:attendance_management/services/app_navigator.dart';
 import 'package:attendance_management/services/auth_service.dart';
-import 'package:attendance_management/utils/utils.dart';
+import 'package:attendance_management/utlities/utlities.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 

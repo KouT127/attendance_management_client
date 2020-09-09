@@ -5,7 +5,7 @@ import 'package:attendance_management/services/http_client_service.dart';
 import 'package:attendance_management/services/shared_preference_service.dart';
 import 'package:attendance_management/states/app_state.dart';
 import 'package:attendance_management/stores/app_store.dart';
-import 'package:attendance_management/utils/utils.dart';
+import 'package:attendance_management/utlities/utlities.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

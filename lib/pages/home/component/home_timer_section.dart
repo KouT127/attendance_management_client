@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:attendance_management/utils/utils.dart';
+import 'package:attendance_management/utlities/utlities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
